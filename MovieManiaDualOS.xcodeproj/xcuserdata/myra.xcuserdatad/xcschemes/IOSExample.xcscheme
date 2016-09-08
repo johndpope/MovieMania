@@ -35,7 +35,7 @@
             BlueprintIdentifier = "4B01EAF01D6E2E32002BEBC9"
             BuildableName = "IOSExample.app"
             BlueprintName = "IOSExample"
-            ReferencedContainer = "container:TVOSExample.xcodeproj">
+            ReferencedContainer = "container:MovieManiaDualOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "4B01EAF01D6E2E32002BEBC9"
             BuildableName = "IOSExample.app"
             BlueprintName = "IOSExample"
-            ReferencedContainer = "container:TVOSExample.xcodeproj">
+            ReferencedContainer = "container:MovieManiaDualOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

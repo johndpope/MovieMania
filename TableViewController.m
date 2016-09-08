@@ -410,6 +410,14 @@
 
     UITableViewCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
     
+    //do I have any subviews?
+    [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    thisCell.contentView.backgroundColor=[UIColor clearColor];
+    thisCell.backgroundColor=[UIColor clearColor];
+    
+   // thisCell.selectionStyle=UITableViewCellSelectionStyleNone;
+   // thisCell.focusStyle=UITableViewCellFocusStyleDefault;   //turns white
+    thisCell.focusStyle=UITableViewCellFocusStyleCustom;
     
     
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellMovieView class]]){
@@ -611,15 +619,42 @@
     */
     
 }
-
-
+/*
+NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)selected
+{
+    NSLog(@"TableViewController setSElected %d",selected);
+}
+ */
 //============================================================================================
 #pragma mark  Table View Delegate - Modifying Row of Section
 //=======================================
+/*- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    NSInteger givenRow=indexPath.row;
+    NSInteger givenSection=indexPath.section;
+    NSLog(@"TABLEVIEWCONTROLLER shouldHighlightRow   indexpath section:%ld row:%ld",(long)givenSection,(long)givenRow);
+    return NO;
 
+}
+ 
+ */
+/* never called - requires custom uitableviewcell  - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    if (highlighted) {
+        NSLog(@"");
+    } else {
+        NSLog(@"");
+    }
+}
+ */
 // Configure the row selection code for any cells that you want to customize the row selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSInteger givenRow=indexPath.row;
+    NSInteger givenSection=indexPath.section;
+    NSLog(@"TABLEVIEWCONTROLLER didSelectRow   indexpath  section:%ld row:%ld",(long)givenSection,(long)givenRow);
+    
     
     SectionDef *sectionPtr;
     CellContentDef *sectionCellsPtr;
@@ -646,7 +681,7 @@
     //NSString *cellText = cell.textLabel.text;
     
    // NSLog(@"cellText %@",cellText);
-    [tableView deselectRowAtIndexPath:indexPath animated:false];
+   //1 [tableView deselectRowAtIndexPath:indexPath animated:false];
 //    int secMod = kCellSectionModulus;
 //    int rowMod = kCellRowModulus;
     int section;
@@ -709,6 +744,20 @@
 //        else
 //            self.shareCell.accessoryType = UITableViewCellAccessoryNone;
 //    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Focus
+////////////////////////////////////////////////////////////////////////////////////////
+- (void)tableView:(UITableView *)tableView didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
+    
+    
+    NSString *classPREV;
+    NSString *classNEXT;
+    classPREV=NSStringFromClass([context.previouslyFocusedView class]);
+    classNEXT=NSStringFromClass([context.nextFocusedView class]);
+    
+    NSLog(@"***TABLEViewController didUpdateFocusInContext:   prevFoc %@   nextFoc(GO FOCUS)  %@",classPREV, classNEXT);
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIScrollViewDelegate

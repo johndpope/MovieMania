@@ -2623,6 +2623,8 @@
             cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellme"];
            // cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellme"];
            // cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cellme"];
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            
             ccontentDefPtr.ccTableViewCellPtr=cell;   //don't initialize cell text here
             
         }

@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AAE8D2FD1BA5CEBC0003A4DF"
-            BuildableName = "TVOSExample.app"
-            BlueprintName = "TVOSExample"
-            ReferencedContainer = "container:TVOSExample.xcodeproj">
+            BuildableName = "MovieManiaDualOS.app"
+            BlueprintName = "tvOSExample"
+            ReferencedContainer = "container:MovieManiaDualOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AAE8D2FD1BA5CEBC0003A4DF"
-            BuildableName = "TVOSExample.app"
-            BlueprintName = "TVOSExample"
-            ReferencedContainer = "container:TVOSExample.xcodeproj">
+            BuildableName = "MovieManiaDualOS.app"
+            BlueprintName = "tvOSExample"
+            ReferencedContainer = "container:MovieManiaDualOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

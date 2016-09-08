@@ -950,6 +950,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.umaproductions.MovieMania;
 				PRODUCT_NAME = MovieManiaDualOS;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
 		};
@@ -963,6 +964,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.umaproductions.MovieMania;
 				PRODUCT_NAME = MovieManiaDualOS;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
 		};
