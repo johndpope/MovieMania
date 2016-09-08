@@ -1,0 +1,63 @@
+//
+//  TransactionData.m
+//  tableProto
+//
+//  Created by Myra Hambleton on 2/24/16.
+//  Copyright © 2016 Hammond Development International. All rights reserved.
+//
+
+#import "TransactionData.h"
+
+@implementation TransactionData
+
+
+
+@synthesize userDefinedData;
+
+@synthesize queryKey;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Destroy
+/////////////////////////////////////////
+-(void) killYourself
+{
+ 
+    
+    userDefinedData=nil;
+   
+    
+    
+   queryKey=nil;//required to do dbtransaction with this user entered data
+    
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Initialize
+/////////////////////////////////////////
+
+-(id) init
+{
+    self = [super init];
+    if (self) {
+        
+        [self makeUseDefaults];
+    }
+    return self;
+}
+
+
+
+-(void) makeUseDefaults
+{
+   
+
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Debug Methods
+/////////////////////////////////////////
+
+
+@end
