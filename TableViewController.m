@@ -759,7 +759,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     
     NSLog(@"***TABLEViewController didUpdateFocusInContext:   prevFoc %@   nextFoc(GO FOCUS)  %@",classPREV, classNEXT);
  
-    
+/*
     if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
         UIButton *cellNext = (UIButton* )context.nextFocusedView;
         cellNext.superview.backgroundColor=[UIColor greenColor];
@@ -795,7 +795,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
         
         
     }
-  
+ */ 
     if ([context.previouslyFocusedView isKindOfClass:[UITableViewCell class]]){
         
         UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;

@@ -401,30 +401,10 @@
  //   if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
  //       return;
  //   }
-    if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
-        UIButton *cellNext = (UIButton* )context.nextFocusedView;
-        cellNext.superview.backgroundColor=[UIColor greenColor];
-        NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];
-        ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
-        NSLog(@"nextButton.buttonName = %@",nextButton.buttonName);
- //       currentButtonInCenter=nextButton;
-        selectedButton=nextButton;
-        [coordinator addCoordinatedAnimations:^{
-            context.nextFocusedView.transform = CGAffineTransformMakeScale(1.1, 1.1);
-           // cellNext.imageView.transform = CGAffineTransformMakeScale(1.1, 1.1);
-        } completion:nil];
-        
-        if (nextButton.reloadOnly){
-            
-            currentButtonInCenter=selectedButton;
-            [self moveToButtonInCenter:currentButtonInCenter.buttonIndex];
-        }
-       
-    }
-     if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
+        if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
          
         UIButton *cellPrev = (UIButton* )context.previouslyFocusedView;
-         cellPrev.superview.backgroundColor=[UIColor clearColor];
+//         cellPrev.superview.backgroundColor=[UIColor clearColor];
         NSString *prevTag = [NSString stringWithFormat:@"%li",cellPrev.tag];
         ActionRequest *prevButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:prevTag];
         NSLog(@"preButton.buttonName = %@",prevButton.buttonName);
@@ -436,7 +416,28 @@
         
         
      }
+    if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
+        UIButton *cellNext = (UIButton* )context.nextFocusedView;
+//        cellNext.superview.backgroundColor=[UIColor greenColor];
+        NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];
+        ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
+        NSLog(@"nextButton.buttonName = %@",nextButton.buttonName);
+        currentButtonInCenter=nextButton;
+        selectedButton=nextButton;
+        [coordinator addCoordinatedAnimations:^{
+            context.nextFocusedView.transform = CGAffineTransformMakeScale(1.6, 1.6);
+            // cellNext.imageView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        } completion:nil];
+        
+        if (nextButton.reloadOnly){
+            
+            currentButtonInCenter=selectedButton;
+            [self moveToButtonInCenter:currentButtonInCenter.buttonIndex];
+        }
+        
+    }
     
+/*
     if ([context.previouslyFocusedView isKindOfClass:[UITableViewCell class]]){
         
         UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;
@@ -448,8 +449,8 @@
         UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
         thisTVC.backgroundColor=[UIColor greenColor];
         NSLog(@"");
-        
     }
+    */
     if ([context.previouslyFocusedView isKindOfClass:[UIView class]]){
         UIView *thisView = (UIView*)context.previouslyFocusedView;
         thisView.backgroundColor=[UIColor clearColor];
@@ -463,7 +464,7 @@
            
     }
     
-    
+
     return;
    
   
