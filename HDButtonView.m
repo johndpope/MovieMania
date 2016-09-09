@@ -64,7 +64,7 @@
     self.buttonSequence = btnSequence;
     self.rowNumber = rowNmbr;
     textColor = [GlobalTableProto sharedGlobalTableProto].viewTextColor;
-    backColor = [UIColor clearColor];// [GlobalTableProto sharedGlobalTableProto].viewBackColor;
+    backColor =  [GlobalTableProto sharedGlobalTableProto].viewBackColor;
     
     
     
