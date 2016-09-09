@@ -684,17 +684,18 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
    //1 [tableView deselectRowAtIndexPath:indexPath animated:false];
 //    int secMod = kCellSectionModulus;
 //    int rowMod = kCellRowModulus;
+/*
     int section;
 #if TARGET_OS_TV
     section=0;
 #else
     section = indexPath.section;
 #endif
-
+*/
 
 //    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;
 
-    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;    touchInput = touchInput + 99;
+    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;    touchInput = touchInput + 99;
     NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
 //    sectionPtr =[activeTableDataPtr.tableSections objectAtIndex:section];
     CellContentDef* ccontentDefPtr = [sectionPtr.sCellsContentDefArr objectAtIndex:indexPath.row];
@@ -707,8 +708,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 //      cellButton.aLocDict = aCell.al
 
 
-    cellButton.tableSection = section;// indexPath.section;
-
+    cellButton.tableSection = indexPath.section;// indexPath.section;
     cellButton.tableRow = indexPath.row;
     cellButton.buttonTag = touchInput;
     cellButton.nextTableView = aCell.nextTableView;
