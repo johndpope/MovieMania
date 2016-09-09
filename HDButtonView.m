@@ -469,6 +469,7 @@
   
 
 }
+
 - (void)tapGestureReceived:(UITapGestureRecognizer *)gesture {
 
     if (!selectedButton)

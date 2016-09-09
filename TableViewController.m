@@ -758,6 +758,80 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     classNEXT=NSStringFromClass([context.nextFocusedView class]);
     
     NSLog(@"***TABLEViewController didUpdateFocusInContext:   prevFoc %@   nextFoc(GO FOCUS)  %@",classPREV, classNEXT);
+ 
+    
+    if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
+        UIButton *cellNext = (UIButton* )context.nextFocusedView;
+        cellNext.superview.backgroundColor=[UIColor greenColor];
+        NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];
+        ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
+        NSLog(@"nextButton.buttonName = %@",nextButton.buttonName);
+        //       currentButtonInCenter=nextButton;
+//        selectedButton=nextButton;
+        [coordinator addCoordinatedAnimations:^{
+            context.nextFocusedView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+            // cellNext.imageView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        } completion:nil];
+        
+        if (nextButton.reloadOnly){
+            
+//            currentButtonInCenter=selectedButton;
+//            [self moveToButtonInCenter:currentButtonInCenter.buttonIndex];
+        }
+        
+    }
+    if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
+        
+        UIButton *cellPrev = (UIButton* )context.previouslyFocusedView;
+        cellPrev.superview.backgroundColor=[UIColor clearColor];
+        NSString *prevTag = [NSString stringWithFormat:@"%li",cellPrev.tag];
+        ActionRequest *prevButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:prevTag];
+        NSLog(@"preButton.buttonName = %@",prevButton.buttonName);
+        
+        [coordinator addCoordinatedAnimations:^{
+            context.previouslyFocusedView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            //cellPrev.imageView .transform = CGAffineTransformMakeScale(1.0, 1.0);
+        } completion:nil];
+        
+        
+    }
+  
+    if ([context.previouslyFocusedView isKindOfClass:[UITableViewCell class]]){
+        
+        UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;
+        thisTVC.backgroundColor=[UIColor clearColor];
+        thisTVC.contentView.backgroundColor=[UIColor clearColor];
+        NSLog(@"");
+        
+    }
+    if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
+        UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
+        thisTVC.backgroundColor=[UIColor greenColor];
+        thisTVC.contentView.backgroundColor=[UIColor greenColor];
+        NSLog(@"");
+        
+    }
+    if ([context.previouslyFocusedView isKindOfClass:[UIView class]]){
+        UIView *thisView = (UIView*)context.previouslyFocusedView;
+        thisView.backgroundColor=[UIColor clearColor];
+        
+        NSLog(@"");
+        
+    }
+    if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
+        UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
+        thisTVC.backgroundColor=[UIColor greenColor];
+        NSLog(@"");
+        
+    }
+    
+    
+    return;
+    
+    
+    
+    
+    
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIScrollViewDelegate
