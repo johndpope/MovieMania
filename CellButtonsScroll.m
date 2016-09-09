@@ -144,16 +144,18 @@
     HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
     buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
     [buttonContainerView addSubview:returnedUIView];
+    returnedUIView.backgroundColor=[UIColor clearColor];
  //   returnedUIView.center=buttonContainerView.center;
     
     // returnedUIView.backgroundColor=self.backgoundColor;
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
-    buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
+ //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
+    buttonContainerView.backgroundColor= [UIColor clearColor];
     
-    buttonContainerView.backgroundColor=[UIColor orangeColor];
+//    buttonContainerView.backgroundColor=[UIColor orangeColor];
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
-    tvcellPtr.backgroundColor=[UIColor blueColor];
+//    tvcellPtr.backgroundColor=[UIColor blueColor];
     
     [tvcellPtr addSubview:buttonContainerView];
  //   buttonContainerView.center=tvcellPtr.center;

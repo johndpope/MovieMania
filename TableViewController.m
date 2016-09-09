@@ -506,7 +506,7 @@
     SectionDef *sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:section];
   //  NSLog(@"show this section header %ld secptr %p",(long)section,sectionPtr);
     UIView *customView =[sectionPtr showMyHeaderInDisplay:self];;
-    customView.backgroundColor= [UIColor purpleColor];// [UIColor clearColor];
+    customView.backgroundColor= [UIColor clearColor];
     
     return customView;
 }

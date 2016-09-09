@@ -2408,7 +2408,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *) makeFixedFooterWithSectionsAndCells
 {
     TableDef *myTable;
-    myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor purpleColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor purpleColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
+    myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor whiteColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
     
     
     myTable.tableFooterFixed=TRUE;
@@ -2657,7 +2657,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     TableDef *myTable;
     //H E A D E R     &     F O O T E R
-    myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor purpleColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor purpleColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
+    myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor whiteColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
     
     //S E C T I O N S:    H E A D E R     &     F O O T E R
     
