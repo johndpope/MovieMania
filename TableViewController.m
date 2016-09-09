@@ -801,6 +801,16 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
         UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;
         thisTVC.backgroundColor=[UIColor clearColor];
         thisTVC.contentView.backgroundColor=[UIColor clearColor];
+        
+        //find subview with tag 99 and remove it
+        // Get the subviews of the view
+        NSArray *subviews = [thisTVC.contentView subviews];
+        for (UIView *subview in subviews) {
+            if (subview.tag==99) {
+                [subview removeFromSuperview];
+            }
+            
+        }
         NSLog(@"");
         
     }
@@ -808,6 +818,17 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
         UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
         thisTVC.backgroundColor=[UIColor greenColor];
         thisTVC.contentView.backgroundColor=[UIColor greenColor];
+        
+        UILabel *aLabel= [[UILabel alloc] initWithFrame:thisTVC.contentView.frame];
+        
+        //L A B E L
+          aLabel.layer.borderColor = [UIColor greenColor].CGColor;
+          aLabel.layer.borderWidth = 3.0;
+        aLabel.layer.backgroundColor=[UIColor clearColor].CGColor;
+        aLabel.tag=99;
+        [thisTVC.contentView addSubview:aLabel];
+        
+        
         NSLog(@"");
         
     }

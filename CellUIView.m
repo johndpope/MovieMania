@@ -814,6 +814,7 @@
 
 -(void) defineTemplateUIViewforMaxWidth:(int)maxW maxHeight:(int)maxH
 {
+   
     CGFloat maxWsubset=maxW;
     
     
@@ -1055,6 +1056,7 @@
 }
 -(UIView *) putMeVisibleMaxWidth:(int)maxwidth maxHeight:(int)maxheight withTVC:(UITableViewController *) tvcPtr
 {
+    
     
     [self defineTemplateUIViewforMaxWidth:maxwidth maxHeight:maxheight];
     return templateUIView;

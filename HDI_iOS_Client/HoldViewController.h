@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HoldViewController : UIViewController
+@interface HoldViewController : UIViewController <UIGestureRecognizerDelegate>
 
 
 @end

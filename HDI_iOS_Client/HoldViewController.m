@@ -98,5 +98,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+////////////////////////////////////////////////////
+#pragma mark - Focus
+///////////////////////////////////////////////////
+/*- (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
+    //user hits ESC (return from movie details),ARROW   AND when COLLECTION APPESRS after Return from Movie details
+    
+    
+    NSString *classPREV;
+    NSString *classNEXT;
+    classPREV=NSStringFromClass([context.previouslyFocusedView class]);
+    classNEXT=NSStringFromClass([context.nextFocusedView class]);
+    
+    NSLog(@"***HoldViewController didUpdateFocusInContext:   prevFoc %@   nextFoc(GO FOCUS)  %@",classPREV, classNEXT);
+    
+    
+    
+    
+}
+ */
 
 @end
