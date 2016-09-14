@@ -73,6 +73,6 @@
 + (TableDef *)initTableBothImageDefText:(NSString*)txt withTextColor:(UIColor*)textClr withBackgroundColor:(UIColor*)backColor withTextFontSize:(int)txtFontSize withTextFontName:(NSString*)txtFontName footerText:(NSString*)footerTxt withFooterTextColor:(UIColor*)footerTextClr withFooterBackgroundColor:(UIColor*)footerBackColor withFooterTextFontSize:(int)footerTxtFontSize withFooterTextFontName:(NSString*)footerTxtFontName withTheImage:(UIImage *) actualImage withImageName:(NSString*)imageName  withImageBackgroundColor:(UIColor*)imageBackColor;
 
 -(void) showMeInDisplay:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight;
-
+-(BOOL) cellCanOwnFocusThisRow:(int)thisRow andSection:(int) thisSection;//NEW
 
 @end

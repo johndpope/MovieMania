@@ -251,6 +251,30 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Display Methods
 /////////////////////////////////////////
+-(BOOL) cellCanOwnFocusThisRow:(int)thisRow andSection:(int) thisSection
+{//my cell can recv focus message if it doesn't contain a button.
+    //if it contains a button, the scroll view has to handle all the focus messages
+    //this only shows up in TVOS
+    SectionDef *sectionPtr;
+    sectionPtr=[self.tableSections  objectAtIndex:thisSection];
+    
+    if (!sectionPtr) {
+        return YES;
+    }
+    
+    
+    CellContentDef *sectionCellsPtr;
+    sectionCellsPtr=[sectionPtr.sCellsContentDefArr objectAtIndex:thisRow];
+    if (!sectionCellsPtr) {
+        return YES;
+    }
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        return NO;
+    }
+    return YES;
+    
+}
+
 
 -(void) showMeInDisplay:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight
 {

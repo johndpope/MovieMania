@@ -101,7 +101,8 @@
 ////////////////////////////////////////////////////
 #pragma mark - Focus
 ///////////////////////////////////////////////////
-/*- (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
+- (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator
+{
     //user hits ESC (return from movie details),ARROW   AND when COLLECTION APPESRS after Return from Movie details
     
     
@@ -116,6 +117,6 @@
     
     
 }
- */
+
 
 @end

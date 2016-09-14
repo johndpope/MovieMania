@@ -11,14 +11,17 @@
 @property ( nonatomic, readwrite) TableDef *tableDataPtr;
 @property (strong, nonatomic) GlobalTableProto *gGTPptr;
 @property (strong, nonatomic) GlobalCalcVals *gGCVptr;
-
+@property (nonatomic, readwrite) CGRect _myInitFrame;
 @end
 
 @implementation TableViewController
+
+@synthesize _myInitFrame;
+
 //@synthesize inMovieVC;
-- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle
+- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle viewFrame:(CGRect)thisFrame
 {
-    
+    _myInitFrame=thisFrame;//fixes scrolling problem in sections
     
     self = [super init];
     if (self) {
@@ -159,13 +162,19 @@
 -(void) viewDidAppear:(BOOL)animated
 {
    // NSLog(@"sep viewdidappear hasstyle  %ld",(long)self.tableView.separatorStyle);
-#if !TARGET_OS_TV
-    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-#endif
+
    // NSLog(@"sep viewdidappear sets style  %ld",(long)self.tableView.separatorStyle);
    // NSLog(@"");
     
     [super viewDidAppear:animated];
+    
+    
+#if !TARGET_OS_TV
+    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+#endif
+    
+    
+    [self.tableView reloadData];
     /*GlobalTableProto *gPtr = [GlobalTableProto sharedGlobalTableProto];
      ActionRequest *savedActionReq;
      NSNumber *touchedButton;
@@ -408,8 +417,13 @@
         return nil;
     }
 
-    UITableViewCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
+    //UITableViewCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
     
+    CustomTVCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
+    int someSection = (int) indexPath.section;
+    int someRow= (int) indexPath.row;
+    [thisCell mkSelfForSection:someSection andRow:someRow onTableDef:self.tableDataPtr];
+    thisCell.selectionStyle=UITableViewCellSelectionStyleNone;
     //do I have any subviews?
     [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     thisCell.contentView.backgroundColor=[UIColor clearColor];
@@ -749,6 +763,37 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Focus
 ////////////////////////////////////////////////////////////////////////////////////////
+-(BOOL)tableView:(UITableView *)tableView canFocusRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //HERE's the DEAL:   SAY NO if you want the contents of the row to handle the focus messages.  (i.e., they contain buttons)
+    //TRICKY TRICKY TRICKY
+    //when the button gets nextFocus, it alerts its cell owner it should have focus so it changes color, done in CustomTVCellControl
+    
+    
+    CustomTVCell *cell=(CustomTVCell*)[tableView cellForRowAtIndexPath:indexPath];
+    int section=(int) indexPath.section;
+    int row=(int)indexPath.row;
+    BOOL answer=cell.focusThisCellvar;
+    if (answer) {
+        NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath YES section:%d row:%d ",section,row);
+    }
+    else {
+            NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath  NO section:%d row:%d ",section,row);
+
+    }
+        
+    
+    
+    
+    return answer;
+
+    
+  
+    
+    
+}
+
 - (void)tableView:(UITableView *)tableView didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
     
     
@@ -799,55 +844,22 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     if ([context.previouslyFocusedView isKindOfClass:[UITableViewCell class]]){
         
         UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;
-        thisTVC.backgroundColor=[UIColor clearColor];
-        thisTVC.contentView.backgroundColor=[UIColor clearColor];
         
-        //find subview with tag 99 and remove it
-        // Get the subviews of the view
-        NSArray *subviews = [thisTVC.contentView subviews];
-        for (UIView *subview in subviews) {
-            if (subview.tag==99) {
-                [subview removeFromSuperview];
-            }
-            
-        }
-        NSLog(@"");
+        thisTVC.contentView.layer.borderColor=[UIColor clearColor].CGColor;
+        
         
     }
     if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
         UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
-        thisTVC.backgroundColor=[UIColor greenColor];
-        thisTVC.contentView.backgroundColor=[UIColor greenColor];
+
         
-        UILabel *aLabel= [[UILabel alloc] initWithFrame:thisTVC.contentView.frame];
+        thisTVC.contentView.layer.borderColor = [UIColor greenColor].CGColor;
+        thisTVC.contentView.layer.borderWidth = 10.0;
         
-        //L A B E L
-          aLabel.layer.borderColor = [UIColor greenColor].CGColor;
-          aLabel.layer.borderWidth = 3.0;
-        aLabel.layer.backgroundColor=[UIColor clearColor].CGColor;
-        aLabel.tag=99;
-        [thisTVC.contentView addSubview:aLabel];
-        
-        
-        NSLog(@"");
-        
-    }
-    if ([context.previouslyFocusedView isKindOfClass:[UIView class]]){
-        UIView *thisView = (UIView*)context.previouslyFocusedView;
-        thisView.backgroundColor=[UIColor clearColor];
-        
-        NSLog(@"");
-        
-    }
-    if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
-        UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
-        thisTVC.backgroundColor=[UIColor greenColor];
-        NSLog(@"");
         
     }
     
     
-    return;
     
     
     

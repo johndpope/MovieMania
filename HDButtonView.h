@@ -10,8 +10,8 @@
 #import "GlobalTableProto.h"
 //#import "GlobalCalcVals.h"
 
-@class SpritesAndButtons;
-@class MMSpriteAction;
+//@class SpritesAndButtons;
+//@class MMSpriteAction;
 @class TableViewController;
 @class ActionRequest;
 
@@ -20,7 +20,7 @@
 //#define kButtonRowModulus 100
 #define kColumn1 21
 
-@interface HDButtonView : UIView <UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@interface HDButtonView : UIView <UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate>
 @property (nonatomic, readwrite) BOOL              isLongBtnPress;
 //@property (nonatomic, readwrite) BOOL               containerViewScrolls;
 @property (nonatomic, readwrite) int                buttonTag;

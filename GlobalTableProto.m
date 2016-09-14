@@ -75,6 +75,9 @@ NSString* const ConstUserTouchInput = @"UserTouchInput";
 NSString* const ConstContinueLoopingTransaction=@"ContinueLoopingTransaction";
 
 
+NSString* const ConstUserFocusMovie = @"UserFocusMovie";
+
+
 NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 +(GlobalTableProto *)sharedGlobalTableProto
@@ -519,7 +522,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -558,7 +561,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cuvPtr.enableUserActivity = YES;//NO;//YES; //????
 
     
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -639,7 +642,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     txtTypeCellPtr=[CellTextDef initCellText:@"Welcome. \n You must login to continue!" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -686,7 +689,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     [cuvPtr.cInputFieldsArray addObject:entryFPtr1];
     
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -833,7 +836,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cuvPtr.nextTableView=TVC4;
         cuvPtr.cellDate = [NSDate date];
         cuvPtr.buttonType=kButtonTypeLocation;
-        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
         [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
         
     }
@@ -1007,7 +1010,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
     
         cuvPtr.displayTemplate= kDISP_TEMPLATE_LABELS_ONLY;//kDISP_TEMPLATE_IMAGELEFT_LABLESRIGHT;//kDISP_TEMPLATE_TRIPLE_IMAGELEFT_BUTTONSBOTTOM_LABELTOP;  //template layout for container
-        cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:cuvPtr];
         cuvPtr.nextTableView = TVC4;
         [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
@@ -1315,7 +1318,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         //        cuvPtr.aLocDict = aLocDict;
         cuvPtr.nextTableView=TVC4;
         cuvPtr.cellDate = [NSDate date];
-        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
         [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
         row++;
         // Now add the Movie Show Time Cells
@@ -1993,6 +1996,19 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         int section = 0;
         int row = 0;
         //C E L L S    F O R        S E C T I O N S
+        
+        
+        
+        //add simple text array for test     MYRA ADDED FOR TEST
+     //a   CellTextDef *ctdPtr;
+     //a   CellContentDef *cellContentPtr1;
+     //a   cellContentPtr1=[[CellContentDef alloc] init];
+     //a   ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor redColor] withTextFontSize:36 withTextFontName:nil];
+     //a   ctdPtr.cellSeparatorVisible=TRUE;
+     //a   cellContentPtr1.ccCellTypePtr=ctdPtr;
+     //a   [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+
+        
         
         //button cells section 1      B U T T O N S
         CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
@@ -2693,12 +2709,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     ctdPtr=[CellTextDef initCellText:@"Sec2 Cell2 this is a very long long long cell.  SO how many lines can this cell span?  Any information would be interesting for us to see" withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
     
      
      ctdPtr=[CellTextDef initCellText:@"Sec2 Cell3 this too is  a very long long long long long cell. As a matter of fact it should take up multiple lines, but I'm not sure my logic will caclulate the maximum height of this cell by determining how many words it contains.  WIll it work or will it fail?  Nobody knows until it decides to display itself.  Can this go on forever" withTextColor:[UIColor orangeColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:0 withTextFontName:nil];
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
   
      [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
     
@@ -2707,17 +2723,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell1" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
    
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell2" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
    
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell3" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
     
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      
@@ -3752,31 +3768,31 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cellContentPtr1=[[CellContentDef alloc] init];
     ctdPtr=[CellTextDef initCellText:@"cellSec12" withTextColor:nil withBackgroundColor:[UIColor greenColor] withTextFontSize:26 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
     
     cellContentPtr1=[[CellContentDef alloc] init];
     ctdPtr=[CellTextDef initCellText:@"cellSec13" withTextColor:nil withBackgroundColor:nil withTextFontSize:36 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
     
     //create cells in section 2
     
     
     ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor whiteColor]withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
     ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
     ctdPtr=[CellTextDef initCellText:@"cellSec23" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
 
  

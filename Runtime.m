@@ -7,6 +7,7 @@
 //
 
 #import "Runtime.h"
+#import "CustomTVCell.h"
 
 @implementation Runtime
 {
@@ -326,7 +327,7 @@
     
     //use tables VC
     
-    self.rtTableViewCtrler =[[TableViewController alloc ]initWithTableDataPtr:thisTDataPtr usingTableViewStyle:UITableViewStyleGrouped];
+    self.rtTableViewCtrler =[[TableViewController alloc ]initWithTableDataPtr:thisTDataPtr usingTableViewStyle:UITableViewStyleGrouped viewFrame:CGRectMake(0, 0, posCenterRect.size.width, posCenterRect.size.height)];
     
     
   
@@ -513,6 +514,8 @@
                 break;
         }
         if (pressedBtn.reloadOnly){
+            
+            NSLog(@"");
             switch (pressedBtn.nextTableView){
                 case TVC2://TVCScrollButtonPress:
                     //[gGTPptr makeTVC2:pressedBtn];
@@ -2593,8 +2596,8 @@
     //getting ready for first table display by loading data
     
     
-    UITableViewCell *cell ;
-    
+    //UITableViewCell *cell ;
+    CustomTVCell *cell;
     
     CellContentDef *ccontentDefPtr;
     SectionDef *sectionPtr;
@@ -2620,9 +2623,11 @@
             
             // cell=[[UITableViewCell alloc] init];
            //works ish  cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellme"];
-            cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellme"];
            // cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellme"];
            // cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"cellme"];
+            
+            // cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellme"];
+             cell=[[CustomTVCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellme"];
             cell.selectionStyle=UITableViewCellSelectionStyleNone;
             
             ccontentDefPtr.ccTableViewCellPtr=cell;   //don't initialize cell text here

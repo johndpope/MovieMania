@@ -36,12 +36,12 @@
 }
 
 
-+ (CellContentDef *)initCellContentDefWithThisCell:(CellTypesAll*)cellTypeDefPtr andTableViewCellPtr:(UITableViewCell *)tvcptr
++ (CellContentDef *)initCellContentDefWithThisCell:(CellTypesAll*)cellTypeDefPtr 
 {
     CellContentDef * nCellContentDef = [[CellContentDef alloc]init];  //this sets defaults
     
     nCellContentDef.ccCellTypePtr=cellTypeDefPtr;
-    nCellContentDef.ccTableViewCellPtr=tvcptr;
+    nCellContentDef.ccTableViewCellPtr=nil;
 
     
     return nCellContentDef;
@@ -55,16 +55,7 @@
 
 }
 
-+ (CellContentDef *)initCellContentDefForTable:(CellTypesAll*)cellTypeDefPtr andTableViewCellPtr:(UITableViewCell *)tvcptr
-{
-    CellContentDef * nCellContentDef = [[CellContentDef alloc]init];  //this sets defaults
-    
-    nCellContentDef.ccCellTypePtr=cellTypeDefPtr;
-    nCellContentDef.ccTableViewCellPtr=tvcptr;
-    
-    
-    return nCellContentDef;
-}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

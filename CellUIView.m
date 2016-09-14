@@ -85,7 +85,7 @@
     backgoundColor= TK_TRANSPARENT_COLOR;
 
 
-    templateUIView=[[UIView alloc]initWithFrame:CGRectZero];
+    templateUIView=[[CustomCellUIView alloc]initWithFrame:CGRectZero];//[[UIView alloc]initWithFrame:CGRectZero];
     templateUIView.backgroundColor=TK_TRANSPARENT_COLOR; //063016
     // nCell.cellMaxHeight=DEF_CELLHEIGHT;   //sections won't display without some non 0 value here
     nCell.cellMaxHeight=templateUIView.frame.size.height;
@@ -836,7 +836,7 @@
             self.inputFieldsUIView=[self createUIViewWithAnyInputFieldsMaxWidth:maxW];
             
             
-            self.templateUIView=[self assignUIViewTop:self.inputFieldsUIView andUIViewBottom:nil fixedWidth:maxW] ;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.inputFieldsUIView andUIViewBottom:nil fixedWidth:maxW] ;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
 
             break;
@@ -849,7 +849,7 @@
             
             //make sub to contain button&label
             self.templateASideView=[self assignUIViewTop:self.labelsUIView andUIViewBottom:self.buttonsUIView fixedWidth:maxWsubset];
-            self.templateUIView=[self assignUIViewLeft:self.imageUIView andUIViewRight:self.templateASideView fixedWidth:maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.imageUIView andUIViewRight:self.templateASideView fixedWidth:maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -862,7 +862,7 @@
             
             //make sub to contain button&label
             self.templateASideView=[self assignUIViewTop:self.buttonsUIView andUIViewBottom:self.labelsUIView fixedWidth:maxWsubset];
-            self.templateUIView=[self assignUIViewLeft:self.imageUIView andUIViewRight:self.templateASideView fixedWidth:maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.imageUIView andUIViewRight:self.templateASideView fixedWidth:maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             
@@ -870,7 +870,7 @@
         case kDISP_TEMPLATE_LABELS_ONLY:
             self.labelsUIView=[self createUIViewWithAnyLabelsDefinedMaxWidth:maxW];
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;
-            self.templateUIView=[self assignUIViewTop:self.labelsUIView andUIViewBottom:nil fixedWidth:maxW] ;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.labelsUIView andUIViewBottom:nil fixedWidth:maxW] ;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             
@@ -884,7 +884,7 @@
             
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.labelsUIView andUIViewRight:self.imageUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.labelsUIView andUIViewRight:self.imageUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             break;
             
@@ -897,7 +897,7 @@
             
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.imageUIView andUIViewRight:self.labelsUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.imageUIView andUIViewRight:self.labelsUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             break;
             
@@ -909,7 +909,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW/2 andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.buttonsUIView andUIViewRight:self.labelsUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.buttonsUIView andUIViewRight:self.labelsUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             
@@ -922,7 +922,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW/2 andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.labelsUIView andUIViewRight:self.buttonsUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.labelsUIView andUIViewRight:self.buttonsUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             
@@ -933,7 +933,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxWsubset andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.buttonsUIView andUIViewRight:self.imageUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.buttonsUIView andUIViewRight:self.imageUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -942,7 +942,7 @@
             maxWsubset=maxW - self.imageUIView.frame.size.width;
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxWsubset andMaxHeight:maxH];
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_LeftRight_FixedWidth: maxW];
-            self.templateUIView=[self assignUIViewLeft:self.imageUIView andUIViewRight:self.buttonsUIView fixedWidth: maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewLeft:self.imageUIView andUIViewRight:self.buttonsUIView fixedWidth: maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -951,7 +951,7 @@
             self.imageUIView=[self createUIViewWithAnyImageDefined];
             self.labelsUIView=[self createUIViewWithAnyLabelsDefinedMaxWidth:maxW];
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.imageUIView andUIViewBottom:self.labelsUIView fixedWidth:maxW];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.imageUIView andUIViewBottom:self.labelsUIView fixedWidth:maxW];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -961,7 +961,7 @@
             self.imageUIView=[self createUIViewWithAnyImageDefined];
             self.labelsUIView=[self createUIViewWithAnyLabelsDefinedMaxWidth:maxW];
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.labelsUIView andUIViewBottom:self.imageUIView fixedWidth:maxW  ];
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.labelsUIView andUIViewBottom:self.imageUIView fixedWidth:maxW  ];
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -975,7 +975,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.buttonsUIView andUIViewBottom:self.labelsUIView fixedWidth: maxW] ;//+ 20;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.buttonsUIView andUIViewBottom:self.labelsUIView fixedWidth: maxW] ;//+ 20;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             break;
             
@@ -985,7 +985,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.labelsUIView andUIViewBottom:self.buttonsUIView fixedWidth: maxW] ;//+ 20;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.labelsUIView andUIViewBottom:self.buttonsUIView fixedWidth: maxW] ;//+ 20;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             break;
         case kDISP_TEMPLATE_BUTTONSTOP_IMAGEBOTTOM:
@@ -993,7 +993,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.buttonsUIView andUIViewBottom:self.imageUIView fixedWidth: maxW] ;//+ 20;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.buttonsUIView andUIViewBottom:self.imageUIView fixedWidth: maxW] ;//+ 20;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
@@ -1002,7 +1002,7 @@
             self.buttonsUIView=[self createUIViewWithButtonsDefinedMaxWidth:maxW andMaxHeight:maxH];
             
             //self.templateUIView=[self assigneAndPositionTemplateUIViews_TopBottom_FixedWidth:maxW] ;//+ 20;
-            self.templateUIView=[self assignUIViewTop:self.imageUIView andUIViewBottom:self.buttonsUIView fixedWidth: maxW] ;//+ 20;
+            self.templateUIView=(CustomCellUIView *)[self assignUIViewTop:self.imageUIView andUIViewBottom:self.buttonsUIView fixedWidth: maxW] ;//+ 20;
             self.cellMaxHeight=self.templateUIView.frame.size.height;
             
             break;
