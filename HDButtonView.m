@@ -234,12 +234,12 @@
 
 -(void)touchUpOnButton:(id)sender
 {
-    
-    NSLog(@"HDButtonView  touchUpOnButton");
-    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
-
     UIButton * uiButtonPressed = sender;
     NSLog(@"HDButtonView touch up on Button Number %li",(long)uiButtonPressed.tag);
+    
+    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+
+
     NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
     NSString *tagString = [touchedButton stringValue];
     ActionRequest *pressedAction = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
@@ -248,7 +248,8 @@
         
         [self moveToButtonInCenter:pressedAction.buttonIndex];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
+    NSLog(@"myra disabled postNotification ConstUserTouchInput from HDButtonView touchUpOnButton");
+   // [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];   //this required to do reload of table
 }
 
 -(void)removeSelectedButtonBoxFromAllRows:(ActionRequest*)aQuery
@@ -257,6 +258,14 @@
      NSLog(@"HDButtonView removeSelectedButtonBoxFromAllRows");
     if(!aQuery)
         return;
+    
+    
+    
+    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+    return;
+    
+    
+    
    TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
     SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:aQuery.tableSection];
     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
@@ -289,8 +298,9 @@
         CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
         ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
         currentButtonInCenter = firstButton;
-        [currentButtonInCenter.uiButton addSubview:selectedBtnBox];
-
+        //myra changed  [currentButtonInCenter.uiButton addSubview:selectedBtnBox];
+    currentButtonInCenter.uiButton.layer.borderWidth=15;
+    currentButtonInCenter.uiButton.layer.borderColor=[UIColor orangeColor].CGColor ;
   //  }   //new
     
     
@@ -386,7 +396,7 @@
 -(void)moveToButtonInCenter:(NSInteger)currentCenterBtnNumber //forScrollView:(UIScrollView*)scrollView
 {
    NSLog(@"HDButtonView moveToButtonInCenter");
-   ///// return; ////myra put back    remove it
+   
     
     
     ActionRequest *aBtn;
@@ -397,24 +407,32 @@
         if (aBtn.buttonIndex == currentCenterBtnNumber){
             currentButtonInCenter = [buttonSequence objectAtIndex:currentCenterBtnNumber];
             currentButtonInCenter.buttonIsOn = YES;
-            if (currentButtonInCenter.reloadOnly)
-              [currentButtonInCenter.uiButton addSubview:selectedBtnBox];
+            if (currentButtonInCenter.reloadOnly){
+              //[currentButtonInCenter.uiButton addSubview:selectedBtnBox];
+                currentButtonInCenter.uiButton.layer.borderColor=[UIColor orangeColor].CGColor;
+                currentButtonInCenter.uiButton.layer.borderWidth=13;;
+                
+            }
+            else {
+                currentButtonInCenter.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+            }
         }
         
         
     }
     
     
-#if TARGET_OS_TV
+    #if TARGET_OS_TV
     
-#else
-    CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
-    NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
-    [UIView animateWithDuration:0.1f animations:^{
-                                        containerView.contentOffset = scrollViewOffset;
-                                        }                completion:nil];
+    #else
+    NSLog(@"myra disabled scrolling in moveToButtonInCenter -- forces yellow box left");
+    //    CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    //    NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
+     //   [UIView animateWithDuration:0.1f animations:^{
+         //                               containerView.contentOffset = scrollViewOffset;
+         //                               }                completion:nil];
 
-#endif
+    #endif
 
     
 

@@ -90,7 +90,7 @@
 -(void)tapRecognized:(id)sender
 {
     UIButton * uiButtonPressed = sender;
-    NSLog(@"ActionRequest touch up on Button Number %li",(long)uiButtonPressed.tag );
+    NSLog(@"ActionRequest tapRecognizer %li",(long)uiButtonPressed.tag );
     NSNumber *touchedButton = [NSNumber numberWithInteger:self.buttonTag];
 }
 -(void)touchDownOnButton:(id)sender
@@ -111,8 +111,7 @@
     NSLog(@"ActionRequest touch up on Button Number %li",(long)uiButtonPressed.tag );
     NSNumber *touchedButton = [NSNumber numberWithInteger:self.buttonTag];
     
- //   NSNumber *touchedButton1 = [NSNumber numberWithInteger:uiButtonPressed.tag];
- //   NSString *tagString = [touchedButton stringValue];
+  //  NSLog(@"myra disable sending notification ConstUserTOUCHINPUT in ActionRequest touchUpOnButton");
     
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];  // testing tvOS let HDButtonView send this

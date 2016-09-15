@@ -37,16 +37,16 @@
         NSLog(@"%@: %@ %@",lan, [NSLocale canonicalLanguageIdentifierFromString:lan], [[[NSLocale alloc] initWithLocaleIdentifier:lan] displayNameForKey:NSLocaleIdentifier value:lan]);
     }
     
+  
     application.statusBarHidden=NO;
-    
-    
+    //NOTE without launch images, the window size will be wrong for iphone 6s
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    //self.window.rootViewController = navController;
+    
     self.gGTPptr.liveRuntimePtr=[[Runtime alloc]init];   //Runtime class creates tavleViewController and navController
     
     
-    // self.window.rootViewController = self.gGTPptr.liveRuntimePtr.rtNavCtrler;
+    
     self.window.rootViewController=self.gGTPptr.liveRuntimePtr.holdVCtrler;
     
     [self.window makeKeyAndVisible];

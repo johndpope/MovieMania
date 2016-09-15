@@ -56,9 +56,10 @@
 {
    // NSLog(@"NOTIFICATION FROM TVC viewDidLayoutSubviews");
     GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
-    
-    
     if (self.isViewLoaded && self.view.window){
+    //if (self.isViewLoaded) {   //if (self.isViewLoaded && self.view.window){     myra put back?
+
+    
         
         if (!self.tableDataPtr.tableDisplayFirstVisibleNotification) {
             NSLog(@"TVC isViewLoaded & TVC.Window  are TRUE Do FIrst notify");
@@ -642,28 +643,11 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 //============================================================================================
 #pragma mark  Table View Delegate - Modifying Row of Section
 //=======================================
-/*- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    NSInteger givenRow=indexPath.row;
-    NSInteger givenSection=indexPath.section;
-    NSLog(@"TABLEVIEWCONTROLLER shouldHighlightRow   indexpath section:%ld row:%ld",(long)givenSection,(long)givenRow);
-    return NO;
-
-}
- 
- */
-/* never called - requires custom uitableviewcell  - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    if (highlighted) {
-        NSLog(@"");
-    } else {
-        NSLog(@"");
-    }
-}
- */
 // Configure the row selection code for any cells that you want to customize the row selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     
     NSInteger givenRow=indexPath.row;
     NSInteger givenSection=indexPath.section;
@@ -688,38 +672,16 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     
 
     
-   // NSLog(@"tableView didSelectRowAtIndexPath:    section:%ld  row: %ld",indexPath.section,indexPath.row);   //chosen, now what
-    
-   // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+   
 
-    //NSString *cellText = cell.textLabel.text;
-    
-   // NSLog(@"cellText %@",cellText);
-   //1 [tableView deselectRowAtIndexPath:indexPath animated:false];
-//    int secMod = kCellSectionModulus;
-//    int rowMod = kCellRowModulus;
-/*
-    int section;
-#if TARGET_OS_TV
-    section=0;
-#else
-    section = indexPath.section;
-#endif
-*/
 
-//    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;
-
-    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;    touchInput = touchInput + 99;
+    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;
     NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
-//    sectionPtr =[activeTableDataPtr.tableSections objectAtIndex:section];
+
     CellContentDef* ccontentDefPtr = [sectionPtr.sCellsContentDefArr objectAtIndex:indexPath.row];
     
     CellTypesAll *aCell = ccontentDefPtr.ccCellTypePtr;
     ActionRequest *cellButton = [[ActionRequest alloc]init];
-//    cellButton.dataRecordKey = aCell.dataRecordKey;
-//    cellButton.dataRecords = aCell.dataRecords;
-//    cellButton.dataBaseDict = aCell.dataBaseDict;
-//      cellButton.aLocDict = aCell.al
 
 
     cellButton.tableSection = indexPath.section;// indexPath.section;
@@ -728,17 +690,13 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     cellButton.nextTableView = aCell.nextTableView;
     cellButton.buttonIndex = 0;
     cellButton.buttonDate = aCell.cellDate;
- //   NSMutableDictionary *aLocDict = [aCell.dataBaseDictsPtrs objectForKey:kDictionaryTypeLocation];
-//    NSMutableDictionary *aProductDict = [aCell.dataBaseDictsPtrs objectForKey:kDictionaryTypeProduct];
-//    [self.gGTPptr putLocationDictInParent:cellButton locDict:aLocDict];
-//    [self.gGTPptr putProductDictInParent:cellButton productDict:aProductDict];
+
     cellButton.productDict=aCell.productDict;
     cellButton.locDict=aCell.locDict;
     cellButton.buttonType=aCell.buttonType;
  
     
-    //    cellButton.aProductDict = aCell.aProductDict;
-//    cellButton.aLocDict = aCell.aLocDict;
+
 
     [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:cellButton forKey:[NSString stringWithFormat:@"%li",cellButton.buttonTag]];
     
@@ -746,19 +704,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 
     return;
     
-    // Handle social cell selection to toggle checkmark
- //   if(indexPath.section == 1 && indexPath.row == 0) {
-        
-        // deselect row
-//        [tableView deselectRowAtIndexPath:indexPath animated:false];
-        
-        // toggle check mark
-//        if(self.shareCell.accessoryType == UITableViewCellAccessoryNone)
-//            self.shareCell.accessoryType = UITableViewCellAccessoryCheckmark;
-//        else
-//            self.shareCell.accessoryType = UITableViewCellAccessoryNone;
-//    }
-}
+    }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Focus
