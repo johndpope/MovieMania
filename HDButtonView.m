@@ -368,7 +368,7 @@
     
  
     CGPoint adjustedOffSet;// = CGPointMake(offset.x+containerView.bounds.size.width/2,containerView.bounds.size.height/2);
-    int selectedButton = 0;
+    int sel = 0;
     float closestDistance = 9999;
     
     for (int i = 0; i < buttonSequence.count; i++){
@@ -377,16 +377,16 @@
         int testDistance = [self distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSab.uiButton.center];
         if ( testDistance < closestDistance){
             closestDistance= testDistance;
-            selectedButton = i;//+1;
+            sel = i;//+1;
         }
     }
     
-    [self moveToButtonInCenter:selectedButton];// forScrollView:scrollView];// withCurrentSA:currentSpriteAction];
+    [self moveToButtonInCenter:sel];// forScrollView:scrollView];// withCurrentSA:currentSpriteAction];
   }
 -(void)moveToButtonInCenter:(NSInteger)currentCenterBtnNumber //forScrollView:(UIScrollView*)scrollView
 {
    NSLog(@"HDButtonView moveToButtonInCenter");
-    return; ////myra put back    remove it
+   ///// return; ////myra put back    remove it
     
     
     ActionRequest *aBtn;
@@ -404,17 +404,19 @@
         
     }
     
+    
+#if TARGET_OS_TV
+    
+#else
+    CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
+    [UIView animateWithDuration:0.1f animations:^{
+                                        containerView.contentOffset = scrollViewOffset;
+                                        }                completion:nil];
+
+#endif
 
     
-    CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
-    
-    NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
-    
-    [UIView animateWithDuration:0.1f animations:^{
-        
-        containerView.contentOffset = scrollViewOffset;
-    }
-                     completion:nil];
 
 }
 -(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos

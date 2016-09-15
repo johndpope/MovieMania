@@ -238,8 +238,9 @@
 {
 #if !TARGET_OS_TV
     CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-   
-    return MIN(statusBarSize.width, statusBarSize.height);
+   CGFloat answer=MIN(statusBarSize.width, statusBarSize.height);
+    
+    return answer;
 #else
     return  0.0;
 #endif
