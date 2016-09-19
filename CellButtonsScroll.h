@@ -20,6 +20,8 @@
 @property (nonatomic, readwrite) NSMutableArray *cellsButtonsArray;
 @property (nonatomic, readwrite) UIScrollView* buttonContainerView;
 @property (nonatomic, retain)    NSArray *buttonView;
+@property (nonatomic, readwrite) BOOL indicateSelItem;
+
 //@property (nonatomic, readwrite) BOOL reloadOnly;//@property (nonatomic, readwrite) BOOL buttonViewScrolls;
 //@property (nonatomic, readwrite) HDButtonView* buttonView;
 
@@ -32,7 +34,7 @@
 -(UIColor *) giveCellBackColor;
 
 
-
+-(void)dealSelectedItem;
 
 
 @end

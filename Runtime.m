@@ -484,6 +484,8 @@
 
 -(void) userTouchInput: (NSNotification*) notification  //BUTTON/CELL PRESS
 {
+    
+    NSLog(@"RUNTIME_ userTouchInput:notification");
 //    rtTableViewCtrler.reloadOnly = NO;
     TableDef *currentTableDef = self.activeTableDataPtr;
     ActionRequest *pressedBtn = nil;

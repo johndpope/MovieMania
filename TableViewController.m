@@ -162,10 +162,6 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-   // NSLog(@"sep viewdidappear hasstyle  %ld",(long)self.tableView.separatorStyle);
-
-   // NSLog(@"sep viewdidappear sets style  %ld",(long)self.tableView.separatorStyle);
-   // NSLog(@"");
     
     [super viewDidAppear:animated];
     
@@ -175,29 +171,7 @@
 #endif
     
     
-    [self.tableView reloadData];
-    /*GlobalTableProto *gPtr = [GlobalTableProto sharedGlobalTableProto];
-     ActionRequest *savedActionReq;
-     NSNumber *touchedButton;
-     switch (inMovieVC) {
-     case 1:
-     inMovieVC=2;
-     break;
-     case 2:
-     savedActionReq=gPtr.actionForReloadingView;
-     touchedButton = [NSNumber numberWithInteger:gPtr.actionForReloadingView.buttonTag];
-     [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
-     inMovieVC=0;
-     break;
-     
-     default:
-     inMovieVC=0;
-     break;
-     }
-     
-     
-     }
-     */
+  //  [self.tableView reloadData];
 
 }
 
@@ -403,7 +377,7 @@
 // R E Q U I R E D    Return the row for the corresponding section and row
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSLog(@"cellForRowAtIndexPath");
+    NSLog(@"TABLEVIEWCONTROLLER cellForRowAtIndexPath sec:%ld  row:%ld",(long)indexPath.section, (long)indexPath.row);
     SectionDef *sectionPtr;
     sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:indexPath.section];
     
@@ -446,10 +420,20 @@
     // NSString *specificCell=[NSString stringWithFormat:@"Cell-%d-%d",i,c ];
     // NSLog(@"make cell %p text %@ withrect %@",cell,specificCell, NSStringFromCGRect(cell.contentView.frame));
     CellButtonsScroll *aButtonView;
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+        if(aButtonView.indicateSelItem){
+            [aButtonView dealSelectedItem];
+        }
+    }
+    
+    
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){// self.reloadOnly){
         //[sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
         
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+
+
         [thisCell addSubview:aButtonView.buttonContainerView];
         
     }else{

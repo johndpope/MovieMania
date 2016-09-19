@@ -105,6 +105,14 @@
 }
 
 
+-(void)primaryActionTriggered:(id)sender   //touchUpInside, touchUpOutside
+{
+    UIButton * uiButtonPressed = sender;
+    NSLog(@"ActionRequest primary action triggered %li",(long)uiButtonPressed.tag );
+    NSNumber *touchedButton = [NSNumber numberWithInteger:self.buttonTag];
+[[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
+}
+
 -(void)touchUpOnButton:(id)sender
 {
     UIButton * uiButtonPressed = sender;
@@ -118,14 +126,14 @@
 }
 -(void)cellButtonTouched:(UIButton*)button
 {
- //   NSLog(@"CELLTVCONTROL   cellButtonTouched:%p) Hit AL:%@  cell says section:%d row:%d ",self,button.accessibilityLabel,dispAsSection,dispAsRow);
+    NSLog(@"ActionRequest   cellButtonTouched:") ;
     //SELF CONTAINS POINTER TO DATA
     
 }
 
 - (void)cellTapped:(UITapGestureRecognizer *)gesture {
     
-//    NSLog(@"CELLTVCONTROL   cellTapped: %p  cell section:%d row:%d ",self,dispAsSection,dispAsRow);
+    NSLog(@"ActionRequest  cellTapped:  ");
     //SELF CONTAINS POINTER TO DATA
     
 }

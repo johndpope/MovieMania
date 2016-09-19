@@ -849,7 +849,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //
     NSString *tableTitle = @"Movie Information";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
-    NSLog(@"----makeTVC2");
+    NSLog(@"----makeTVC2    reloadOnly is %d",pressedButton.reloadOnly);
     TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
     
     
@@ -862,13 +862,14 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         sdPtr2.sectionHeaderContentPtr=nil;
         sdPtr2.sectionFooterContentPtr=nil;
         [myTable.tableSections addObject:sdPtr2];
-        
+    
     
  //       CGSize btnSize2 = CGSizeMake(300,280);
     
         NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
   //       NSString *productName = [productDict objectForKey:kProductNameKey];
         CellUIView *cuvPtr;
+        NSLog(@"getting cuvPtr for %@",[pressedButton.productDict objectForKey:@"Title"]);
         NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
         if (![movieInfoDict objectForKey:@"Error"]){
             cuvPtr = [self buildMovieInfoCell:movieInfoDict];
@@ -1976,14 +1977,15 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CGSize movieBtnSize = CGSizeMake(100, 150);
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
+        NSLog(@"reloadonly - notcreate table");
         sdPtr1 = [myTable.tableSections objectAtIndex:0];
         [myTable.tableSections removeAllObjects];
         [myTable.tableSections addObject:sdPtr1];
         cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
         cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
     }
-    
-    if (!pressedButton.reloadOnly){
+    else{
+        NSLog(@"create table");
         myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
         CGSize sechdrBtnSize = CGSizeMake(60, 30);
         sdPtr1 = nil;
@@ -2012,6 +2014,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         //button cells section 1      B U T T O N S
         CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+        cbsPtr.indicateSelItem=YES;
         if (cbsPtr.cellsButtonsArray.count){
             cellContentPtr1=[[CellContentDef alloc] init];
             cellContentPtr1.ccCellTypePtr=cbsPtr;
