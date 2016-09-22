@@ -457,12 +457,7 @@
     // NSString *specificCell=[NSString stringWithFormat:@"Cell-%d-%d",i,c ];
     // NSLog(@"make cell %p text %@ withrect %@",cell,specificCell, NSStringFromCGRect(cell.contentView.frame));
     
-    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
-        aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
-        if(aButtonView.indicateSelItem){
-            [aButtonView dealSelectedItem];
-        }
-    }
+
     
     
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){// self.reloadOnly){

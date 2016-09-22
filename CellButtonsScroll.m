@@ -195,12 +195,7 @@
   
     
 }
--(void)dealSelectedItem
-{
-    NSLog(@"show selected item");
-    [[self.buttonView objectAtIndex:0] borderButtonSel];
-    NSLog(@"");
-}
+
 -(UIScrollView *) putMeVisibleMaxWidth:(int)maxwidth maxHeight:(int)maxheight withTVC:(UITableViewController *) tvcPtr
 {
     

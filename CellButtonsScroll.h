@@ -34,7 +34,7 @@
 -(UIColor *) giveCellBackColor;
 
 
--(void)dealSelectedItem;
+
 
 
 @end
