@@ -1,3 +1,4 @@
+
 //
 //  CellTextDef.m
 //  tableProto
@@ -23,7 +24,7 @@
 
 @synthesize tableHeaderFixed,fixedTableFooterUIView,fixedTableHeaderUIView;
 @synthesize tableFooterFixed;
-
+@synthesize initialDraw;
 
 
 @synthesize cellDispPrepared;  //true if cell initialization and allocation complete for table display
@@ -83,6 +84,7 @@
 }
 -(void) makeUseDefaults:(TableDef *)nTableDef
 {
+    initialDraw=YES;
     nTableDef.tableDisplayFirstVisibleNotification=FALSE;    //has runtime been notified yet?
 
     nTableDef.dbAllTabTransDict=[[NSMutableDictionary alloc] init];
@@ -329,7 +331,22 @@
     self.tvcCreatedWidth=createdWidth;
     self.tvcCreatedHeight=createdHeight-returnedFooterUIView.frame.size.height-returnedHeaderUIView.frame.size.height;
     //what is tvcCreatedHeight, tvcCreatedWidth
-    [tvc.tableView reloadData];
+    
+    
+    if (initialDraw) {
+        initialDraw=NO;
+        [tvc.tableView reloadData];
+        
+    }
+    else{
+        NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+        
+        
+        [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    
+    
      
     
 }

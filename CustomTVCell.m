@@ -204,7 +204,22 @@
     
     NSLog(@"***CUSTOMTVCELL   didUpdateFocusInContext:  sec %d row %d prevFoc %@   nextFoc(GO FOCUS)  %@",self.dispAsSection, self.dispAsRow,classPREV, classNEXT);
 
-    
+    if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
+        
+        // context.nextFocusedView.layer.borderColor = [UIColor greenColor].CGColor;
+        //  context.nextFocusedView.layer.borderWidth = 10.0;
+        
+        UIButton *cellNext = (UIButton* )context.nextFocusedView;
+
+        NSLog(@"        nextButton %ld",cellNext.tag);
+        
+        
+        NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];
+        ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
+        
+        //[nextButton.myButtonView checkUserFocusMovie];
+    }
+
     /*
     CustomTVCellControl *nextInFocus_cellControlPtr= (CustomTVCellControl *)context.nextFocusedView;
     CustomTVCellControl *prevInFocus_cellControlPtr= (CustomTVCellControl *)context.previouslyFocusedView;

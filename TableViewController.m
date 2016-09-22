@@ -346,6 +346,7 @@
 {
    // return 2;
     NSInteger answer =[self.tableDataPtr.tableSections count];
+    NSLog(@"number of section is %d",answer);
     return answer;
 }
 
@@ -367,7 +368,7 @@
     
     sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:section];
    NSInteger answer = [sectionPtr.sCellsContentDefArr count];
-   // NSLog(@"section %ld number of rows is %ld",section,(long)answer);
+    NSLog(@"section %ld number of rows is %ld",section,(long)answer);
     return answer;
 }
 //
@@ -397,10 +398,46 @@
     CustomTVCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
     int someSection = (int) indexPath.section;
     int someRow= (int) indexPath.row;
+    
+    
+    
     [thisCell mkSelfForSection:someSection andRow:someRow onTableDef:self.tableDataPtr];
+    
+    
+    
     thisCell.selectionStyle=UITableViewCellSelectionStyleNone;
+    
     //do I have any subviews?
+    int subsCount=[[thisCell.contentView subviews] count];
+    
+    //am I a reloadOnly and already exist?
+    CellButtonsScroll *aButtonView;
+    BOOL iamreloading=NO;
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+        if (aButtonView.reloadOnly){
+            iamreloading=YES;
+            NSLog(@"");
+            return thisCell;
+            
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
+    //if (!iamreloading) {
     [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+    //}
+    
+    
+    
+    
+    
     thisCell.contentView.backgroundColor=[UIColor clearColor];
     thisCell.backgroundColor=[UIColor clearColor];
     
@@ -419,7 +456,7 @@
     
     // NSString *specificCell=[NSString stringWithFormat:@"Cell-%d-%d",i,c ];
     // NSLog(@"make cell %p text %@ withrect %@",cell,specificCell, NSStringFromCGRect(cell.contentView.frame));
-    CellButtonsScroll *aButtonView;
+    
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
         if(aButtonView.indicateSelItem){
@@ -458,8 +495,8 @@
     
     
     
-       [thisCell setNeedsLayout]; //?
-       [thisCell layoutIfNeeded]; //?
+      // [thisCell setNeedsLayout]; //?
+     //  [thisCell layoutIfNeeded]; //?
     return thisCell;
     
 
@@ -683,7 +720,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 
 
     [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:cellButton forKey:[NSString stringWithFormat:@"%li",cellButton.buttonTag]];
-    
+    NSLog(@"             postsNotifcation userTOuchInput");
     [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
 
     return;
@@ -705,16 +742,17 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     int section=(int) indexPath.section;
     int row=(int)indexPath.row;
     BOOL answer=cell.focusThisCellvar;
+    NSString *it;
     if (answer) {
-        NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath YES section:%d row:%d ",section,row);
+        it=@"YES";
     }
     else {
-            NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath  NO section:%d row:%d ",section,row);
+            it=@"no";
 
     }
         
-    
-    
+    NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath  %@ section:%d row:%d ",it,section,row);
+    NSLog(@"");
     
     return answer;
 

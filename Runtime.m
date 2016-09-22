@@ -215,6 +215,10 @@
     
     
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(processUserFocusMovie:)
+                                                 name:ConstUserFocusMovie          //const in TableProntoDefines.h
+                                               object:nil];
 
     
     
@@ -494,9 +498,26 @@
     [dateFormatter setDateFormat:@"MMM dd"];
 //    NSDate *today = [NSDate date];
 //    NSString *todayDateString = [dateFormatter stringFromDate:today];
+    NSNumber *touchInput;
+    NSString *tagString;
     if (notification){
-        NSNumber *touchInput = [notification object];
-        NSString *tagString = [touchInput stringValue];
+        
+        if ([notification.name isEqualToString:@"UserFocusMovie"])
+        {
+            int pass = [[[notification userInfo] valueForKey:@"index"] intValue];
+            touchInput =[NSNumber numberWithInt:pass];
+            
+            
+        }
+        else{
+            touchInput= [notification object];
+            
+        }
+        
+        tagString = [touchInput stringValue];
+        
+        
+        
         pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
         switch (pressedBtn.buttonType) {
             case kButtonTypeDate:
@@ -518,9 +539,10 @@
         }
         if (pressedBtn.reloadOnly){
             
-            NSLog(@"");
+            NSLog(@"       reloadOnly");
             switch (pressedBtn.nextTableView){
                 case TVC2://TVCScrollButtonPress:
+                    NSLog(@"       TVC2");
                     //[gGTPptr makeTVC2:pressedBtn];
                     [gGTPptr makeTVC:pressedBtn];
                     currentTableDef.cellDispPrepared = NO;
@@ -550,23 +572,23 @@
          
             case TVC1:
                 [self defineTransactionsTVC1:pressedBtn];
-                NSLog(@"do fake db xaction");
+                NSLog(@"do fake db xaction send successnotif1");
                 [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                 break;
             case TVC2:
                 [self defineTransactionsTVC2:pressedBtn];
-                NSLog(@"do fake db xaction");
+                NSLog(@"do fake db xaction send successnotif2");
                 [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                 return;
                 break;
             case TVC3:
   //              [self defineTransactionsTVC3:pressedBtn];
-                NSLog(@"do fake db xaction");
+                NSLog(@"do fake db xaction send successnotif3");
                 [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                 return;
                 break;
             case TVC4:
-                NSLog(@"do fake db xaction");
+                NSLog(@"do fake db xaction send successnotif4");
                 [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                 return;
   //              [self defineTransactionsTVC4:pressedBtn];
@@ -574,7 +596,8 @@
             case TVC5:
                 break;
             case TVC10:
-                NSLog(@"do fake db xaction");
+                NSLog(@"do fake db xaction    send successnotif5");
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
 //                [self defineTransactionsTVC10:pressedBtn];
                 return;
@@ -585,6 +608,7 @@
                     if ([efdata isEqualToString:gGTPptr.globalZipCode]) {
                         pressedBtn.nextTableView=TVC2;
                         //do nothing all is good   - get rid of screen-
+                        NSLog(@"            sending userControllerSuccess 1");
                         [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                         return;
                     }
@@ -592,12 +616,14 @@
                         //replace zipcode , start over getting data for this zipcode
                         gGTPptr.globalZipCode=efdata;
                         pressedBtn.nextTableView = TVCInitDBs;   //new
+                        NSLog(@"            sending zipstartover");
                         [[NSNotificationCenter defaultCenter] postNotificationName: ConstNEWZIPstartOver  object:pressedBtn];
                         return;
                     }
 
                 }
                 else{
+                    NSLog(@"            sending userControllerSuccess 2");
                     [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
                     return;
                 }
@@ -607,7 +633,7 @@
                 break;
         }
         [self evaluateAction:pressedBtn];
-    }
+    }//end if notification
 }
 
 -(void)setupTVCdata:(ActionRequest*)aQuery   //STUFFs our table like the db return should
@@ -758,6 +784,83 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NOTIFICATIONS
 /////////////////////////////////////////
+- (void)processUserFocusMovie:(NSNotification *)notification {
+    int pass = [[[notification userInfo] valueForKey:@"index"] intValue];
+    
+    //-(void)processUserFocusMovie:(id)sender   //touchUpInside, touchUpOutside
+    //{
+    //UIButton * uiButtonPressed = [notification object];
+    NSLog(@"RUNTIME processUserFocusMovie: %d",pass );
+    
+    
+    //[self userTouchInput:notification];
+    
+    NSNumber *touchInput;
+    NSString *tagString;
+    
+    
+            touchInput =[NSNumber numberWithInt:pass];
+    
+    tagString = [touchInput stringValue];
+    
+    TableDef *currentTableDef = self.activeTableDataPtr;
+    ActionRequest *pressedBtn = nil;
+    //    NSMutableDictionary *aMutDict;
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMM dd"];
+    
+    pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
+    switch (pressedBtn.buttonType) {
+        case kButtonTypeDate:
+            self.gGTPptr.selectedDate=pressedBtn.buttonDate;
+            break;
+        case kButtonTypeLocation:
+            self.gGTPptr.selectedLocDict=pressedBtn.locDict;
+            break;
+        case kButtonTypeProduct:
+            self.gGTPptr.selectedProdcuctDict=pressedBtn.productDict;
+            break;
+        case kButtonTypeShowTime:
+            break;
+        case kButtonTypeTrailer:
+            break;
+            
+        default:
+            break;
+    }
+    if (pressedBtn.reloadOnly){
+        
+        NSLog(@"       reloadOnly");
+        switch (pressedBtn.nextTableView){
+            case TVC2://TVCScrollButtonPress:
+                NSLog(@"       TVC2");
+                //[gGTPptr makeTVC2:pressedBtn];
+                [gGTPptr makeTVC:pressedBtn];
+                currentTableDef.cellDispPrepared = NO;
+                [self prepareTheActiveTableDataForDisplay:pressedBtn];
+                /*                   if (!gGTPptr.inAVPlayerVC){
+                 [self defineMovieTrailerQuery:pressedBtn];
+                 [self evaluateAction:pressedBtn];
+                 }
+                 */
+                [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                break;
+            case TVC4://TVCScrollButtonPress:
+                //[gGTPptr makeTVC2:pressedBtn];
+                [gGTPptr makeTVC:pressedBtn];
+                //                    rtTableViewCtrler.reloadOnly = YES;
+                currentTableDef.cellDispPrepared = NO;
+                [self prepareTheActiveTableDataForDisplay:pressedBtn];
+                [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                break;
+            default:
+                break;
+        }//end switch
+        return;
+    }//end reloadonly
+    NSLog(@"");
+}
+
 -(void) continueXactLoop:(NSNotification *)notification
 {
     ActionRequest *aQuery = [notification object];

@@ -36,7 +36,7 @@
 @synthesize errorDisplayText;
 @synthesize buttonOrigin;
 
-//@synthesize myButtonView;
+@synthesize myButtonView;
 //@synthesize buttonDate;
 
 -(id) init
@@ -110,7 +110,7 @@
     UIButton * uiButtonPressed = sender;
     NSLog(@"ActionRequest primary action triggered %li",(long)uiButtonPressed.tag );
     NSNumber *touchedButton = [NSNumber numberWithInteger:self.buttonTag];
-[[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
 }
 
 -(void)touchUpOnButton:(id)sender
@@ -138,35 +138,6 @@
     
 }
 
-/////////////////////////////////////////////////////////////////////////
-#pragma mark - Focus
-/////////////////////////////////////////////////////////////////////////
-/*
-- (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
-    /* this gets called twice for every tv arrow movement.
-     collectionViewController only gets called once  */
-    
-    // NSLog(@"CELLTVCONTROL didUpdateFocusInContext:withAnimationCoordinator:    section:%d  row:%d",dispAsSection,dispAsRow);
-    
- //  UITableViewCell *nextInFocus_cellControlPtr= (UITableViewCell    *)context.nextFocusedView;
-//    CustomTVCellControl *prevInFocus_cellControlPtr= (CustomTVCellControl *)context.previouslyFocusedView;
-/*
-    if (self == nextInFocus_cellControlPtr) {
-        NSLog(@"CELLTVCONTROL didUpdateFocusInContext:withAnimationCoordinator: (NEXT)   section:%d  row:%d",dispAsSection,dispAsRow);
-//        self.contentView.backgroundColor=self.cellDataHptr.myContainerBackgroundColorSELECTED;
-//        self.transform= CGAffineTransformMakeScale(1.1, 1.1);
-        // self.highlighted=YES;
-        // [self setSelected:YES];
-    }
-    if (self == prevInFocus_cellControlPtr) {
-        NSLog(@"CELLTVCONTROL didUpdateFocusInContext:withAnimationCoordinator: (PREV)   section:%d  row:%d",dispAsSection,dispAsRow);
-        // self.highlighted=NO;   these mess up in simulator
-        //[self setSelected:NO];   these mess up in simulator  can get multiple highlighted
-        self.contentView.backgroundColor=self.cellDataHptr.myContainerBackgroundColorDESELECTED;
-        self.transform= CGAffineTransformMakeScale(1.0, 1.0);
- */
-        
-//    }
 
 
 

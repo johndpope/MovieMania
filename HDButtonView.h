@@ -51,6 +51,6 @@
 //-(void)disableThisSAB;
 //-(void)moveToButtonInCenter:(NSInteger)currentCenterBtnNumber;
 +(void)makeUIButton:(ActionRequest*)actionReq inButtonSequence:(NSMutableArray *)buttonSeq;
-
+-(void)checkUserFocusMovie;
 -(void) borderButtonSel;
 @end

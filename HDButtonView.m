@@ -48,6 +48,8 @@
     ActionRequest *selectedButton;
     UIColor *textColor;
     UIColor *backColor;
+    
+    int _viewReloadState; //0=off, 1=doing
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
 //    int     rowNumber;
@@ -58,6 +60,7 @@
 //- (id)initWithContainer:(UIView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr containerScrolls:(BOOL)containerScrolls withTVC:(TableViewController *)tvcPtr
 - (id)initWithContainer:(UIScrollView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr withTVC:(TableViewController *)tvcPtr// leftJustifyPartial:(BOOL)
 {
+    _viewReloadState=0;
     tvc = tvcPtr;
 //    [self addTestButtonsToArray:btnSequence];
     self.containerView = container;
@@ -71,6 +74,13 @@
     
 //    self.containerViewScrolls = containerScrolls;
     ActionRequest *firstButton = [buttonSequence objectAtIndex:0];
+    
+    
+     
+
+    
+    
+    
     buttonViewWidth =  containerView.bounds.size.width;
     buttonViewHeight = containerView.bounds.size.height;
  //   buttonViewHeight = 100;
@@ -114,11 +124,7 @@
         
         
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(processUserFocusMovie:)
-                                                     name:ConstUserFocusMovie          //const in TableProntoDefines.h
-                                                   object:nil];
-
+ 
         
         
         
@@ -128,7 +134,10 @@
     
 }
 
-
+-(void)layoutSubviews{
+    NSLog(@"HDBUttonView layoutSubviews");
+    [super layoutSubviews];
+}
 
 
 -(UIView *)addButtonsToView
@@ -175,6 +184,12 @@
 #if TARGET_OS_TV
             [nextButton addTarget:self  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
             [nextButton addTarget:aBtn  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
+            
+                           
+
+
+            
+            
             //   UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)];
             //    [tapGesture setCancelsTouchesInView:NO];
             //    [tapGesture setDelegate:self];
@@ -207,11 +222,11 @@
     }
     
     if (containerScrolls && aBtn.reloadOnly){
-        NSLog(@"HDButtonView addButtonsToView   INIT button in center ");
+        NSLog(@"HDButtonView addButtonsToView   INIT button in center buttonsCount %ld ",[self.buttonSequence count]);
         [self initButtonInCenterToRow0Btn0];
     }
     else{
-        NSLog(@"HDButtonView addButtonsToView   not init button in center ");
+        NSLog(@"HDButtonView addButtonsToView   not init button in center  buttonsCount %ld",[self.buttonSequence count]);
     }
     
     
@@ -283,7 +298,7 @@
     NSLog(@"myra disabled postNotification ConstUserTouchInput from HDButtonView touchUpOnButton");
    // [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];   //this causes reload of table (do through another way)
 }
--(void)primaryActionTriggered:(id)sender   //touchUpInside, touchUpOutside
+-(void)primaryActionTriggered:(id)sender   //TVOS select button (or enter on focused button in simulator)
 {
     UIButton * uiButtonPressed = sender;
     NSLog(@"HDButtonView primaryActionTriggered: Button Number %li",(long)uiButtonPressed.tag);
@@ -302,6 +317,7 @@
     NSLog(@"myra disabled postNotification ConstUserTouchInput from HDButtonView primaryActionTriggered:");
     // [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];   //this causes reload of table (do through another way)
 }
+
 
 
 -(void)removeSelectedButtonBoxFromAllRows:(ActionRequest*)aQuery
@@ -338,6 +354,7 @@
 {
     
      NSLog(@"HDButtonView initBUttonInCenterToRow0Btn0 orange A.R. 0");
+    tvfocusAction=nil; //important
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
     SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
@@ -356,18 +373,28 @@
     currentButtonInCenter.uiButton.layer.borderColor=[UIColor orangeColor].CGColor ;
   //  }   //new
     
+    
+    
+    for (int index=0; index < [firstButtonRow.cellsButtonsArray count]; index++) {
+        ActionRequest *aButton = [firstButtonRow.cellsButtonsArray objectAtIndex:index];
+        aButton.myButtonView=self;
+    }
+    
     [self logCBCtag];
 }
 -(void) borderButtonSel
 {
     NSLog(@"HDBUttonView borderButtonSel");
     
+    
+    return;
+    
     for (int i = 0; i < buttonSequence.count; i++){
         ActionRequest *aReq = [buttonSequence objectAtIndex:i];
         aReq.uiButton.layer.borderWidth=13;
         aReq.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
         if (aReq==currentButtonInCenter) {
-            NSLog(@"-----setButtonCenter orange %d",i);
+            NSLog(@"-----borderButtonSel setButtonCenter orange %d",i);
 
             aReq.uiButton.layer.borderColor=[UIColor orangeColor].CGColor;
         }
@@ -407,7 +434,7 @@
 {
     NSNumber *aButtontag ;
     aButtontag = [NSNumber numberWithInteger:currentButtonInCenter.buttonTag];
-    NSLog(@"      current button in center has tag %@",aButtontag);
+    NSLog(@"      current button in center has tag %@ %@",aButtontag,currentButtonInCenter.buttonName);
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
@@ -416,7 +443,14 @@
     
     
     NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDragging   ");
-    [self logCBCtag];
+    _viewReloadState=0;
+    return;
+    
+    
+    
+    
+    
+    
     NSNumber *touchedButton ;
     
     
@@ -529,7 +563,7 @@
               //[currentButtonInCenter.uiButton addSubview:selectedBtnBox];
                 currentButtonInCenter.uiButton.layer.borderColor=[UIColor orangeColor].CGColor;
                 currentButtonInCenter.uiButton.layer.borderWidth=13;;
-                NSLog(@"-----setButtonCenter orange %d",i);
+                NSLog(@"-----MoveToButtonInCenter setButtonCenter orange %d",i);
 
                 
             }
@@ -566,29 +600,87 @@
 /////////////////////////////////////////////////////////////////////////
 #pragma mark - FOCUS
 /////////////////////////////////////////////////////////////////////////
--(void)processUserFocusMovie:(NSNotification *)notification
+-(void)checkUserFocusMovie
 {
+    NSLog(@"HDBUTTONVIEW checkUserFocusMovie");
     
-    NSLog(@"processUserFocusMovie:");
-    NSNumber *touchedButton ;
-    ActionRequest *nextButton;
-    if (notification){
-        nextButton = [notification object];
-        
-        
-        touchedButton = [NSNumber numberWithInteger:nextButton.buttonTag];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
-        NSLog(@"");
+    if (_viewReloadState==1) {
+        NSLog(@"      doing already");
+        return;
     }
     
+    if(tvfocusAction){
+        
+        if (tvfocusAction != currentButtonInCenter) {
+            
+            currentButtonInCenter=tvfocusAction;   //no color changes
+            int indexIt=(int)currentButtonInCenter.uiButton.tag;   //no color changes
+            
+            
+            [self logCBCtag];
+            NSLog(@"      doing userFocusNotify for runtime");//only to be picked up by runtime.m
+            _viewReloadState=1;
+            //[[NSNotificationCenter defaultCenter] postNotificationName:ConstUserFocusMovie object:currentButtonInCenter.uiButton];
+            NSDictionary* dict = [NSDictionary dictionaryWithObject:
+                                  [NSNumber numberWithInt:indexIt]
+                                                             forKey:@"index"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserFocusMovie
+                                                                object:self
+                                                              userInfo:dict];
+            
+            
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserFocusMovie
+                                                                    object:self
+                                                                  userInfo:dict];
+            });
+            
+            
+        }
+        else{
+            [self logCBCtag];
+        }
+    }
+
    
 }
+/*-(BOOL) shouldUpdateFocusInContext:(UIFocusUpdateContext *)context   //never called
+{
+    
+    NSLog(@"HDBUTTONVIEW shouldUpdateFocusInContext   tvfocusaction %ld  currentbuttonincenter %ld",tvfocusAction.uiButton.tag,currentButtonInCenter.uiButton.tag);
+    return YES;
+    
+    
+    
+    if (tvfocusAction == currentButtonInCenter) {
+            
+
+        return YES;
+    }
+
+    
+    NSLog(@"HDBUTTONVIEW shouldUpdateFocusInContext   YES:");
+
+    return YES;
+}*/
 - (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
         NSLog(@"HDBUTTONVIEW didUpdateFocusInContext:");
     
     //HDButtonView holds all the UIButtons defined in the cell.
     //context.previouslyFocusedView is a UIButton (Maybe)
     //context.nextFocusedView is a UIButton(Maybe)
+    
+    if(_viewReloadState ==1){
+        NSLog(@"        ignore in reloadstate");
+        return;
+    }
+        
+    if(context.nextFocusedView == context.previouslyFocusedView){
+        return;
+    }
+        
     
     if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
         
@@ -597,7 +689,7 @@
         ActionRequest *prevButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:prevTag];
         NSLog(@"      prevButton %@",prevButton.buttonName);
         
-      //  context.previouslyFocusedView.layer.borderColor=[UIColor clearColor].CGColor;
+        context.previouslyFocusedView.layer.borderColor=[UIColor clearColor].CGColor;
       //  [coordinator addCoordinatedAnimations:^{
       //      context.previouslyFocusedView.transform = CGAffineTransformMakeScale(1.0, 1.0);
       //  } completion:nil];
@@ -616,23 +708,51 @@
         NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];
         ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
         NSLog(@"      nextButton %@",nextButton.buttonName);
+        
+         tvfocusAction=nextButton;
+        nextButton.uiButton.layer.borderWidth=13;
+        nextButton.uiButton.layer.borderColor=[UIColor orangeColor].CGColor;
+        
 
-        NSNumber *touchedButton = [NSNumber numberWithInteger:nextButton.buttonTag];
+       
+            if( (currentButtonInCenter != nextButton)&& (nextButton.reloadOnly)){
+                
+                tvfocusAction=nextButton;
+                [self checkUserFocusMovie];
+               // currentButtonInCenter=nextButton;   //? this one line causes tvc2 to go back to object 0 by invoking bogus didUpdateFocusInContext message
+               // containerView.contentOffset=containerView.contentOffset;//CGPointMake(100,100);   //forces recv scrollEndM msg
+               
+                
+                
+               // int indexIt=(int)nextButton.uiButton.tag;
+                
+                
+               // [self logCBCtag];
+              //  NSLog(@"      doing userFocusNotify for runtime button %d %@",indexIt,tvfocusAction.buttonName);//only to be picked up by runtime.m
+                
+             //   NSDictionary* dict = [NSDictionary dictionaryWithObject:
+             //                         [NSNumber numberWithInt:indexIt]
+             //                                                    forKey:@"index"];
+                
+             //   [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserFocusMovie
+             //                                                       object:self
+             //                                                     userInfo:dict];
+
+                
+                
+                
+                
+            }
+            else{
+                [self logCBCtag];
+                NSLog(@"     disable focusMovie notification");
+            }
+            
+
         
         
         
-   //     tvfocusAction=nextButton;
-        
-        
-        //Cause reload of table with this button in focus......
-        //if(currentButtonInCenter != nextButton){
           
-            
-          //   maybe need?  [self moveToButtonInCenter:nextButton.buttonIndex];
-          //  [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserFocusMovie object:nextButton];
-        //}
-            
-        
         
         //notify ActionRequest this button was pressed
         
