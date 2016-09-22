@@ -772,11 +772,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496185886.057398"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "685"
-            endingLineNumber = "685"
+            startingLineNumber = "667"
+            endingLineNumber = "667"
             landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
             landmarkType = "5">
          </BreakpointContent>
@@ -788,11 +788,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "-initButtonInCenterToRow0Btn0"
             landmarkType = "5">
          </BreakpointContent>
@@ -916,11 +916,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "-removeSelectedButtonBoxFromAllRows:"
             landmarkType = "5">
          </BreakpointContent>
@@ -932,11 +932,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "-touchUpOnButton:"
             landmarkType = "5">
          </BreakpointContent>
@@ -948,11 +948,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "-initButtonInCenterToRow0Btn0"
             landmarkType = "5">
          </BreakpointContent>
@@ -980,11 +980,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496185886.057398"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "755"
-            endingLineNumber = "755"
+            startingLineNumber = "737"
+            endingLineNumber = "737"
             landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
             landmarkType = "5">
          </BreakpointContent>
@@ -996,11 +996,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496185886.057398"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "711"
-            endingLineNumber = "711"
+            startingLineNumber = "693"
+            endingLineNumber = "693"
             landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1012,11 +1012,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496183352.378899"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
             landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1076,11 +1076,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
             landmarkName = "-addButtonsToView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1172,11 +1172,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "-borderButtonSel"
             landmarkType = "5">
          </BreakpointContent>
@@ -1220,11 +1220,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
             landmarkName = "-touchUpOnButton:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1252,11 +1252,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496185886.057398"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "719"
-            endingLineNumber = "719"
+            startingLineNumber = "701"
+            endingLineNumber = "701"
             landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1268,11 +1268,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1290,22 +1290,6 @@
             startingLineNumber = "113"
             endingLineNumber = "113"
             landmarkName = "-primaryActionTriggered:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "-addButtonsToView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1524,11 +1508,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "-addButtonsToView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1540,11 +1524,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182400.73353"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "-initButtonInCenterToRow0Btn0"
             landmarkType = "5">
          </BreakpointContent>
@@ -1556,11 +1540,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "496182739.92035"
+            timestampString = "496253745.944279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1700,11 +1684,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableDef.m"
-            timestampString = "496198709.282269"
+            timestampString = "496253038.489077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "-showMeInDisplayReload:tvcCreatedWidth:tvcCreatedHeight:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1722,6 +1706,22 @@
             startingLineNumber = "372"
             endingLineNumber = "372"
             landmarkName = "-tableView:numberOfRowsInSection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HDButtonView.m"
+            timestampString = "496253745.944279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "589"
+            endingLineNumber = "589"
+            landmarkName = "-checkUserFocusMovie"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

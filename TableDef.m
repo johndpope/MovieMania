@@ -364,9 +364,10 @@
 
     
             NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
-        
-        
-        [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    NSIndexPath *tmpIndexpath2=[NSIndexPath indexPathForRow:1 inSection:1];
+    NSArray *reloadPaths=[NSArray arrayWithObjects:tmpIndexpath,tmpIndexpath2, nil];
+    
+        [tvc.tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
     
     
     

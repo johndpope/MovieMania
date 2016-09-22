@@ -799,7 +799,7 @@
     NSString *tagString;
     
     
-            touchInput =[NSNumber numberWithInt:pass];
+    touchInput =[NSNumber numberWithInt:pass];
     
     tagString = [touchInput stringValue];
     

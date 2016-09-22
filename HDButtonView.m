@@ -181,18 +181,10 @@
              [nextButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
             [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
             [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
+            
+            
 #if TARGET_OS_TV
             [nextButton addTarget:self  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
-            [nextButton addTarget:aBtn  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
-            
-                           
-
-
-            
-            
-            //   UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)];
-            //    [tapGesture setCancelsTouchesInView:NO];
-            //    [tapGesture setDelegate:self];
 #endif
 
 
@@ -300,22 +292,12 @@
 }
 -(void)primaryActionTriggered:(id)sender   //TVOS select button (or enter on focused button in simulator)
 {
+ //so this is for tv only.  assuming have to have focus on button before you can select it.... so already know what it is and its highlighted....
+    
     UIButton * uiButtonPressed = sender;
     NSLog(@"HDButtonView primaryActionTriggered: Button Number %li",(long)uiButtonPressed.tag);
-    
-    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
-    
-    
-    NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
-    NSString *tagString = [touchedButton stringValue];
-    ActionRequest *pressedAction = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
-    
-    if (pressedAction.reloadOnly){
-        
-        [self moveToButtonInCenter:pressedAction.buttonIndex];
-    }
-    NSLog(@"myra disabled postNotification ConstUserTouchInput from HDButtonView primaryActionTriggered:");
-    // [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];   //this causes reload of table (do through another way)
+    [self checkUserFocusMovie];
+
 }
 
 
