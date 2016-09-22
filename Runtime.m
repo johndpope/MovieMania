@@ -681,7 +681,7 @@
                 //                    rtTableViewCtrler.reloadOnly = YES;
                 currentTableDef.cellDispPrepared = NO;
                 [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
                 break;
             default:
                 break;

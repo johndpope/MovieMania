@@ -51,7 +51,7 @@
     UIColor *textColor;
     UIColor *backColor;
     
-    int _viewReloadState; //0=off, 1=doing
+
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
 //    int     rowNumber;
@@ -62,7 +62,7 @@
 
 - (id)initWithContainer:(UIScrollView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr withTVC:(TableViewController *)tvcPtr// leftJustifyPartial:(BOOL)
 {
-    _viewReloadState=0;
+    
     tvc = tvcPtr;
 //    [self addTestButtonsToArray:btnSequence];
     self.containerView = container;
@@ -146,15 +146,15 @@
 {
     ActionRequest *aBtn;
     UIView * newButtonView = self;
-    newButtonView.backgroundColor = backColor;// [UIColor blackColor];
+    newButtonView.backgroundColor = backColor;
     int     numberOfButtonsToMake =(int) buttonSequence.count;
     float   buttonYOffset = 0;
     
     
     if (isColumn)
         buttonYOffset = buttonWidth/8;
-    self.backgroundColor = backColor;//[UIColor blackColor];
-    //   self.backgroundColor = [UIColor greenColor] ;
+    self.backgroundColor = backColor;
+   
     float buttonViewXOffset = buttonViewWidth/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
     if (isColumn)
         buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
@@ -389,7 +389,7 @@
     
     
     NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDragging   ");
-    _viewReloadState=0;
+    
     return;
     
     
@@ -537,10 +537,7 @@
 {
     NSLog(@"HDBUTTONVIEW checkUserFocusMovie");
     
-    if (_viewReloadState==1) {
-        NSLog(@"      doing already");
-        return;
-    }
+   
     
     if(tvfocusAction){
         
@@ -552,7 +549,7 @@
             
             [self logCBCtag];
             NSLog(@"      doing userFocusNotify for runtime");//only to be picked up by runtime.m
-            _viewReloadState=1;
+            
             
             NSDictionary* dict = [NSDictionary dictionaryWithObject:
                                   [NSNumber numberWithInt:indexIt]
@@ -605,10 +602,7 @@
     //context.previouslyFocusedView is a UIButton (Maybe)
     //context.nextFocusedView is a UIButton(Maybe)
     
-    if(_viewReloadState ==1){
-        NSLog(@"        ignore in reloadstate");
-        return;
-    }
+    
         
     if(context.nextFocusedView == context.previouslyFocusedView){
         return;
@@ -634,8 +628,7 @@
     
     if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
         
-       // context.nextFocusedView.layer.borderColor = [UIColor greenColor].CGColor;
-      //  context.nextFocusedView.layer.borderWidth = 10.0;
+  
 
         UIButton *cellNext = (UIButton* )context.nextFocusedView;
         NSString *nextTag = [NSString stringWithFormat:@"%li",cellNext.tag];

@@ -580,16 +580,18 @@
    // NSLog(@"heightForHeaderInSection");
     if (sectionPtr) {
         answer=[sectionPtr heightForHeaderInSection];
-      //  NSLog(@"TVCTRL heightForHeaderInSection %ld is %d",(long)section,answer);
+        NSLog(@"TVCTRL heightForHeaderInSection %ld is %d",(long)section,answer);
+        if(answer < 1)
+            NSLog(@"");
       //  if (answer > 0) {
       //      NSLog(@"CHECK THIS");
       //  }
-        
+       
         return [sectionPtr heightForHeaderInSection];
     }
     else{
         //NSLog(@"htforheaderinsection  ...sectionptr nil for %ld section",section);
-      //  NSLog(@"TVCTRL heightForHeaderInSection %ld is 0",section);
+       NSLog(@"TVCTRL heightForHeaderInSection %ld is 0",section);
         return 0;
     }
     
@@ -817,7 +819,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 
         
         thisTVC.contentView.layer.borderColor = [UIColor greenColor].CGColor;
-        thisTVC.contentView.layer.borderWidth = 10.0;
+        thisTVC.contentView.layer.borderWidth = 3.0;
         
         
     }

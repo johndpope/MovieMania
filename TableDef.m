@@ -361,11 +361,30 @@
    /// self.tvcCreatedWidth=createdWidth;
    // self.tvcCreatedHeight=createdHeight;   //all scrollable, no fixed header or footer
     
-
+    int totSections=(int)[self.tableSections count];
+    int rowsSection1=0;
+    SectionDef *sec1ptr;
+    if (totSections > 1) {
+        sec1ptr=[self.tableSections objectAtIndex:1];
+        rowsSection1=(int )[sec1ptr.sCellsContentDefArr count];
+    }
     
-            NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
-    NSIndexPath *tmpIndexpath2=[NSIndexPath indexPathForRow:1 inSection:1];
-    NSArray *reloadPaths=[NSArray arrayWithObjects:tmpIndexpath,tmpIndexpath2, nil];
+    if (totSections < 2) {
+        [tvc.tableView reloadData];  //this is wrong
+        return;
+    }
+    NSMutableArray *allPaths=[[NSMutableArray alloc]init];
+    
+    for (int index=0; index<rowsSection1; index++) {
+        NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:1];
+        [allPaths addObject: somePath];
+        
+    }
+    NSArray *reloadPaths=[allPaths copy];
+    
+  //          NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+  //  NSIndexPath *tmpIndexpath2=[NSIndexPath indexPathForRow:1 inSection:1];
+  //  NSArray *reloadPaths=[NSArray arrayWithObjects:tmpIndexpath,tmpIndexpath2, nil];
     
         [tvc.tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
     

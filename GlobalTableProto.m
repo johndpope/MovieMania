@@ -987,7 +987,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 -(TableDef *)makeTVC4:(ActionRequest *)pressedButton
 {
-        NSLog(@"----makeTVC4");
+    NSLog(@"----makeTVC4   reloadOnly is %d",pressedButton.reloadOnly);
+
+    
                //C E L L S    F O R        S E C T I O N S
     
         NSMutableDictionary *aLocDict =  pressedButton.locDict;  // [self fetchLocationDict:pressedButton];
