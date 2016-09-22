@@ -24,7 +24,7 @@
 
 @synthesize tableHeaderFixed,fixedTableFooterUIView,fixedTableHeaderUIView;
 @synthesize tableFooterFixed;
-@synthesize initialDraw;
+//@synthesize initialDraw;
 
 
 @synthesize cellDispPrepared;  //true if cell initialization and allocation complete for table display
@@ -84,7 +84,7 @@
 }
 -(void) makeUseDefaults:(TableDef *)nTableDef
 {
-    initialDraw=YES;
+    //initialDraw=YES;
     nTableDef.tableDisplayFirstVisibleNotification=FALSE;    //has runtime been notified yet?
 
     nTableDef.dbAllTabTransDict=[[NSMutableDictionary alloc] init];
@@ -333,23 +333,48 @@
     //what is tvcCreatedHeight, tvcCreatedWidth
     
     
-    if (initialDraw) {
-        initialDraw=NO;
+    //if (initialDraw) {
+    //    initialDraw=NO;
         [tvc.tableView reloadData];
         
-    }
-    else{
-        NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+   // }
+   // else{
+   //    NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
         
         
-        [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
-    }
+    //    [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
+   // }
     
     
     
      
     
 }
+
+
+-(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight
+{
+    
+    //Make returned UIViews the header and footer for the table
+    NSLog(@"RNTME showMeInDisplayReload");
+    
+   /// self.tvcCreatedWidth=createdWidth;
+   // self.tvcCreatedHeight=createdHeight;   //all scrollable, no fixed header or footer
+    
+
+    
+            NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+        
+        
+        [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
+    
+    
+    
+    
+    
+    
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Debug Methods
 /////////////////////////////////////////

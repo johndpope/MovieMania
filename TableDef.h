@@ -39,7 +39,7 @@
 
 
 @property (nonatomic, readwrite) BOOL titleOpaque;
-@property (nonatomic, readwrite) BOOL initialDraw;
+//@property (nonatomic, readwrite) BOOL initialDraw;
 @property (nonatomic, readwrite) BOOL cellDispPrepared; //cells initialized and ready to display
 @property (nonatomic, readwrite) int tvcCreatedHeight;
 @property (nonatomic, readwrite) int tvcCreatedWidth;
@@ -75,5 +75,5 @@
 
 -(void) showMeInDisplay:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight;
 -(BOOL) cellCanOwnFocusThisRow:(int)thisRow andSection:(int) thisSection;//NEW
-
+-(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight;
 @end

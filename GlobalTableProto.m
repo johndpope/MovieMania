@@ -899,7 +899,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             trailerArray = [NSMutableArray arrayWithArray: [trailersDict allValues]];
         }
             
-            
+    //return myTable;   //myra fix this
+    
+    
+    
+    
     
     CellButtonsScroll *cbsPtr = [self buildMovieTrailerButtonsCell:pressedButton inSection:section inRow:row fromTrailerArray:trailerArray]; //forNumberOfTrailers:3];
         cellContentPtr1=[[CellContentDef alloc] init];
@@ -907,6 +911,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cellContentPtr1.ccTableViewCellPtr=nil;
         if (cbsPtr.cellsButtonsArray.count)
             [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+        else{
+            [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];   //yes this in as array of 0 elements....required for reload of row to work 
+        }
     
     
     return myTable; //tvc2

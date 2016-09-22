@@ -790,7 +790,7 @@
     //-(void)processUserFocusMovie:(id)sender   //touchUpInside, touchUpOutside
     //{
     //UIButton * uiButtonPressed = [notification object];
-    NSLog(@"RUNTIME processUserFocusMovie: %d",pass );
+    NSLog(@"**************RUNTIME processUserFocusMovie: %d",pass );
     
     
     //[self userTouchInput:notification];
@@ -843,7 +843,7 @@
                  [self evaluateAction:pressedBtn];
                  }
                  */
-                [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
                 break;
             case TVC4://TVCScrollButtonPress:
                 //[gGTPptr makeTVC2:pressedBtn];
