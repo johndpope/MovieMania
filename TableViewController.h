@@ -19,7 +19,7 @@
 
 //@property (nonatomic, readwrite) int inMovieVC;
 //@property (nonatomic, readwrite) ActionRequest *actionForReloadingView;
-- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle;
+- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle viewFrame:(CGRect)thisFrame;//CHANGED
 //@property(nonatomic, readwrite) BOOL reloadOnly;
 //-(void)touchDownOnButton:(id)sender;
 //-(void)touchUpOnButton:(id)sender;

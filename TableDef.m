@@ -1,3 +1,4 @@
+
 //
 //  CellTextDef.m
 //  tableProto
@@ -23,7 +24,7 @@
 
 @synthesize tableHeaderFixed,fixedTableFooterUIView,fixedTableHeaderUIView;
 @synthesize tableFooterFixed;
-
+//@synthesize initialDraw;
 
 
 @synthesize cellDispPrepared;  //true if cell initialization and allocation complete for table display
@@ -83,6 +84,7 @@
 }
 -(void) makeUseDefaults:(TableDef *)nTableDef
 {
+    //initialDraw=YES;
     nTableDef.tableDisplayFirstVisibleNotification=FALSE;    //has runtime been notified yet?
 
     nTableDef.dbAllTabTransDict=[[NSMutableDictionary alloc] init];
@@ -251,6 +253,30 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Display Methods
 /////////////////////////////////////////
+-(BOOL) cellCanOwnFocusThisRow:(int)thisRow andSection:(int) thisSection
+{//my cell can recv focus message if it doesn't contain a button.
+    //if it contains a button, the scroll view has to handle all the focus messages
+    //this only shows up in TVOS
+    SectionDef *sectionPtr;
+    sectionPtr=[self.tableSections  objectAtIndex:thisSection];
+    
+    if (!sectionPtr) {
+        return YES;
+    }
+    
+    
+    CellContentDef *sectionCellsPtr;
+    sectionCellsPtr=[sectionPtr.sCellsContentDefArr objectAtIndex:thisRow];
+    if (!sectionCellsPtr) {
+        return YES;
+    }
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        return NO;
+    }
+    return YES;
+    
+}
+
 
 -(void) showMeInDisplay:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight
 {
@@ -305,10 +331,70 @@
     self.tvcCreatedWidth=createdWidth;
     self.tvcCreatedHeight=createdHeight-returnedFooterUIView.frame.size.height-returnedHeaderUIView.frame.size.height;
     //what is tvcCreatedHeight, tvcCreatedWidth
-    [tvc.tableView reloadData];
+    
+    
+    //if (initialDraw) {
+    //    initialDraw=NO;
+        [tvc.tableView reloadData];
+        
+   // }
+   // else{
+   //    NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+        
+        
+    //    [tvc.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:tmpIndexpath, nil] withRowAnimation:UITableViewRowAnimationNone];
+   // }
+    
+    
+    
      
     
 }
+
+
+-(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight
+{
+    
+    //Make returned UIViews the header and footer for the table
+    NSLog(@"RNTME showMeInDisplayReload");
+    
+   /// self.tvcCreatedWidth=createdWidth;
+   // self.tvcCreatedHeight=createdHeight;   //all scrollable, no fixed header or footer
+    
+    int totSections=(int)[self.tableSections count];
+    int rowsSection1=0;
+    SectionDef *sec1ptr;
+    if (totSections > 1) {
+        sec1ptr=[self.tableSections objectAtIndex:1];
+        rowsSection1=(int )[sec1ptr.sCellsContentDefArr count];
+    }
+    
+    if (totSections < 2) {
+        [tvc.tableView reloadData];  //this is wrong
+        return;
+    }
+    NSMutableArray *allPaths=[[NSMutableArray alloc]init];
+    
+    for (int index=0; index<rowsSection1; index++) {
+        NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:1];
+        [allPaths addObject: somePath];
+        
+    }
+    NSArray *reloadPaths=[allPaths copy];
+    
+  //          NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
+  //  NSIndexPath *tmpIndexpath2=[NSIndexPath indexPathForRow:1 inSection:1];
+  //  NSArray *reloadPaths=[NSArray arrayWithObjects:tmpIndexpath,tmpIndexpath2, nil];
+    
+        [tvc.tableView reloadRowsAtIndexPaths:reloadPaths withRowAnimation:UITableViewRowAnimationNone];
+    
+    
+    
+    
+    
+    
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Debug Methods
 /////////////////////////////////////////

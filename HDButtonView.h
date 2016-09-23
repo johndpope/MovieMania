@@ -10,8 +10,8 @@
 #import "GlobalTableProto.h"
 //#import "GlobalCalcVals.h"
 
-@class SpritesAndButtons;
-@class MMSpriteAction;
+//@class SpritesAndButtons;
+//@class MMSpriteAction;
 @class TableViewController;
 @class ActionRequest;
 
@@ -20,7 +20,7 @@
 //#define kButtonRowModulus 100
 #define kColumn1 21
 
-@interface HDButtonView : UIView <UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@interface HDButtonView : UIView <UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDelegate>
 @property (nonatomic, readwrite) BOOL              isLongBtnPress;
 //@property (nonatomic, readwrite) BOOL               containerViewScrolls;
 @property (nonatomic, readwrite) int                buttonTag;
@@ -28,6 +28,10 @@
 @property (nonatomic, strong) UIScrollView          *containerView;
 @property (nonatomic, readwrite) int                rowNumber;
 @property (nonatomic, retain) UIImageView *selectedBtnBox;
+
+
+
+@property (nonatomic, readwrite) ActionRequest *tvfocusAction;
 //- (id)initWithContainer:(UIView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr containerScrolls:(BOOL)containerScrolls;
 
 //- (id)initWithContainer:(UIView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr containerScrolls:(BOOL)containerScrolls withTVC:(TableViewController *)tvcPtr;
@@ -47,4 +51,6 @@
 //-(void)disableThisSAB;
 //-(void)moveToButtonInCenter:(NSInteger)currentCenterBtnNumber;
 +(void)makeUIButton:(ActionRequest*)actionReq inButtonSequence:(NSMutableArray *)buttonSeq;
+-(void)checkUserFocusMovie;
+-(void) borderButtonSel;
 @end

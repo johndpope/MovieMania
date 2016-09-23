@@ -15,7 +15,7 @@
 #import "CellTextDef.h"
 
 
-
+#import "CustomCellUIView.h"
 
 
 @interface CellUIView : CellTypesAll   //<UITextFieldDelegate>
@@ -26,7 +26,7 @@
 
 
 
-@property (nonatomic, readwrite) UIView *templateUIView;   //final
+@property (nonatomic, readwrite) CustomCellUIView *templateUIView;   //final
 
 @property (nonatomic, readwrite) UIView *templateASideView; //special.... holds two views TOP?BOTTOM
 

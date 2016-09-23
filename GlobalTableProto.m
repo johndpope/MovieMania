@@ -75,6 +75,9 @@ NSString* const ConstUserTouchInput = @"UserTouchInput";
 NSString* const ConstContinueLoopingTransaction=@"ContinueLoopingTransaction";
 
 
+NSString* const ConstUserFocusMovie = @"UserFocusMovie";
+
+
 NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 +(GlobalTableProto *)sharedGlobalTableProto
@@ -519,7 +522,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -558,7 +561,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cuvPtr.enableUserActivity = YES;//NO;//YES; //????
 
     
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -639,7 +642,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     txtTypeCellPtr=[CellTextDef initCellText:@"Welcome. \n You must login to continue!" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -686,7 +689,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     [cuvPtr.cInputFieldsArray addObject:entryFPtr1];
     
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -833,7 +836,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cuvPtr.nextTableView=TVC4;
         cuvPtr.cellDate = [NSDate date];
         cuvPtr.buttonType=kButtonTypeLocation;
-        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
         [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
         
     }
@@ -846,7 +849,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //
     NSString *tableTitle = @"Movie Information";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
-    NSLog(@"----makeTVC2");
+    NSLog(@"----makeTVC2    reloadOnly is %d",pressedButton.reloadOnly);
     TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
     
     
@@ -859,13 +862,14 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         sdPtr2.sectionHeaderContentPtr=nil;
         sdPtr2.sectionFooterContentPtr=nil;
         [myTable.tableSections addObject:sdPtr2];
-        
+    
     
  //       CGSize btnSize2 = CGSizeMake(300,280);
     
         NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
   //       NSString *productName = [productDict objectForKey:kProductNameKey];
         CellUIView *cuvPtr;
+        NSLog(@"getting cuvPtr for %@",[pressedButton.productDict objectForKey:@"Title"]);
         NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
         if (![movieInfoDict objectForKey:@"Error"]){
             cuvPtr = [self buildMovieInfoCell:movieInfoDict];
@@ -895,7 +899,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             trailerArray = [NSMutableArray arrayWithArray: [trailersDict allValues]];
         }
             
-            
+    //return myTable;   //myra fix this
+    
+    
+    
+    
     
     CellButtonsScroll *cbsPtr = [self buildMovieTrailerButtonsCell:pressedButton inSection:section inRow:row fromTrailerArray:trailerArray]; //forNumberOfTrailers:3];
         cellContentPtr1=[[CellContentDef alloc] init];
@@ -903,6 +911,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cellContentPtr1.ccTableViewCellPtr=nil;
         if (cbsPtr.cellsButtonsArray.count)
             [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+        else{
+            [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];   //yes this in as array of 0 elements....required for reload of row to work 
+        }
     
     
     return myTable; //tvc2
@@ -976,7 +987,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 -(TableDef *)makeTVC4:(ActionRequest *)pressedButton
 {
-        NSLog(@"----makeTVC4");
+    NSLog(@"----makeTVC4   reloadOnly is %d",pressedButton.reloadOnly);
+
+    
                //C E L L S    F O R        S E C T I O N S
     
         NSMutableDictionary *aLocDict =  pressedButton.locDict;  // [self fetchLocationDict:pressedButton];
@@ -1007,7 +1020,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
     
         cuvPtr.displayTemplate= kDISP_TEMPLATE_LABELS_ONLY;//kDISP_TEMPLATE_IMAGELEFT_LABLESRIGHT;//kDISP_TEMPLATE_TRIPLE_IMAGELEFT_BUTTONSBOTTOM_LABELTOP;  //template layout for container
-        cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:cuvPtr];
         cuvPtr.nextTableView = TVC4;
         [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
@@ -1035,6 +1048,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         CellTextDef *txtTypePtr2;
       //  CellButtonsScroll *cButPtr;
  //       NSString *groupQuals;
+    
+    
+    
+    
         for (aGroupKey in showingsGroupKeys){
             aShowingsGroup = [showTimesDictOfArrays objectForKey:aGroupKey];
             
@@ -1051,7 +1068,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
             
             row = [self buildShowTimesBtnsCells:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict buttonsPerRow:5 sectionDef:sdPtr2];
-            
+  
+
+            NSLog(@"");
  /*
             cButPtr = [self buildShowTimesBtnsArray:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict];
             cellContentPtr1=[[CellContentDef alloc] init];
@@ -1062,8 +1081,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 */
         
         }
+    //THIS IS RELOAD-ABLE.  THAT means we cannot change the size of the tableview cells once they are build initially. (trap occurs)
+    //
     
-    
+    [self forceSectionReloadABLEwithMaxCells:10 sectionDef:sdPtr2 ];
     
  /*
         NSMutableArray *allDigitalShowTimes = [[NSMutableArray alloc] init];
@@ -1315,7 +1336,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         //        cuvPtr.aLocDict = aLocDict;
         cuvPtr.nextTableView=TVC4;
         cuvPtr.cellDate = [NSDate date];
-        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
         [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
         row++;
         // Now add the Movie Show Time Cells
@@ -1350,7 +1371,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             cellContentPtr.ccCellTypePtr=cuvPtr;
             cellContentPtr.ccTableViewCellPtr=nil;
             [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
+            
+            
             row = [self buildShowTimesBtnsCells:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict buttonsPerRow:5 sectionDef:sdPtr];
+            
             /*
              cButPtr = [self buildShowTimesBtnsArray:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict];
              cellContentPtr=[[CellContentDef alloc] init];
@@ -1973,14 +1997,15 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CGSize movieBtnSize = CGSizeMake(100, 150);
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
+        NSLog(@"reloadonly - notcreate table");
         sdPtr1 = [myTable.tableSections objectAtIndex:0];
         [myTable.tableSections removeAllObjects];
         [myTable.tableSections addObject:sdPtr1];
         cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
         cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
     }
-    
-    if (!pressedButton.reloadOnly){
+    else{
+        NSLog(@"create table");
         myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
         CGSize sechdrBtnSize = CGSizeMake(60, 30);
         sdPtr1 = nil;
@@ -1994,8 +2019,22 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         int row = 0;
         //C E L L S    F O R        S E C T I O N S
         
+        
+        
+        //add simple text array for test     MYRA ADDED FOR TEST
+     //a   CellTextDef *ctdPtr;
+     //a   CellContentDef *cellContentPtr1;
+     //a   cellContentPtr1=[[CellContentDef alloc] init];
+     //a   ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor redColor] withTextFontSize:36 withTextFontName:nil];
+     //a   ctdPtr.cellSeparatorVisible=TRUE;
+     //a   cellContentPtr1.ccCellTypePtr=ctdPtr;
+     //a   [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+
+        
+        
         //button cells section 1      B U T T O N S
         CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+        cbsPtr.indicateSelItem=YES;
         if (cbsPtr.cellsButtonsArray.count){
             cellContentPtr1=[[CellContentDef alloc] init];
             cellContentPtr1.ccCellTypePtr=cbsPtr;
@@ -2034,7 +2073,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     return showingsForDate;
 }
--(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr// is3D:(BOOL)is3D// allShowingCount:(NSInteger)allShowingsCount
+-(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr
 {
     ActionRequest *aShowTimeButton;
     CGSize btnSize2 = CGSizeMake(60,30);
@@ -2045,17 +2084,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [localTimeZone setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
     [localTimeZone setDateFormat:@"hh:mm a"];
     
-//    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withButtonSize:btnSize2];
-
-//    int arrayIndex = 0;
-//    int rowDelta = 0;
+    //    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withButtonSize:btnSize2];
+    
+    //    int arrayIndex = 0;
+    //    int rowDelta = 0;
     
     for (int arrayIndex = 0; arrayIndex < productShowingsArray.count;){
- //       NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row+rowDelta buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withButtonSize:btnSize2];
+        //       NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row+rowDelta buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withButtonSize:btnSize2];
         NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withStartingIndex:arrayIndex withButtonSize:btnSize2];
         
         CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
-    
+        
         NSString *ticketURL;
         for (int i = 0; i <showTimesBtns.count; i++){
             aShowTimeButton = [cButPtr.cellsButtonsArray  objectAtIndex:i];
@@ -2081,8 +2120,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 aShowTimeButton.uiButton.userInteractionEnabled=NO;
             }
             aShowTimeButton.locDict = aLocDict;
-        
-        
+            
+            
         }
         CellContentDef* cellContentPtr=[[CellContentDef alloc] init];
         cellContentPtr.ccCellTypePtr=cButPtr;
@@ -2095,6 +2134,58 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     
     return row; //cButPtr;
+}
+
+-(void)forceSectionReloadABLEwithMaxCells:(int)maxTVCellsCreating sectionDef:(SectionDef *)sdPtr
+{
+    // maxTVCellsCreated will be created even if they are empty. if more exist than max, they will be deleted
+    //reloadable means memory size cannot change during the reload (specifically - can't get bigger) without access violation (trap)
+    
+    
+    if(maxTVCellsCreating < 2){   //failsafe?
+        maxTVCellsCreating=2;
+        
+        
+    }
+
+    int builtCnt=(int)[sdPtr.sCellsContentDefArr count];
+    
+    if (builtCnt == maxTVCellsCreating) {
+        return;   //no work to do
+    }
+    
+    if ( builtCnt< maxTVCellsCreating) {
+        
+        for (int index=builtCnt; index<maxTVCellsCreating; index++) {   //create variable amount of  dummy area so don't get access violation on reload
+            CellContentDef* cellContentPtr1=[[CellContentDef alloc] init];
+            cellContentPtr1.ccCellTypePtr=nil;
+            cellContentPtr1.ccTableViewCellPtr=nil;
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+        }
+        return;
+        
+    }
+    
+    
+    
+    
+
+    if ( builtCnt> maxTVCellsCreating){//row isn't just incremented by 1  in above for loop
+        NSLog(@"");
+        
+        
+        
+        for (int index=builtCnt-1; index> maxTVCellsCreating-1; index--) {   //remove excess can't display;prevent reload's access violation
+            [sdPtr.sCellsContentDefArr removeObjectAtIndex:index];
+        }
+        NSLog(@"");
+    }
+    
+    
+   
+    
+    
+    
 }
 
 /*
@@ -2693,12 +2784,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     ctdPtr=[CellTextDef initCellText:@"Sec2 Cell2 this is a very long long long cell.  SO how many lines can this cell span?  Any information would be interesting for us to see" withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
     
      
      ctdPtr=[CellTextDef initCellText:@"Sec2 Cell3 this too is  a very long long long long long cell. As a matter of fact it should take up multiple lines, but I'm not sure my logic will caclulate the maximum height of this cell by determining how many words it contains.  WIll it work or will it fail?  Nobody knows until it decides to display itself.  Can this go on forever" withTextColor:[UIColor orangeColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:0 withTextFontName:nil];
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
   
      [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
     
@@ -2707,17 +2798,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell1" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
    
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell2" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
    
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      ctdPtr=[CellTextDef initCellText:@"Sec3 Cell3" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
     
-     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
      [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
      
      
@@ -3752,31 +3843,31 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cellContentPtr1=[[CellContentDef alloc] init];
     ctdPtr=[CellTextDef initCellText:@"cellSec12" withTextColor:nil withBackgroundColor:[UIColor greenColor] withTextFontSize:26 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
     
     cellContentPtr1=[[CellContentDef alloc] init];
     ctdPtr=[CellTextDef initCellText:@"cellSec13" withTextColor:nil withBackgroundColor:nil withTextFontSize:36 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
     
     //create cells in section 2
     
     
     ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor whiteColor]withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
     ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
     ctdPtr=[CellTextDef initCellText:@"cellSec23" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
-    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
 
  

@@ -17,6 +17,7 @@
 @synthesize buttonContainerView;
 @synthesize cellsButtonsArray;
 @synthesize buttonView;
+@synthesize indicateSelItem;
 //@synthesize reloadOnly;
 
 //@synthesize buttonView;
@@ -52,6 +53,7 @@
 }
 -(void) makeUseDefaults:(CellButtonsScroll *)nCell
 {
+    nCell.indicateSelItem=NO;
     nCell.enableUserActivity=TRUE;
     nCell.cellclassType=CELLCLASS_BUTTONS_SCROLL;
   //!  backgoundColor = [UIColor redColor];
@@ -129,6 +131,16 @@
     if (!cellsButtonsArray.count)
         return;
     
+    
+    //remove subviews in my contentView, because it is for another cell
+    [[tvcellPtr.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];    //new
+    
+    
+    
+    
+    
+    
+    
     //put my displayable contents in a passed table view cell
     //tvcPtr.textLabel.backgroundColor=self.backgoundColor;
  
@@ -137,6 +149,12 @@
     ActionRequest *aBtn =    [cellsButtonsArray objectAtIndex:0];
     
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
+    
+    
+    if (self.buttonContainerView) {
+        self.buttonContainerView=nil;   //kill it?
+    }
+    
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
 //    cellsButtonsArray = [[NSMutableArray alloc] init];
     
@@ -148,6 +166,11 @@
  //   returnedUIView.center=buttonContainerView.center;
     
     // returnedUIView.backgroundColor=self.backgoundColor;
+    
+    if (self.buttonView) {
+        self.buttonView=nil; //kill it?
+    }
+    
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
     buttonContainerView.backgroundColor= [UIColor clearColor];
@@ -172,6 +195,7 @@
   
     
 }
+
 -(UIScrollView *) putMeVisibleMaxWidth:(int)maxwidth maxHeight:(int)maxheight withTVC:(UITableViewController *) tvcPtr
 {
     
@@ -186,13 +210,16 @@
         return nil;
     ActionRequest *aBtn = [cellsButtonsArray objectAtIndex:0];
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
-    NSLog(@"buttonView maxwidth %d",maxwidth);
+    NSLog(@"CellBUttonScroll putMeVisibleMaxWidth %d indicateSel %d",maxwidth,indicateSelItem);
+    
+    if (self.buttonContainerView) {
+        buttonContainerView=nil;
+    }
+    
+    
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxwidth, self.cellMaxHeight)];// maxheight)];
     
   
-//    cellsButtonsArray = [[NSMutableArray alloc] init];
-    
-//    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0 containerScrolls:thisViewScrolls withTVC:(TableViewController *)tvcPtr];
     
     HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr];
     buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);

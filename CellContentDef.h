@@ -12,13 +12,14 @@
 
 
 #import "CellTypesAll.h"
+#import "CustomTVCell.h"
 
 
 @interface CellContentDef : NSObject
 
 
-
-@property (nonatomic, readwrite) UITableViewCell *ccTableViewCellPtr;
+//@property (nonatomic, readwrite) UITableViewCell *ccTableViewCellPtr;
+@property (nonatomic, readwrite) CustomTVCell *ccTableViewCellPtr;
 
 @property (nonatomic, readwrite) CellTypesAll *ccCellTypePtr;
 
@@ -26,8 +27,8 @@
 
 
 -(void) killYourself;
++ (CellContentDef *)initCellContentDefWithThisCell:(CellTypesAll*)cellTypeDefPtr;
 
-+ (CellContentDef *)initCellContentDefWithThisCell:(CellTypesAll*)cellTypeDefPtr andTableViewCellPtr:(UITableViewCell *)tvcptr;
 
 
 @end

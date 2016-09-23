@@ -11,14 +11,17 @@
 @property ( nonatomic, readwrite) TableDef *tableDataPtr;
 @property (strong, nonatomic) GlobalTableProto *gGTPptr;
 @property (strong, nonatomic) GlobalCalcVals *gGCVptr;
-
+@property (nonatomic, readwrite) CGRect _myInitFrame;
 @end
 
 @implementation TableViewController
+
+@synthesize _myInitFrame;
+
 //@synthesize inMovieVC;
-- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle
+- (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle viewFrame:(CGRect)thisFrame
 {
-    
+    _myInitFrame=thisFrame;//fixes scrolling problem in sections
     
     self = [super init];
     if (self) {
@@ -53,9 +56,10 @@
 {
    // NSLog(@"NOTIFICATION FROM TVC viewDidLayoutSubviews");
     GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
-    
-    
     if (self.isViewLoaded && self.view.window){
+    //if (self.isViewLoaded) {   //if (self.isViewLoaded && self.view.window){     myra put back?
+
+    
         
         if (!self.tableDataPtr.tableDisplayFirstVisibleNotification) {
             NSLog(@"TVC isViewLoaded & TVC.Window  are TRUE Do FIrst notify");
@@ -158,36 +162,16 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-   // NSLog(@"sep viewdidappear hasstyle  %ld",(long)self.tableView.separatorStyle);
+    
+    [super viewDidAppear:animated];
+    
+    
 #if !TARGET_OS_TV
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 #endif
-   // NSLog(@"sep viewdidappear sets style  %ld",(long)self.tableView.separatorStyle);
-   // NSLog(@"");
     
-    [super viewDidAppear:animated];
-    /*GlobalTableProto *gPtr = [GlobalTableProto sharedGlobalTableProto];
-     ActionRequest *savedActionReq;
-     NSNumber *touchedButton;
-     switch (inMovieVC) {
-     case 1:
-     inMovieVC=2;
-     break;
-     case 2:
-     savedActionReq=gPtr.actionForReloadingView;
-     touchedButton = [NSNumber numberWithInteger:gPtr.actionForReloadingView.buttonTag];
-     [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
-     inMovieVC=0;
-     break;
-     
-     default:
-     inMovieVC=0;
-     break;
-     }
-     
-     
-     }
-     */
+    
+  //  [self.tableView reloadData];
 
 }
 
@@ -243,7 +227,7 @@
     self.gGCVptr.tableCreatedHeight=self.view.frame.size.height;
     NSLog(@"TABLE CREATED w: %f h:%f",self.view.frame.size.width,self.view.frame.size.height);
     
-    
+    CGRect mainRect=[[UIScreen mainScreen] bounds];
     CGSize result = [[UIScreen mainScreen] bounds].size;
     NSLog(@"mainScreen bounds.size  %@",NSStringFromCGSize(result));
     
@@ -362,6 +346,7 @@
 {
    // return 2;
     NSInteger answer =[self.tableDataPtr.tableSections count];
+    NSLog(@"number of section is %d",answer);
     return answer;
 }
 
@@ -383,7 +368,7 @@
     
     sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:section];
    NSInteger answer = [sectionPtr.sCellsContentDefArr count];
-   // NSLog(@"section %ld number of rows is %ld",section,(long)answer);
+    NSLog(@"section %ld number of rows is %ld",section,(long)answer);
     return answer;
 }
 //
@@ -393,7 +378,7 @@
 // R E Q U I R E D    Return the row for the corresponding section and row
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSLog(@"cellForRowAtIndexPath");
+    NSLog(@"TABLEVIEWCONTROLLER cellForRowAtIndexPath sec:%ld  row:%ld",(long)indexPath.section, (long)indexPath.row);
     SectionDef *sectionPtr;
     sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:indexPath.section];
     
@@ -408,10 +393,51 @@
         return nil;
     }
 
-    UITableViewCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
+    //UITableViewCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
+    
+    CustomTVCell *thisCell=sectionCellsPtr.ccTableViewCellPtr;
+    int someSection = (int) indexPath.section;
+    int someRow= (int) indexPath.row;
+    
+    
+    
+    [thisCell mkSelfForSection:someSection andRow:someRow onTableDef:self.tableDataPtr];
+    
+    
+    
+    thisCell.selectionStyle=UITableViewCellSelectionStyleNone;
     
     //do I have any subviews?
+    int subsCount=[[thisCell.contentView subviews] count];
+    
+    //am I a reloadOnly and already exist?
+    CellButtonsScroll *aButtonView;
+    BOOL iamreloading=NO;
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+        if (aButtonView.reloadOnly){
+            iamreloading=YES;
+            NSLog(@"");
+            return thisCell;
+            
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
+    //if (!iamreloading) {
     [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+    //}
+    
+    
+    
+    
+    
     thisCell.contentView.backgroundColor=[UIColor clearColor];
     thisCell.backgroundColor=[UIColor clearColor];
     
@@ -430,11 +456,16 @@
     
     // NSString *specificCell=[NSString stringWithFormat:@"Cell-%d-%d",i,c ];
     // NSLog(@"make cell %p text %@ withrect %@",cell,specificCell, NSStringFromCGRect(cell.contentView.frame));
-    CellButtonsScroll *aButtonView;
+    
+
+    
+    
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){// self.reloadOnly){
         //[sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
         
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+
+
         [thisCell addSubview:aButtonView.buttonContainerView];
         
     }else{
@@ -459,8 +490,8 @@
     
     
     
-       [thisCell setNeedsLayout]; //?
-       [thisCell layoutIfNeeded]; //?
+      // [thisCell setNeedsLayout]; //?
+     //  [thisCell layoutIfNeeded]; //?
     return thisCell;
     
 
@@ -549,16 +580,18 @@
    // NSLog(@"heightForHeaderInSection");
     if (sectionPtr) {
         answer=[sectionPtr heightForHeaderInSection];
-      //  NSLog(@"TVCTRL heightForHeaderInSection %ld is %d",(long)section,answer);
+        NSLog(@"TVCTRL heightForHeaderInSection %ld is %d",(long)section,answer);
+        if(answer < 1)
+            NSLog(@"");
       //  if (answer > 0) {
       //      NSLog(@"CHECK THIS");
       //  }
-        
+       
         return [sectionPtr heightForHeaderInSection];
     }
     else{
         //NSLog(@"htforheaderinsection  ...sectionptr nil for %ld section",section);
-      //  NSLog(@"TVCTRL heightForHeaderInSection %ld is 0",section);
+       NSLog(@"TVCTRL heightForHeaderInSection %ld is 0",section);
         return 0;
     }
     
@@ -628,28 +661,11 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 //============================================================================================
 #pragma mark  Table View Delegate - Modifying Row of Section
 //=======================================
-/*- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    NSInteger givenRow=indexPath.row;
-    NSInteger givenSection=indexPath.section;
-    NSLog(@"TABLEVIEWCONTROLLER shouldHighlightRow   indexpath section:%ld row:%ld",(long)givenSection,(long)givenRow);
-    return NO;
-
-}
- 
- */
-/* never called - requires custom uitableviewcell  - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    if (highlighted) {
-        NSLog(@"");
-    } else {
-        NSLog(@"");
-    }
-}
- */
 // Configure the row selection code for any cells that you want to customize the row selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     
     NSInteger givenRow=indexPath.row;
     NSInteger givenSection=indexPath.section;
@@ -674,38 +690,16 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     
 
     
-   // NSLog(@"tableView didSelectRowAtIndexPath:    section:%ld  row: %ld",indexPath.section,indexPath.row);   //chosen, now what
-    
-   // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+   
 
-    //NSString *cellText = cell.textLabel.text;
-    
-   // NSLog(@"cellText %@",cellText);
-   //1 [tableView deselectRowAtIndexPath:indexPath animated:false];
-//    int secMod = kCellSectionModulus;
-//    int rowMod = kCellRowModulus;
-/*
-    int section;
-#if TARGET_OS_TV
-    section=0;
-#else
-    section = indexPath.section;
-#endif
-*/
 
-//    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;
-
-    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;    touchInput = touchInput + 99;
+    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;
     NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
-//    sectionPtr =[activeTableDataPtr.tableSections objectAtIndex:section];
+
     CellContentDef* ccontentDefPtr = [sectionPtr.sCellsContentDefArr objectAtIndex:indexPath.row];
     
     CellTypesAll *aCell = ccontentDefPtr.ccCellTypePtr;
     ActionRequest *cellButton = [[ActionRequest alloc]init];
-//    cellButton.dataRecordKey = aCell.dataRecordKey;
-//    cellButton.dataRecords = aCell.dataRecords;
-//    cellButton.dataBaseDict = aCell.dataBaseDict;
-//      cellButton.aLocDict = aCell.al
 
 
     cellButton.tableSection = indexPath.section;// indexPath.section;
@@ -714,41 +708,57 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     cellButton.nextTableView = aCell.nextTableView;
     cellButton.buttonIndex = 0;
     cellButton.buttonDate = aCell.cellDate;
- //   NSMutableDictionary *aLocDict = [aCell.dataBaseDictsPtrs objectForKey:kDictionaryTypeLocation];
-//    NSMutableDictionary *aProductDict = [aCell.dataBaseDictsPtrs objectForKey:kDictionaryTypeProduct];
-//    [self.gGTPptr putLocationDictInParent:cellButton locDict:aLocDict];
-//    [self.gGTPptr putProductDictInParent:cellButton productDict:aProductDict];
+
     cellButton.productDict=aCell.productDict;
     cellButton.locDict=aCell.locDict;
     cellButton.buttonType=aCell.buttonType;
  
     
-    //    cellButton.aProductDict = aCell.aProductDict;
-//    cellButton.aLocDict = aCell.aLocDict;
+
 
     [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:cellButton forKey:[NSString stringWithFormat:@"%li",cellButton.buttonTag]];
-    
+    NSLog(@"             postsNotifcation userTOuchInput");
     [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
 
     return;
     
-    // Handle social cell selection to toggle checkmark
- //   if(indexPath.section == 1 && indexPath.row == 0) {
-        
-        // deselect row
-//        [tableView deselectRowAtIndexPath:indexPath animated:false];
-        
-        // toggle check mark
-//        if(self.shareCell.accessoryType == UITableViewCellAccessoryNone)
-//            self.shareCell.accessoryType = UITableViewCellAccessoryCheckmark;
-//        else
-//            self.shareCell.accessoryType = UITableViewCellAccessoryNone;
-//    }
-}
+    }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Focus
 ////////////////////////////////////////////////////////////////////////////////////////
+-(BOOL)tableView:(UITableView *)tableView canFocusRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //HERE's the DEAL:   SAY NO if you want the contents of the row to handle the focus messages.  (i.e., they contain buttons)
+    //TRICKY TRICKY TRICKY
+    //when the button gets nextFocus, it alerts its cell owner it should have focus so it changes color, done in CustomTVCellControl
+    
+    
+    CustomTVCell *cell=(CustomTVCell*)[tableView cellForRowAtIndexPath:indexPath];
+    int section=(int) indexPath.section;
+    int row=(int)indexPath.row;
+    BOOL answer=cell.focusThisCellvar;
+    NSString *it;
+    if (answer) {
+        it=@"YES";
+    }
+    else {
+            it=@"no";
+
+    }
+        
+    NSLog(@"TABLEviewCNTRLR canfocusRowAtInexPath  %@ section:%d row:%d ",it,section,row);
+    NSLog(@"");
+    
+    return answer;
+
+    
+  
+    
+    
+}
+
 - (void)tableView:(UITableView *)tableView didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
     
     
@@ -799,55 +809,22 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     if ([context.previouslyFocusedView isKindOfClass:[UITableViewCell class]]){
         
         UITableViewCell *thisTVC = (UITableViewCell*)context.previouslyFocusedView;
-        thisTVC.backgroundColor=[UIColor clearColor];
-        thisTVC.contentView.backgroundColor=[UIColor clearColor];
         
-        //find subview with tag 99 and remove it
-        // Get the subviews of the view
-        NSArray *subviews = [thisTVC.contentView subviews];
-        for (UIView *subview in subviews) {
-            if (subview.tag==99) {
-                [subview removeFromSuperview];
-            }
-            
-        }
-        NSLog(@"");
+        thisTVC.contentView.layer.borderColor=[UIColor clearColor].CGColor;
+        
         
     }
     if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
         UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
-        thisTVC.backgroundColor=[UIColor greenColor];
-        thisTVC.contentView.backgroundColor=[UIColor greenColor];
+
         
-        UILabel *aLabel= [[UILabel alloc] initWithFrame:thisTVC.contentView.frame];
+        thisTVC.contentView.layer.borderColor = [UIColor greenColor].CGColor;
+        thisTVC.contentView.layer.borderWidth = 3.0;
         
-        //L A B E L
-          aLabel.layer.borderColor = [UIColor greenColor].CGColor;
-          aLabel.layer.borderWidth = 3.0;
-        aLabel.layer.backgroundColor=[UIColor clearColor].CGColor;
-        aLabel.tag=99;
-        [thisTVC.contentView addSubview:aLabel];
-        
-        
-        NSLog(@"");
-        
-    }
-    if ([context.previouslyFocusedView isKindOfClass:[UIView class]]){
-        UIView *thisView = (UIView*)context.previouslyFocusedView;
-        thisView.backgroundColor=[UIColor clearColor];
-        
-        NSLog(@"");
-        
-    }
-    if ([context.nextFocusedView isKindOfClass:[UITableViewCell class]]){
-        UITableViewCell *thisTVC = (UITableViewCell*)context.nextFocusedView;
-        thisTVC.backgroundColor=[UIColor greenColor];
-        NSLog(@"");
         
     }
     
     
-    return;
     
     
     
