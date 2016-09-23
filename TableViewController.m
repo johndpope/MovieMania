@@ -227,7 +227,7 @@
     self.gGCVptr.tableCreatedHeight=self.view.frame.size.height;
     NSLog(@"TABLE CREATED w: %f h:%f",self.view.frame.size.width,self.view.frame.size.height);
     
-    
+    CGRect mainRect=[[UIScreen mainScreen] bounds];
     CGSize result = [[UIScreen mainScreen] bounds].size;
     NSLog(@"mainScreen bounds.size  %@",NSStringFromCGSize(result));
     
