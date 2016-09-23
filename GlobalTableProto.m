@@ -1048,6 +1048,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         CellTextDef *txtTypePtr2;
       //  CellButtonsScroll *cButPtr;
  //       NSString *groupQuals;
+    
+    
+    
+    
         for (aGroupKey in showingsGroupKeys){
             aShowingsGroup = [showTimesDictOfArrays objectForKey:aGroupKey];
             
@@ -1064,7 +1068,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
             
             row = [self buildShowTimesBtnsCells:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict buttonsPerRow:5 sectionDef:sdPtr2];
-            
+  
+
+            NSLog(@"");
  /*
             cButPtr = [self buildShowTimesBtnsArray:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict];
             cellContentPtr1=[[CellContentDef alloc] init];
@@ -1075,8 +1081,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 */
         
         }
+    //THIS IS RELOAD-ABLE.  THAT means we cannot change the size of the tableview cells once they are build initially. (trap occurs)
+    //
     
-    
+    [self forceSectionReloadABLEwithMaxCells:10 sectionDef:sdPtr2 ];
     
  /*
         NSMutableArray *allDigitalShowTimes = [[NSMutableArray alloc] init];
@@ -1363,7 +1371,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             cellContentPtr.ccCellTypePtr=cuvPtr;
             cellContentPtr.ccTableViewCellPtr=nil;
             [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
+            
+            
             row = [self buildShowTimesBtnsCells:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict buttonsPerRow:5 sectionDef:sdPtr];
+            
             /*
              cButPtr = [self buildShowTimesBtnsArray:aShowingsGroup inSection:section inRow:row forProduct:aProductDict inLocation:aLocDict];
              cellContentPtr=[[CellContentDef alloc] init];
@@ -2062,7 +2073,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     return showingsForDate;
 }
--(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr// is3D:(BOOL)is3D// allShowingCount:(NSInteger)allShowingsCount
+-(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr
 {
     ActionRequest *aShowTimeButton;
     CGSize btnSize2 = CGSizeMake(60,30);
@@ -2073,17 +2084,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [localTimeZone setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
     [localTimeZone setDateFormat:@"hh:mm a"];
     
-//    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withButtonSize:btnSize2];
-
-//    int arrayIndex = 0;
-//    int rowDelta = 0;
+    //    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withButtonSize:btnSize2];
+    
+    //    int arrayIndex = 0;
+    //    int rowDelta = 0;
     
     for (int arrayIndex = 0; arrayIndex < productShowingsArray.count;){
- //       NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row+rowDelta buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withButtonSize:btnSize2];
+        //       NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row+rowDelta buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withButtonSize:btnSize2];
         NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withStartingIndex:arrayIndex withButtonSize:btnSize2];
         
         CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
-    
+        
         NSString *ticketURL;
         for (int i = 0; i <showTimesBtns.count; i++){
             aShowTimeButton = [cButPtr.cellsButtonsArray  objectAtIndex:i];
@@ -2109,8 +2120,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 aShowTimeButton.uiButton.userInteractionEnabled=NO;
             }
             aShowTimeButton.locDict = aLocDict;
-        
-        
+            
+            
         }
         CellContentDef* cellContentPtr=[[CellContentDef alloc] init];
         cellContentPtr.ccCellTypePtr=cButPtr;
@@ -2123,6 +2134,58 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     
     return row; //cButPtr;
+}
+
+-(void)forceSectionReloadABLEwithMaxCells:(int)maxTVCellsCreating sectionDef:(SectionDef *)sdPtr
+{
+    // maxTVCellsCreated will be created even if they are empty. if more exist than max, they will be deleted
+    //reloadable means memory size cannot change during the reload (specifically - can't get bigger) without access violation (trap)
+    
+    
+    if(maxTVCellsCreating < 2){   //failsafe?
+        maxTVCellsCreating=2;
+        
+        
+    }
+
+    int builtCnt=(int)[sdPtr.sCellsContentDefArr count];
+    
+    if (builtCnt == maxTVCellsCreating) {
+        return;   //no work to do
+    }
+    
+    if ( builtCnt< maxTVCellsCreating) {
+        
+        for (int index=builtCnt; index<maxTVCellsCreating; index++) {   //create variable amount of  dummy area so don't get access violation on reload
+            CellContentDef* cellContentPtr1=[[CellContentDef alloc] init];
+            cellContentPtr1.ccCellTypePtr=nil;
+            cellContentPtr1.ccTableViewCellPtr=nil;
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+        }
+        return;
+        
+    }
+    
+    
+    
+    
+
+    if ( builtCnt> maxTVCellsCreating){//row isn't just incremented by 1  in above for loop
+        NSLog(@"");
+        
+        
+        
+        for (int index=builtCnt-1; index> maxTVCellsCreating-1; index--) {   //remove excess can't display;prevent reload's access violation
+            [sdPtr.sCellsContentDefArr removeObjectAtIndex:index];
+        }
+        NSLog(@"");
+    }
+    
+    
+   
+    
+    
+    
 }
 
 /*
