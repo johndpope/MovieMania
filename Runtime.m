@@ -284,9 +284,13 @@
                           posWindowRect.size.width,
                           fixedHeaderHeight);
     
-    posCenterRect=CGRectMake(0, fixedHeaderHeight + fixedStatusBarHeight,
-                             posWindowRect.size.width,
+//    posCenterRect=CGRectMake(0, fixedHeaderHeight + fixedStatusBarHeight,
+ //                            posWindowRect.size.width,
+ //                            allowTableHeight);
+    posCenterRect=CGRectMake(2, fixedHeaderHeight + fixedStatusBarHeight,
+                             posWindowRect.size.width-2,
                              allowTableHeight);
+
     
     posBottomRect=CGRectMake(0, allowTableHeight + fixedHeaderHeight + fixedStatusBarHeight,
                              posWindowRect.size.width,

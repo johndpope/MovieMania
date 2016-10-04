@@ -9,16 +9,46 @@
 #ifndef TableProtoDefines_h
 #define TableProtoDefines_h
 
-
-
+//////////////////////////////////////////////////////
+//    T K     C E L L     D E F A U L T S
 //below used by all toolkit cell types as default.
 //So, when nil is passed to an initializer, this is what they use for default foreground text color
 //and default background color
 #define TK_TEXT_COLOR    [UIColor whiteColor]   //use like [UIColor colorWithRed:0.1f green:0.004f blue:0.3f alpha:0.3f]
 #define TK_TRANSPARENT_COLOR [UIColor clearColor]
 #define TK_TEXTCELL_SEPARATOR_COLOR [UIColor whiteColor]
+
+
+#define TK_VIEW_BackColor  [UIColor colorWithRed:(32/255.0) green:(32/255.0) blue:(32/255.0) alpha:1] ;  // very dark gray
+#define TK_CELL_BackColor  [UIColor colorWithRed:(47/255.0) green:(47/255.0) blue:(47/255.0) alpha:1] ;  // dark gray
+#define TK_HEADER_BackColor  [UIColor colorWithRed:(204/255.0) green:(0/255.0) blue:(0/255.0) alpha:1] ; // reddish
+#define TK_FOCUSBORDER_COLOR [UIColor orangeColor]
+#define TK_FOCUSBORDER_SIZE 3
 //#define globalColor [UIColor colorWithRed:0.1f green:0.004f blue:0.3f alpha:0.3f]   //example
 
+#define TK_IOS_ButtonWidth 60
+#define TK_IOS_ButtonHeight 30
+#define TK_IOS_PictureWidth 100 //80
+#define TK_IOS_PictureHeight 150  //120
+#define TK_IOS_VideoWidth 80
+#define TK_IOS_VideoHeight 60
+#define TK_IOS_TextFontBig 20
+#define TK_IOS_TextFontMiddle 16
+#define TK_IOS_TextFontSmall 12
+
+#define TK_TVOS_ButtonWidth 120
+#define TK_TVOS_ButtonHeight 60
+#define TK_TVOS_PictureWidth 200
+#define TK_TVOS_PictureHeight 300
+#define TK_TVOS_VideoWidth 160
+#define TK_TVOS_VideoHeight 120
+
+#define TK_TVOS_TextFontBig 40
+#define TK_TVOS_TextFontMiddle 32
+#define TK_TVOS_TextFontSmall 24
+
+
+///////////////////////////////////////////////////////
 #define  DISK_STORAGE_ENABLED YES               // if this is NO, none of the archive and unarchive methods work
 #define  DISK_DOCSTORE @"STORE"                 //storage files located at .../Documents/<DISK_DOCSTORE>
 #define  DISK_DOCDEBUG  @"DEBUG"                //debug files located at .../Documents/<DISK_DOCDEBUG>

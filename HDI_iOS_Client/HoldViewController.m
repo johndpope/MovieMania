@@ -24,7 +24,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
   [self.view setOpaque:NO];
-    self.view.backgroundColor = [UIColor yellowColor];//;[UIColor blueColor];
+    self.view.backgroundColor = [UIColor clearColor];//;[UIColor blueColor];
    // self.view.frame=CGRectMake(0, 0, 50, 50);
    // self.view.bounds=self.view.frame;
     

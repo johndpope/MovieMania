@@ -43,7 +43,12 @@
     nDispTText.textColor=TK_TEXT_COLOR;
     nDispTText.backgoundColor=TK_TRANSPARENT_COLOR;
     
-    nDispTText.textFontAndSize=[UIFont fontWithName:@"Helvetica Neue" size:12];
+    nDispTText.textFontAndSize=[UIFont fontWithName:@"Helvetica Neue" size:TK_IOS_TextFontMiddle];
+#if TARGET_OS_TV
+    nDispTText.textFontAndSize=[UIFont fontWithName:@"Helvetica Neue" size:TK_TVOS_TextFontMiddle];
+#endif
+   
+    
     nDispTText.alignMe=UIViewAutoresizingFlexibleRightMargin; //aligns left
     // UIViewAutoresizingFlexibleLeftMargin; //aligns right
     // UIViewAutoresizingFlexibleRightMargin; //aligns left

@@ -49,7 +49,12 @@ extern NSString* const ConstDoneLoopingXactionResponseProcessed;
 @property (nonatomic, readwrite) UIColor *viewBackColor;
 @property (nonatomic, readwrite) UIColor *cellBackColor;
 @property (nonatomic, readwrite) UIColor *headerBackColor;
-
+@property (nonatomic, readwrite) CGSize sizeGlobalButton;   //manipulate based on IOS or TVOS
+@property (nonatomic, readwrite) CGSize sizeGlobalPoster;   //manipulate based on IOS or TVOS
+@property (nonatomic, readwrite) CGSize sizeGlobalVideo;   //manipulate based on IOS or TVOS
+@property (nonatomic, readwrite) int sizeGlobalTextFontBig;    //manipulate based on IOS or TVOS
+@property (nonatomic, readwrite) int sizeGlobalTextFontMiddle;    //manipulate based on IOS or TVOS
+@property (nonatomic, readwrite) int sizeGlobalTextFontSmall;    //manipulate based on IOS or TVOS
 
 @property (nonatomic, readwrite) NSString *globalZipCode;
 

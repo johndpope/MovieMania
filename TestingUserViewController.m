@@ -817,7 +817,7 @@
     title = [[UILabel alloc] init];
     // CGRect myFrame=CGRectMake(0, 0, maxW, maxH);
     //[title setFrame:myFrame];
-    title.layer.borderColor = [UIColor yellowColor].CGColor;
+    title.layer.borderColor = [UIColor magentaColor].CGColor;
     title.layer.borderWidth = 3.0;
     //title.layer.cornerRadius=8.0;
     //title.clipsToBounds=YES;
@@ -845,7 +845,7 @@
     UILabel *title;
     title = [[UILabel alloc] init];
     [title setFrame:myFrame];
-    title.layer.borderColor = [UIColor yellowColor].CGColor;
+    title.layer.borderColor = [UIColor magentaColor].CGColor;
     title.layer.borderWidth = 3.0;
     //title.layer.cornerRadius=8.0;
     //title.clipsToBounds=YES;

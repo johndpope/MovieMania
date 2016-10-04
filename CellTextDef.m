@@ -524,7 +524,7 @@
     //return  UIView to display this stuff
     UIView* returnedUIView;
    
-    UILabel *aLabel=[self buildMultiLineLabelMaxWidth:maxwidth];
+    UILabel *aLabel=[self buildMultiLineLabelMaxWidth:maxwidth-10];
     
     
 
@@ -562,7 +562,7 @@
     
     int maxwidth=[GlobalCalcVals sharedGlobalCalcVals].tableCreatedWidth;//?tvcellPtr.frame.size.width;
     
-    UILabel *aLabel=[self buildMultiLineLabelMaxWidth:maxwidth];
+    UILabel *aLabel=[self buildMultiLineLabelMaxWidth:maxwidth-10];
     self.cellMaxHeight=aLabel.frame.size.height;
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];

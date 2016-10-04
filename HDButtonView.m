@@ -29,7 +29,7 @@
 #import "CellContentDef.h"
 
 #define kControlViewsBackgroundAlpha  0.6
-#define kSelectBorderWidth 3
+
 
 //#define kAutoScroll 1
 @implementation HDButtonView
@@ -204,7 +204,7 @@
             //            nextLabel.userInteractionEnabled = YES;
             //            nextLabel.backgroundColor = [UIColor whiteColor];
             
-            nextLabel.font = [UIFont systemFontOfSize:12];
+            nextLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
             nextLabel.text = aBtn.buttonLabel;
             nextLabel.backgroundColor = backColor;
             nextLabel.textColor = textColor;
@@ -253,7 +253,7 @@
         
     }else{
         [nextButton setTitle:actionReq.buttonName forState:UIControlStateNormal];
-        nextButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        nextButton.titleLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
         [nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         nextButton.titleLabel.numberOfLines = 2;
         nextButton.alpha = 0.6;
@@ -353,8 +353,8 @@
         currentButtonInCenter = firstButton;
     
         //myra changed  [currentButtonInCenter.uiButton addSubview:selectedBtnBox];
-    currentButtonInCenter.uiButton.layer.borderWidth=kSelectBorderWidth;
-    currentButtonInCenter.uiButton.layer.borderColor=[UIColor yellowColor].CGColor ;
+    currentButtonInCenter.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
+    currentButtonInCenter.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
   //  }   //new
     
     
@@ -507,8 +507,8 @@
             currentButtonInCenter.buttonIsOn = YES;
             if (currentButtonInCenter.reloadOnly){
               //[currentButtonInCenter.uiButton addSubview:selectedBtnBox];
-                currentButtonInCenter.uiButton.layer.borderColor=[UIColor yellowColor].CGColor;
-                currentButtonInCenter.uiButton.layer.borderWidth=kSelectBorderWidth;
+                currentButtonInCenter.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
+                currentButtonInCenter.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
                 NSLog(@"-----MoveToButtonInCenter setButtonCenter %d",i);
 
                 
@@ -636,8 +636,8 @@
         NSLog(@"      nextButton %@",nextButton.buttonName);
         
          tvfocusAction=nextButton;
-        nextButton.uiButton.layer.borderWidth=kSelectBorderWidth;
-        nextButton.uiButton.layer.borderColor=[UIColor yellowColor].CGColor;
+        nextButton.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
+        nextButton.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
         
 
        

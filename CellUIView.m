@@ -1025,7 +1025,7 @@
     
     
     
-    [self defineTemplateUIViewforMaxWidth:maxW maxHeight:maxH];
+    [self defineTemplateUIViewforMaxWidth:maxW-10 maxHeight:maxH];
 
    // tvcellPtr.contentView.backgroundColor=[UIColor clearColor]; //no effect?
 
@@ -1058,7 +1058,7 @@
 {
     
     
-    [self defineTemplateUIViewforMaxWidth:maxwidth maxHeight:maxheight];
+    [self defineTemplateUIViewforMaxWidth:maxwidth-10 maxHeight:maxheight];
     return templateUIView;
     
     

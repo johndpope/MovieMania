@@ -64,6 +64,7 @@
 @synthesize inAVPlayerVC;
 @synthesize viewBackColor,viewTextColor,cellBackColor,headerBackColor;
 @synthesize selectedDate, selectedLocDict, selectedProdcuctDict;
+@synthesize sizeGlobalButton,sizeGlobalPoster,sizeGlobalVideo,sizeGlobalTextFontBig,sizeGlobalTextFontMiddle,sizeGlobalTextFontSmall;
 
 NSString* const ConstDoneLoopingXactionResponseProcessed = @"DoneLoopingXactionResponseProcessed";
 NSString* const ConstIDentifyUserControllerSuccess = @"IDentifyUserControllerCompletedOK";
@@ -127,12 +128,24 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     //default TOOLKIT settings like when you pass nil for a helper method are defined SEE TableProtoDefines.h
     //
-    viewTextColor = [UIColor whiteColor];
-//    viewBackColor = [UIColor darkGrayColor];
-    viewBackColor = [UIColor colorWithRed:(32/255.0) green:(32/255.0) blue:(32/255.0) alpha:1] ;  // very dark gray
-    cellBackColor = [UIColor colorWithRed:(47/255.0) green:(47/255.0) blue:(47/255.0) alpha:1] ;  // dark gray
-    headerBackColor = [UIColor colorWithRed:(204/255.0) green:(0/255.0) blue:(0/255.0) alpha:1] ; // reddish
-    }
+    viewTextColor = TK_TEXT_COLOR;//[UIColor whiteColor];
+    viewBackColor = TK_VIEW_BackColor;//[UIColor colorWithRed:(32/255.0) green:(32/255.0) blue:(32/255.0) alpha:1] ;  // very dark gray
+    cellBackColor = TK_CELL_BackColor;//[UIColor colorWithRed:(47/255.0) green:(47/255.0) blue:(47/255.0) alpha:1] ;  // dark gray
+    headerBackColor = TK_HEADER_BackColor;//[UIColor colorWithRed:(204/255.0) green:(0/255.0) blue:(0/255.0) alpha:1] ; // reddish
+    sizeGlobalTextFontBig=TK_IOS_TextFontBig;
+    sizeGlobalTextFontMiddle=TK_IOS_TextFontMiddle;
+    sizeGlobalTextFontSmall=TK_IOS_TextFontSmall;
+    sizeGlobalPoster=CGSizeMake(TK_IOS_PictureWidth, TK_IOS_PictureHeight);  //picture holder
+    sizeGlobalButton=CGSizeMake(TK_IOS_ButtonWidth, TK_IOS_ButtonHeight);  //press button
+    
+    #if TARGET_OS_TV
+    sizeGlobalTextFontBig=TK_TVOS_TextFontBig;
+    sizeGlobalTextFontMiddle=TK_TVOS_TextFontMiddle;
+    sizeGlobalTextFontSmall=TK_TVOS_TextFontSmall;
+    sizeGlobalPoster=CGSizeMake(TK_TVOS_PictureWidth, TK_TVOS_PictureHeight);  //picture holder
+    sizeGlobalButton=CGSizeMake(TK_TVOS_ButtonWidth, TK_TVOS_ButtonHeight);  //press button
+    #endif
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +247,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)makeTVCInitDBs:(ActionRequest *)pressedButton
 {
     TableDef *myTable;
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;// CGSizeMake(60, 30);
     AutomatedXACT *automateXACTptr;
     if (debugFlag) {
             myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames0 withNextTVCs:footerButtonNextTableviews0 withButtonSize:btnSize];// buttonsScroll:NO];
@@ -337,7 +350,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)makeTVCStartUp:(ActionRequest *)pressedButton
 {
     TableDef *myTable;
-       CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
 
     myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
 /*
@@ -520,7 +533,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSString *currentString=[NSString stringWithFormat:@"Movies in zipcode: %@",globalZipCode];
     
 
-    txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
@@ -541,13 +554,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //DO entryField with PlaceHolder AND Label:   U S E R    I D
     entryFPtr=[[CellInputField alloc]init];
     
-    placeholderTxt=[CellTextDef initCellText:globalZipCode withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    placeholderTxt=[CellTextDef initCellText:globalZipCode withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
     if (entryFPtr.placeholderTextDefPtr) {
         [entryFPtr.placeholderTextDefPtr killYourself];
     }
     entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New Zip code:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New Zip code:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
 
     entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
        TransactionData *dataFieldEF=[[TransactionData alloc]init];
@@ -569,7 +582,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //NEED ONE VERIFY BUTTON - how to do that?
     
     
-    CGSize btnSize1 = CGSizeMake(80, 30);
+    CGSize btnSize1 = sizeGlobalButton;//CGSizeMake(80, 30);
     
     NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize1];
     
@@ -661,13 +674,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //DO entryField with PlaceHolder AND Label:   U S E R    I D
     entryFPtr=[[CellInputField alloc]init];
     
-    placeholderTxt=[CellTextDef initCellText:@"User ID" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    placeholderTxt=[CellTextDef initCellText:@"User ID" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
     if (entryFPtr.placeholderTextDefPtr) {
         [entryFPtr.placeholderTextDefPtr killYourself];
     }
     entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"Your User ID:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"Your User ID:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
     entryFPtr.transDataPtr=dataField0;
     
@@ -676,13 +689,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //DO entryField with PlaceHolder AND Label:     P A S S W O R D
     entryFPtr1=[[CellInputField alloc]init];
     
-    placeholderTxt=[CellTextDef initCellText:@"Password" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    placeholderTxt=[CellTextDef initCellText:@"Password" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
     if (entryFPtr1.placeholderTextDefPtr) {
         [entryFPtr1.placeholderTextDefPtr killYourself];
     }
     entryFPtr1.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr1.leftSideDispTextPtr=[CellTextDef initCellText:@"Your Password:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    entryFPtr1.leftSideDispTextPtr=[CellTextDef initCellText:@"Your Password:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     entryFPtr1.secureEntry=TRUE;
     entryFPtr1.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
     entryFPtr1.transDataPtr=dataField1;
@@ -697,7 +710,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //NEED ONE VERIFY BUTTON - how to do that?
     
     
-    CGSize btnSize = CGSizeMake(80, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(80, 30);
     
     NSMutableArray *logOnBtn = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize];
     
@@ -740,7 +753,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CGSize useWHoleSize=useImage.size;
     CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
     
-    CellImageOnly *cioPtr=[CellImageOnly initCellDefaults:useImage withPNGName:@"umaRuler" withBackColor:[UIColor clearColor] rotateWhenVisible:NO withSize:useWHoleSize];
+    CellImageOnly *cioPtr=[CellImageOnly initCellDefaults:useImage withPNGName:@"umaRuler" withBackColor:cellBackColor rotateWhenVisible:NO withSize:useWHoleSize];
     myTable.tableHeaderContentPtr=nil;
     myTable.tableFooterContentPtr=nil;
     
@@ -773,19 +786,19 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     CellTextDef *ctdPtr;
     //line 1
-    ctdPtr=[CellTextDef initCellText:@"Data Error" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:36 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"Data Error" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:(sizeGlobalTextFontBig) withTextFontName:nil];
     [cuvPtr.cTextDefsArray addObject:ctdPtr];
     ctdPtr.cellSeparatorVisible=TRUE;
     ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     
     //line2
-    ctdPtr=[CellTextDef initCellText:pressedButton.errorDisplayText withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:26 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:pressedButton.errorDisplayText withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
     [cuvPtr.cTextDefsArray addObject:ctdPtr];
     ctdPtr.cellSeparatorVisible=FALSE;
     
     //line3
-    ctdPtr=[CellTextDef initCellText:@"Sorry.  Please re-start to try again." withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:16 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"Sorry.  Please re-start to try again." withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:ctdPtr];
     ctdPtr.cellSeparatorVisible=FALSE;
@@ -799,7 +812,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     TableDef *myTable;
     NSLog(@"----makeTVC1");
      myTable = [self createFixedTableHeaderUsingText:@"Theater List" forTable:nil];
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     CellButtonsScroll *footerCell = (CellButtonsScroll *) myTable.tableFooterContentPtr.ccCellTypePtr;
     [self turnOnButton:TVC1 inCellBtnArray:footerCell.cellsButtonsArray];
@@ -864,7 +877,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         [myTable.tableSections addObject:sdPtr2];
     
     
- //       CGSize btnSize2 = CGSizeMake(300,280);
+ 
     
         NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
   //       NSString *productName = [productDict objectForKey:kProductNameKey];
@@ -924,7 +937,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     TableDef *myTable;
     NSLog(@"----makeTVC3");
     myTable = [self createFixedTableHeaderUsingText:@"Locate Where Showing" forTable:nil];
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     CellButtonsScroll *footerCell = (CellButtonsScroll *) myTable.tableFooterContentPtr.ccCellTypePtr;
     [self turnOnButton:TVC3 inCellBtnArray:footerCell.cellsButtonsArray];
@@ -949,7 +962,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     int row = 0;
     int numberOfButtonsPerCell = 2;
     ActionRequest *aBtn;
-    CGSize btn2Size = CGSizeMake(120, 180);
+    CGSize btn2Size = CGSizeMake(sizeGlobalButton.width*2, sizeGlobalButton.height*6);//CGSizeMake(120, 180);
     
     
     for (NSInteger keyIndex = 0; keyIndex < allProductNames.count; ){
@@ -1011,10 +1024,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
         NSMutableDictionary* aProductDict = pressedButton.productDict;  //[self fetchProductDict:pressedButton];
         CellUIView *cuvPtr =[[CellUIView alloc]init];
-        CellTextDef  * txtTypePtr=[CellTextDef initCellText:[aProductDict objectForKey:kMovieTitle] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:16 withTextFontName:nil];
+        CellTextDef  * txtTypePtr=[CellTextDef initCellText:[aProductDict objectForKey:kMovieTitle] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];   //was font size 16
         txtTypePtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
         [cuvPtr.cTextDefsArray addObject:txtTypePtr];
-        CellTextDef  * txtTypePtr1=[CellTextDef initCellText:[aProductDict objectForKey:kMoviePlot]  withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:12 withTextFontName:nil];
+        CellTextDef  * txtTypePtr1=[CellTextDef initCellText:[aProductDict objectForKey:kMoviePlot]  withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil];   //was font size 12
         txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
         [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
@@ -1058,7 +1071,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             aShowing = [aShowingsGroup objectAtIndex:0];
             CellUIView *cuvPtr =[[CellUIView alloc]init];
             // [aShowing objectForKey:kProductQualsKey];
-            txtTypePtr2=[CellTextDef initCellText:aGroupKey withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:10 withTextFontName:nil];
+            txtTypePtr2=[CellTextDef initCellText:aGroupKey withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil]; //was font size 10
             txtTypePtr2.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
             [cuvPtr.cTextDefsArray addObject:txtTypePtr2];
             row++;
@@ -1219,8 +1232,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellContentDef *cellContentPtr;//,*cellContentPtr1;
  //   NSString *tableTitle = [NSString stringWithFormat:@"Theaters Showing - %@",[aProductDict objectForKey:kProductNameKey]];
     NSString *tableTitle = @"Movie Details";
-    CGSize sechdrBtnSize = CGSizeMake(60, 30);
-    CGSize ftrBtnSize = CGSizeMake(60, 30);
+    CGSize sechdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+    CGSize ftrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     int section = 0;
     myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
     sdPtr = nil;
@@ -1237,7 +1250,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    CGSize picSize = CGSizeMake(80,120);
+    CGSize picSize = sizeGlobalPoster;//CGSizeMake(80,120);
     NSString *productName = [aProductDict objectForKey:kMovieTitle];
     NSString *shortDesc = [aProductDict objectForKey:kMovieShortDescr];
     if (!shortDesc) {
@@ -1266,7 +1279,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",genre]];
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",releaseDate]];
-    CellUIView *ctdPtr=[CellUIView mkcuvImageLeft:[aProductDict objectForKey:kProductImageKey] withImageName:movieName andImageSize:picSize andTextsArrayRight:arrayOfStrings useTextSizeTopCell:16 useTextSizeAdditionalCells:11 withBackGroundColor:viewBackColor withTextColor:viewTextColor];
+    CellUIView *ctdPtr=[CellUIView mkcuvImageLeft:[aProductDict objectForKey:kProductImageKey] withImageName:movieName andImageSize:picSize andTextsArrayRight:arrayOfStrings useTextSizeTopCell:sizeGlobalTextFontBig useTextSizeAdditionalCells:sizeGlobalTextFontSmall withBackGroundColor:viewBackColor withTextColor:viewTextColor];   //was text size 16
     ctdPtr.enableUserActivity=NO;
     cellContentPtr=[[CellContentDef alloc] init];
     cellContentPtr.ccCellTypePtr=ctdPtr;   //not citPtr
@@ -1362,7 +1375,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             
             CellUIView *cuvPtr =[[CellUIView alloc]init];
             // [aShowing objectForKey:kProductQualsKey];
-            txtTypePtr2=[CellTextDef initCellText:aGroupKey withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:10 withTextFontName:nil];
+            txtTypePtr2=[CellTextDef initCellText:aGroupKey withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil];  //was text font 10
             txtTypePtr2.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
             [cuvPtr.cTextDefsArray addObject:txtTypePtr2];
             row++;
@@ -1710,17 +1723,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     //build text cells
     CellTextDef *txtTypePtr, *txtTypePtr1, *txtTypePtr2;
-    txtTypePtr=[CellTextDef initCellText:[aLocDict objectForKey:kLocationNameKey] withTextColor:textColor withBackgroundColor:backColor withTextFontSize:20 withTextFontName:nil];
+    txtTypePtr=[CellTextDef initCellText:[aLocDict objectForKey:kLocationNameKey] withTextColor:textColor withBackgroundColor:backColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];  //was text size 20
     txtTypePtr.cellDispTextPtr.alignMe=alignment;// NSTextAlignmentLeft;//NSTextAlignmentCenter;
     txtTypePtr.cellSeparatorVisible=TRUE;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr];
     
-    txtTypePtr1=[CellTextDef initCellText:[aLocDict objectForKey:kLocationAddressKey] withTextColor:textColor withBackgroundColor:backColor withTextFontSize:16 withTextFontName:nil];
+    txtTypePtr1=[CellTextDef initCellText:[aLocDict objectForKey:kLocationAddressKey] withTextColor:textColor withBackgroundColor:backColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil]; //was text size 16
     txtTypePtr1.cellDispTextPtr.alignMe=alignment;// NSTextAlignmentLeft;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
     NSString *cityStateZip=[NSString stringWithFormat:@"%@, %@ %@",[aLocDict objectForKey:kLocationCityKey], [aLocDict objectForKey:kLocationStateKey], [aLocDict objectForKey:kLocationZipKey]];
-    txtTypePtr2=[CellTextDef initCellText:cityStateZip withTextColor:textColor withBackgroundColor:backColor withTextFontSize:12 withTextFontName:nil];
+    txtTypePtr2=[CellTextDef initCellText:cityStateZip withTextColor:textColor withBackgroundColor:backColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil]; //was text size 12
     txtTypePtr2.cellDispTextPtr.alignMe=alignment;// NSTextAlignmentLeft;
     
     
@@ -1742,13 +1755,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    txtTypePtr=[CellTextDef initCellText:[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    txtTypePtr=[CellTextDef initCellText:[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil]; //was text size 20
     txtTypePtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr];
     keyIdx++;
     
     for (keyIdx = keyIdx; keyIdx < movieInfoKeys.count; keyIdx++){
-        txtTypePtr=[CellTextDef initCellText:[NSString stringWithFormat:@"%@: %@",[movieInfoKeys objectAtIndex:keyIdx],[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:12 withTextFontName:nil];
+        txtTypePtr=[CellTextDef initCellText:[NSString stringWithFormat:@"%@: %@",[movieInfoKeys objectAtIndex:keyIdx],[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil]; //was text size 12
         txtTypePtr.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
         [cuvPtr.cTextDefsArray addObject:txtTypePtr];
     }
@@ -1798,13 +1811,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    txtTypePtr=[CellTextDef initCellText:[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    txtTypePtr=[CellTextDef initCellText:[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];  //was text size 20
     txtTypePtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr];
     keyIdx++;
     
     for (keyIdx = keyIdx; keyIdx < movieInfoKeys.count; keyIdx++){
-        txtTypePtr=[CellTextDef initCellText:[NSString stringWithFormat:@"%@: %@",[movieInfoKeys objectAtIndex:keyIdx],[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:12 withTextFontName:nil];
+        txtTypePtr=[CellTextDef initCellText:[NSString stringWithFormat:@"%@: %@",[movieInfoKeys objectAtIndex:keyIdx],[movieInfo objectForKey:[movieInfoKeys objectAtIndex:keyIdx]]] withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil]; //was text size 12
         txtTypePtr.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
         [cuvPtr.cTextDefsArray addObject:txtTypePtr];
     }
@@ -1993,8 +2006,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     SectionDef *sdPtr1;
     TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
     CellContentDef *cellContentPtr1;//, *cellContentPtr2;
-    CGSize hdrBtnSize = CGSizeMake(60, 30);
-    CGSize movieBtnSize = CGSizeMake(100, 150);
+    CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+    CGSize movieBtnSize = sizeGlobalPoster;//CGSizeMake(100, 150);
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
         NSLog(@"reloadonly - notcreate table");
@@ -2007,7 +2020,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     else{
         NSLog(@"create table");
         myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
-        CGSize sechdrBtnSize = CGSizeMake(60, 30);
+        CGSize sechdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
         sdPtr1 = nil;
         sdPtr1 = [self createDateButtonsAsSectionHeader:sdPtr1 sectionNumber:0 inTable:myTable actionReq:pressedButton withButtonSize:sechdrBtnSize];// nextTVC:TVC2];
         hdrCell = (CellButtonsScroll *)sdPtr1.sectionHeaderContentPtr.ccCellTypePtr;
@@ -2076,7 +2089,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr
 {
     ActionRequest *aShowTimeButton;
-    CGSize btnSize2 = CGSizeMake(60,30);
+    CGSize btnSize2 = sizeGlobalButton;//CGSizeMake(60,30);
     NSDate *aShowTime;
     NSString *tmsShowtimeStr;
     NSMutableDictionary *aShowing;
@@ -2342,7 +2355,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 }
 -(CellButtonsScroll*)buildMovieTrailerButtonsCell:(ActionRequest*)pressedBtn inSection:(int)section inRow:(int)row fromTrailerArray:(NSMutableArray*)trailerArray //forNumberOfTrailers:(int)numberOfTrailers
 {
-    CGSize tailerBtnSize = CGSizeMake(80,60);
+    CGSize tailerBtnSize = sizeGlobalVideo;//CGSizeMake(80,60);
     NSMutableArray *movieTraierBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:trailerArray.count withButtonSize:tailerBtnSize];
     ActionRequest *aBtn;
     NSMutableDictionary *aTrailerDict;
@@ -2824,7 +2837,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     TableDef *myTable;
     
 //    myTable=[self createButtonsForFixedHeaderinTable:nil];
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;
     myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     
     SectionDef *sdPtr1;
@@ -2873,7 +2886,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)testButtonsFixedFooterOnly
 {
     TableDef *myTable;
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:nil withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     
     SectionDef *sdPtr1;
@@ -2897,7 +2910,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)testCellImageLTextR
 {
     TableDef *myTable;
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:nil withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     
     SectionDef *sdPtr1;
@@ -2921,7 +2934,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)testCellImageOnly
 {
     TableDef *myTable;
-    CGSize btnSize = CGSizeMake(60, 30);
+    CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:nil withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
     
     SectionDef *sdPtr1;
@@ -3139,7 +3152,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }  //end for labels in cell
         */
         
-       CGSize btnSize = CGSizeMake(60, 30);
+        CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
         NSMutableArray *hdrButtons = [self buildSpecialButtons:BUTTONS_NORMAL_CELL inSection:0 withButtonNames:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];
         
         cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:[UIColor blueColor] withCellButtonArray:hdrButtons];// buttonScroll:NO];
@@ -3430,7 +3443,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 -(SectionDef*) createButtonsAsSectionHeader:(SectionDef*)mySection sectionNumber:(int)secNum  inTable:(TableDef *)myTable withBtnNames:(NSArray *)butNamesPtr withNextTVCs:(NSArray *)nextTVCsPtr withButtonSize:(CGSize)btnSize// buttonsScroll:(BOOL)buttonsScroll
 {
-    //    CGSize btnSize = CGSizeMake(60, 30);
+  
     
     NSMutableArray *secButtons = [self buildSpecialButtons:BUTTONS_SEC_HEADER inSection:secNum withButtonNames:butNamesPtr withNextTVCs:nextTVCsPtr withButtonSize:btnSize];
     
@@ -3702,7 +3715,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellContentDef *cellContentPtr1;
     CellTextDef *ctdPtr1;
     cellContentPtr1=[[CellContentDef alloc] init];
-    ctdPtr1=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor redColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:36 withTextFontName:nil];
+    ctdPtr1=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor redColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil]; //was font size 36
     ctdPtr1.cellSeparatorVisible=TRUE;
     
     cellContentPtr1.ccCellTypePtr=ctdPtr1;
@@ -3723,7 +3736,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    SectionDef *sdPtr2=[SectionDef initSectionHeaderText:@"mySection2" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:18 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+    SectionDef *sdPtr2=[SectionDef initSectionHeaderText:@"mySection2" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
     //SectionDef *sdPtr1=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
     // sdPtr1.sectionHeaderContentPtr=nil;
     sdPtr2.sectionFooterContentPtr=nil;
@@ -3733,10 +3746,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     CellTextDef *ctdPtr;
-    ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:46 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     [cuvPtr.cTextDefsArray addObject:ctdPtr];
     ctdPtr.cellSeparatorVisible=TRUE;
-    ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:26 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor redColor] withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     [cuvPtr.cTextDefsArray addObject:ctdPtr];
     ctdPtr.cellSeparatorVisible=TRUE;
 
@@ -3819,10 +3832,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     SectionDef *sdPtr;
     SectionDef *sdPtr2;
     
-    sdPtr=[SectionDef initSectionHeaderText:@"mySection1" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:18 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+    sdPtr=[SectionDef initSectionHeaderText:@"mySection1" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
     
     [myTable.tableSections addObject:sdPtr];
-    sdPtr2=[SectionDef initSectionHeaderText:@"mySection2" withTextColor:nil withBackgroundColor:nil withTextFontSize:18 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+    sdPtr2=[SectionDef initSectionHeaderText:@"mySection2" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
     [myTable.tableSections addObject: sdPtr2];
     
     
@@ -3832,7 +3845,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellContentDef *cellContentPtr1;
     CellTextDef *ctdPtr;
     cellContentPtr1=[[CellContentDef alloc] init];
-    ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
     cellContentPtr1.ccCellTypePtr=ctdPtr;
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
@@ -3841,13 +3854,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     cellContentPtr1=[[CellContentDef alloc] init];
-    ctdPtr=[CellTextDef initCellText:@"cellSec12" withTextColor:nil withBackgroundColor:[UIColor greenColor] withTextFontSize:26 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec12" withTextColor:nil withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
     cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
     
     cellContentPtr1=[[CellContentDef alloc] init];
-    ctdPtr=[CellTextDef initCellText:@"cellSec13" withTextColor:nil withBackgroundColor:nil withTextFontSize:36 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec13" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
     cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
@@ -3855,17 +3868,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //create cells in section 2
     
     
-    ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor whiteColor]withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec21" withTextColor:[UIColor whiteColor]withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
-    ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec22" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     ctdPtr.cellSeparatorVisible=TRUE;
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
-    ctdPtr=[CellTextDef initCellText:@"cellSec23" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:16 withTextFontName:nil];
+    ctdPtr=[CellTextDef initCellText:@"cellSec23" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     ctdPtr.cellSeparatorVisible=TRUE;
     cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
     [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];

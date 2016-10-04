@@ -252,7 +252,7 @@
     title = [[UILabel alloc] init];
     title.text=thisString;
     title.textColor=[UIColor blackColor];
-    title.backgroundColor=[UIColor yellowColor];
+    title.backgroundColor=[UIColor magentaColor];
     title.frame=CGRectMake(0, 0,20,40);
     title.numberOfLines=2;
     //title.intrinsicContentSize=CGSizeMake(100, 20);
