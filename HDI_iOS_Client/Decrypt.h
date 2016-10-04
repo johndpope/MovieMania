@@ -20,7 +20,7 @@
 +(NSMutableArray *)arrFromDecryptDictForKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict;
 
 +(NSString *)valForHDIKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict;
-
++(NSNumber *)numForHDIKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict;
 +(NSString *)convertDictionaryToJSON:(NSMutableDictionary*)myDict;
 
 -(void) killYourself;

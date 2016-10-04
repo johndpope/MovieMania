@@ -231,6 +231,8 @@
 #define kMovieTitle @"Title"
 #define kMovieID @"MovieID"
 #define kMovieReleased @"Released"
+#define kMovieYear @"MovieYear"
+#define kNoMovieYear @"NoMovieYearThisCannotBeNil"
 #define kMovieRated @"Rated"
 #define kMovieRuntime @"Runtime"
 #define kMovieGenre @"Genre"

@@ -166,7 +166,12 @@
 +(void) performREPLACE_STRING_TRAILS_process:(NSMutableDictionary *)decryptDict onDataResponse:(NSMutableArray*)thisDataArray
 {
     NSMutableArray *modifyDefArrayOfDictionaries=[decryptDict valueForKey:kDECRYPT_P_REPLACE_FIELD_STRINGTRAILS];
-    /* "HDI_PROCESS REPLACEFIELDstringTrails" :[
+    /* 
+     "HDI_OPT Process" : [
+        "           ",
+        "HDI_PROCESS REPLACEFIELDstringTrails"
+        ],
+     "HDI_PROCESS REPLACEFIELDstringTrails" :[
                                              {"title" : "3D"},
                                              {"bogusKey" : "BogusValue"}
                                              ],
@@ -384,6 +389,22 @@
     return answer;
     
 }
++(NSNumber *)numForHDIKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict
+{
+    NSNumber *answer=nil;
+    NSArray *allKeys=[decryptDict allKeys];
+    NSString *customKey=nil;
+    
+    if ([allKeys containsObject:hdiKey]) {
+        customKey=[decryptDict valueForKeyPath:hdiKey];
+        if (customKey) {
+            answer=[searchDict valueForKeyPath:customKey];
+        }
+    }
+    return answer;
+    
+}
+
 +(NSMutableArray *)arrFromDecryptDictForKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict
 {
     NSMutableArray *answer=nil;

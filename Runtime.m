@@ -24,6 +24,7 @@
 //    NSArray             *allLocationKeys;
     NSInteger     initDBRecordKeyIndex;
     NSMutableArray *movieNameArray;
+    NSMutableDictionary *movieYearDictionary;  //corresponds to moviewNameArray for host transaction
     NSMutableArray *testProductArray;
     NSMutableDictionary *allMovieInfoOMDB;
     NSMutableDictionary *allProductInventory;
@@ -802,10 +803,6 @@
     Transaction *dbTrans = nil;
     
     
-  //  aQuery.transactionKey =  TranCodeAllInv;
-  //  aQuery.buttonName=@"MovieInfo";
-    
-  //  NSMutableArray *correctedNameArray=[self correctMovieNames:movieNameArray];
     
     
     
@@ -835,6 +832,24 @@
         aQuery.aiKeyForResultDict=qField;
         
         [activeTableDataPtr.tableVariablesArray addObject:tranCodeData];
+    
+    TransactionData* tranCodeData1=[[TransactionData alloc]init];
+    tranCodeData1.queryKey= @"MovieYear";
+    NSString *someMoveYear=nil;
+    if (qField) {
+        someMoveYear=[movieYearDictionary objectForKey:qField];
+        if (![someMoveYear isEqualToString:kNoMovieYear] ) {
+            tranCodeData1.userDefinedData=someMoveYear;
+            [activeTableDataPtr.tableVariablesArray addObject:tranCodeData1];    //this is an optional parameter, only pass it if it exists.
+        }
+    }
+
+    
+    
+    
+    
+    
+    
         [activeTableDataPtr.dbAllTabTransDict setObject:dbTrans forKey:TranCodeAllInv];// startUpTVCKey];
         NSLog(@"Runtime continue LOOPING movieName %@",qField);
         
@@ -1162,6 +1177,16 @@
     [activeTableDataPtr.tableVariablesArray addObject:tranCodeData];
     [activeTableDataPtr.dbAllTabTransDict setObject:dbTrans forKey:TranCodeAllInv];// startUpTVCKey];
     
+    TransactionData* tranCodeData1=[[TransactionData alloc]init];
+     tranCodeData1.queryKey= @"MovieYear";
+    NSString *someMoveYear=nil;
+    if (qfield) {
+        someMoveYear=[movieYearDictionary objectForKey:qfield];
+        if (![someMoveYear isEqualToString:kNoMovieYear] ) {
+            tranCodeData1.userDefinedData=someMoveYear;
+            [activeTableDataPtr.tableVariablesArray addObject:tranCodeData1];    //this is an optional parameter, only pass it if it exists.
+        }
+    }
     
     
     //here's the deal - storingKey has to be real name, but names can't search with 3d in them.
@@ -1354,8 +1379,7 @@
             downloadDone=TRUE;
         }
     }//end while
-    
-    
+
     
     [self purgeAndSaveMovieImageDiskDictionary];
     
@@ -1783,7 +1807,7 @@
     //when here, dups gone, data merged (thanks decrypt process)
     
     movieNameArray=[[NSMutableArray alloc]init];
-    
+    movieYearDictionary=[[NSMutableDictionary alloc]init];
 
     NSString *thisID;
     NSString *thisKey;
@@ -1794,6 +1818,7 @@
     NSString * movieTitle;
     NSString * movieID;
     NSString * movieReleased;
+    NSString * movieYear;
     NSString * movieRated;
     NSString * movieRuntime;
     NSString * movieGenre;
@@ -1846,6 +1871,7 @@
     NSMutableDictionary *tmpNewHDIdict;
     NSMutableDictionary *tmpNewShowDict;
     NSMutableArray *tmpNewShowArray;
+    NSNumber *tmpNumber;
     
     for (NSMutableDictionary *obj in aReq.retRecordsAsDPtrs) {
         
@@ -1878,6 +1904,16 @@
                 movieTitle=[Decrypt valForHDIKey:kMovieTitle inDict:obj decryptDict:aReq.decryptDict];
                 movieID=[Decrypt valForHDIKey:kMovieID inDict:obj decryptDict:aReq.decryptDict];
                 movieReleased=[Decrypt valForHDIKey:kMovieReleased inDict:obj decryptDict:aReq.decryptDict];
+            
+            
+                tmpNumber=[Decrypt numForHDIKey:kMovieYear inDict:obj decryptDict:aReq.decryptDict];
+            movieYear=[tmpNumber stringValue];
+            if (!movieYear) {
+                movieYear=kNoMovieYear;//have to have a dummy placeholder here
+            }
+            [movieYearDictionary setObject:movieYear forKey:movieTitle];
+            
+            
                 movieRated=[Decrypt valForHDIKey:kMovieRated inDict:obj decryptDict:aReq.decryptDict];
                 //anArray=[Decrypt arrFromDecryptDictForKey:kMovieRated inDict:obj decryptDict:aReq.decryptDict];
                 //if ([anArray count]) {
@@ -1925,6 +1961,7 @@
                 if (movieTitle) {   [tmpNewHDIdict setObject:movieTitle forKey:kMovieTitle];   }
                 if (movieID){  [tmpNewHDIdict setObject:movieID    forKey:kMovieID  ];}
                 if (movieReleased){ [tmpNewHDIdict setObject:movieReleased   forKey:kMovieReleased  ];}
+                if (movieYear){ [tmpNewHDIdict setObject:movieYear   forKey:kMovieYear  ];}
                 if (movieRated){ [tmpNewHDIdict setObject:movieRated forKey:kMovieRated  ];}
                 if (movieRuntime){ [tmpNewHDIdict setObject:movieRuntime    forKey: kMovieRuntime ];}
                 if (movieGenre){ [tmpNewHDIdict setObject:movieGenre forKey: kMovieGenre ];}
@@ -3443,307 +3480,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark SAVE
 /////////////////////////////////////////
-- (void)OLDprocessUserFocusMovie:(NSNotification *)notification {
-    int pass = [[[notification userInfo] valueForKey:@"index"] intValue];
-    
-    //-(void)processUserFocusMovie:(id)sender   //touchUpInside, touchUpOutside
-    //{
-    //UIButton * uiButtonPressed = [notification object];
-    NSLog(@"**************RUNTIME processUserFocusMovie: %d",pass );
-    
-    
-    //[self userTouchInput:notification];
-    
-    NSNumber *touchInput;
-    NSString *tagString;
-    
-    
-        touchInput =[NSNumber numberWithInt:pass];
-        tagString = [touchInput stringValue];
-      
-    
-    
-    
-    
-    
-    
-    
-    TableDef *currentTableDef = self.activeTableDataPtr;
-    ActionRequest *pressedBtn = nil;
-    //    NSMutableDictionary *aMutDict;
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMM dd"];
-    
-    pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
-    switch (pressedBtn.buttonType) {
-        case kButtonTypeDate:
-            self.gGTPptr.selectedDate=pressedBtn.buttonDate;
-            break;
-        case kButtonTypeLocation:
-            self.gGTPptr.selectedLocDict=pressedBtn.locDict;
-            break;
-        case kButtonTypeProduct:
-            self.gGTPptr.selectedProdcuctDict=pressedBtn.productDict;
-            break;
-        case kButtonTypeShowTime:
-            break;
-        case kButtonTypeTrailer:
-            break;
-            
-        default:
-            break;
-    }
-    if (pressedBtn.reloadOnly){
-        
-        NSLog(@"       reloadOnly");
-        switch (pressedBtn.nextTableView){
-            case TVC2://TVCScrollButtonPress:
-                NSLog(@"       TVC2");
-                //[gGTPptr makeTVC2:pressedBtn];
-                [gGTPptr makeTVC:pressedBtn];
-                currentTableDef.cellDispPrepared = NO;
-                [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                /*                   if (!gGTPptr.inAVPlayerVC){
-                 [self defineMovieTrailerQuery:pressedBtn];
-                 [self evaluateAction:pressedBtn];
-                 }
-                 */
-                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
-                break;
-            case TVC4://TVCScrollButtonPress:
-                //[gGTPptr makeTVC2:pressedBtn];
-                [gGTPptr makeTVC:pressedBtn];
-                //                    rtTableViewCtrler.reloadOnly = YES;
-                currentTableDef.cellDispPrepared = NO;
-                [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
-                break;
-            default:
-                break;
-        }//end switch
-        return;
-    }//end reloadonly
-    NSLog(@"");
-}
-
--(void) OLDuserTouchInput: (NSNotification*) notification  //BUTTON/CELL PRESS
-{
-    
-    NSLog(@"RUNTIME_ userTouchInput:notification");
-    //    rtTableViewCtrler.reloadOnly = NO;
-    TableDef *currentTableDef = self.activeTableDataPtr;
-    ActionRequest *pressedBtn = nil;
-    //    NSMutableDictionary *aMutDict;
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMM dd"];
-    //    NSDate *today = [NSDate date];
-    //    NSString *todayDateString = [dateFormatter stringFromDate:today];
-    NSNumber *touchInput;
-    NSString *tagString;
-    if (notification){
-        
-        if ([notification.name isEqualToString:@"UserFocusMovie"])
-        {
-            int pass = [[[notification userInfo] valueForKey:@"index"] intValue];
-            touchInput =[NSNumber numberWithInt:pass];
-            
-            
-        }
-        else{
-            touchInput= [notification object];
-            
-        }
-        
-        tagString = [touchInput stringValue];
-        
-        
-        
-        pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
-        switch (pressedBtn.buttonType) {
-            case kButtonTypeDate:
-                self.gGTPptr.selectedDate=pressedBtn.buttonDate;
-                break;
-            case kButtonTypeLocation:
-                self.gGTPptr.selectedLocDict=pressedBtn.locDict;
-                break;
-            case kButtonTypeProduct:
-                self.gGTPptr.selectedProdcuctDict=pressedBtn.productDict;
-                break;
-            case kButtonTypeShowTime:
-                break;
-            case kButtonTypeTrailer:
-                break;
-                
-            default:
-                break;
-        }
-        if (pressedBtn.reloadOnly){
-            
-            NSLog(@"       reloadOnly");
-            switch (pressedBtn.nextTableView){
-                case TVC2://TVCScrollButtonPress:
-                    NSLog(@"       TVC2");
-                    //[gGTPptr makeTVC2:pressedBtn];
-                    [gGTPptr makeTVC:pressedBtn];
-                    currentTableDef.cellDispPrepared = NO;
-                    [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                    /*                   if (!gGTPptr.inAVPlayerVC){
-                     [self defineMovieTrailerQuery:pressedBtn];
-                     [self evaluateAction:pressedBtn];
-                     }
-                     */
-                    [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
-                    break;
-                case TVC4://TVCScrollButtonPress:
-                    //[gGTPptr makeTVC2:pressedBtn];
-                    [gGTPptr makeTVC:pressedBtn];
-                    //                    rtTableViewCtrler.reloadOnly = YES;
-                    currentTableDef.cellDispPrepared = NO;
-                    [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                    [currentTableDef showMeInDisplay:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
-                    break;
-                default:
-                    break;
-            }//end switch
-            return;
-        }//end reloadonly
-        NSString *efdata;
-        switch (pressedBtn.nextTableView) {
-                
-            case TVC1:
-                [self defineTransactionsTVC1:pressedBtn];
-                NSLog(@"do fake db xaction send successnotif1");
-                [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                break;
-            case TVC2:
-                [self defineTransactionsTVC2:pressedBtn];
-                NSLog(@"do fake db xaction send successnotif2");
-                [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                return;
-                break;
-            case TVC3:
-                //              [self defineTransactionsTVC3:pressedBtn];
-                NSLog(@"do fake db xaction send successnotif3");
-                [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                return;
-                break;
-            case TVC4:
-                NSLog(@"do fake db xaction send successnotif4");
-                [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                return;
-                //              [self defineTransactionsTVC4:pressedBtn];
-                break;
-            case TVC5:
-                break;
-            case TVC10:
-                NSLog(@"do fake db xaction    send successnotif5");
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                //                [self defineTransactionsTVC10:pressedBtn];
-                return;
-                break;
-            case TVCChangeZip:
-                efdata=[gInputFieldsDictionary objectForKey:EFKEY_ZIPCODE];
-                if (efdata) {
-                    if ([efdata isEqualToString:gGTPptr.globalZipCode]) {
-                        pressedBtn.nextTableView=TVC2;
-                        //do nothing all is good   - get rid of screen-
-                        NSLog(@"            sending userControllerSuccess 1");
-                        [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                        return;
-                    }
-                    else{
-                        //replace zipcode , start over getting data for this zipcode
-                        gGTPptr.globalZipCode=efdata;
-                        pressedBtn.nextTableView = TVCInitDBs;   //new
-                        NSLog(@"            sending zipstartover");
-                        [[NSNotificationCenter defaultCenter] postNotificationName: ConstNEWZIPstartOver  object:pressedBtn];
-                        return;
-                    }
-                    
-                }
-                else{
-                    NSLog(@"            sending userControllerSuccess 2");
-                    [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:pressedBtn];
-                    return;
-                }
-                
-                break;
-            default:
-                break;
-        }
-        [self evaluateAction:pressedBtn];
-    }//end if notification
-}
-
--(void) OLDxactGetImages:(ActionRequest *)aReq   //new....   DOES THE XACTION for uiimage
-{//pre archive of stuff
-    NSString *mName;
-    NSString *mPath;
-    BOOL downloadDone=false;
-    int downloadKeyCtr=0;
-    NSMutableDictionary *thisDictPtr;
-    if ([movieNameArray count]) {
-        downloadKeyCtr=0;
-    }
-    else {
-        downloadDone=TRUE;
-    }
-    
-    
-    UIImage *itImage;
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"defMovie" ofType:@"png"];
-    UIImage * defImage = [UIImage imageWithContentsOfFile:filePath];
-    
-    
-    
-    
-    //preProcess list to download.  We have dictionary from disk if we've run before.  Some movies have to be deleted, some have to be added.
-    //after downloading, entire dictionary should be store to disk again.   thus, making next load during same week FASTER.
-    
-    
-    while (!downloadDone) {
-        mName=[movieNameArray objectAtIndex:downloadKeyCtr];
-        thisDictPtr=[allMovieInfoOMDB objectForKey:mName];
-        mPath=[thisDictPtr objectForKey:@"Poster"];
-        
-        
-        NSURL* pathAurl = [NSURL URLWithString:mPath];
-        
-        
-        
-        if (pathAurl) {
-            NSLog(@" Qfetch %@ at \n %@",mName,mPath);
-            itImage=[self downloadSyncImageWithURL:[NSURL URLWithString:mPath] forKey:mName];
-            if(!itImage){
-                itImage=defImage;
-                [movieImageDictionaryPath setObject:@"dummy" forKey:mName];
-            }
-            else{
-                [movieImageDictionaryPath setObject:pathAurl forKey:mName];
-            }
-            
-            [movieImageDictionary setObject:itImage forKey:mName];
-            NSLog(@"Image Download Succeeded");
-        }
-        else{
-            [movieImageDictionary setObject:defImage forKey:mName];
-            [movieImageDictionaryPath setObject:@"dummy" forKey:mName];
-            NSLog(@"NOfetch1 %@ at \n %@",mName,mPath);
-        }
-        downloadKeyCtr++;
-        if (downloadKeyCtr >= [movieNameArray count]) {
-            downloadDone=TRUE;
-        }
-    }//end while
-    
-    
-    NSLog(@"do fake db xaction");
-    aReq.transactionKey=@"NONE";    //[[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:aReq];
-    
-    
-}
-
 
 
 
