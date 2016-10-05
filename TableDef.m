@@ -260,6 +260,7 @@
     SectionDef *sectionPtr;
     sectionPtr=[self.tableSections  objectAtIndex:thisSection];
     
+    
     if (!sectionPtr) {
         return YES;
     }
@@ -270,10 +271,26 @@
     if (!sectionCellsPtr) {
         return YES;
     }
+    CellUIView *cuvPtr;
+    
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellUIView class]]){
+        NSLog(@"CellUIView for section %d row %d",thisSection,thisRow);//evaluate what's inside the cellUIView
+        cuvPtr=(CellUIView *)sectionCellsPtr.ccCellTypePtr;
+        if ([cuvPtr.cButtonsArray count]){
+            return YES;
+        }
+        if ([cuvPtr.cInputFieldsArray count]) {
+            return YES;
+        }
+        return cuvPtr.canMyRowHaveTVFocus;
+        
+    }
+    
     if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
         return NO;
     }
     return YES;
+    
     
 }
 

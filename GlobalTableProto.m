@@ -570,7 +570,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     [cuvPtr.cInputFieldsArray addObject:entryFPtr];
     
-    
+    cuvPtr.canMyRowHaveTVFocus=YES;
     cuvPtr.enableUserActivity = YES;//NO;//YES; //????
 
     
@@ -776,7 +776,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     cellContentPtr.ccCellTypePtr=cuvPtr;
     
-    
+    cuvPtr.canMyRowHaveTVFocus=NO;
     SectionDef *sdPtr2=[SectionDef initSectionHeaderCenteredText:@"MOVIE MANIA" withTextColor:viewTextColor withBackgroundColor:headerBackColor withTextFontSize:20 withTextFontName:nil footerCenteredText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
      sdPtr2.sectionFooterContentPtr=nil;
     
@@ -844,6 +844,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         cuvPtr = [self buildLocationCell:aLocDictTMS withAlignment:NSTextAlignmentLeft withTextColor:viewTextColor andBackGroundColor:viewBackColor];
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
         cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
+        cuvPtr.canMyRowHaveTVFocus=YES; //this is special, selectable row like a button
 //        [cuvPtr.dataBaseDictsPtrs setObject:aLocDictTMS forKey:kDictionaryTypeLocation];
         cuvPtr.locDict=aLocDictTMS;
         cuvPtr.nextTableView=TVC4;
@@ -889,7 +890,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }else{
             cuvPtr = [self buildMovieInfoCellTMS:productDict];
         }
-    
+    cuvPtr.canMyRowHaveTVFocus=NO;//TVOS user shouldn't select me
         cuvPtr.enableUserActivity = NO;
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
         cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
@@ -989,6 +990,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         //       ctdPtr.dataRecords = pressedButton.dataRecords;
         cellContentPtr=[[CellContentDef alloc] init];
         cellContentPtr.ccCellTypePtr=ctdPtr;
+        
         cellContentPtr.ccTableViewCellPtr=nil;
         [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
         row = row + 1;
@@ -1034,6 +1036,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
         cuvPtr.displayTemplate= kDISP_TEMPLATE_LABELS_ONLY;//kDISP_TEMPLATE_IMAGELEFT_LABLESRIGHT;//kDISP_TEMPLATE_TRIPLE_IMAGELEFT_BUTTONSBOTTOM_LABELTOP;  //template layout for container
         cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:cuvPtr];
+    cuvPtr.canMyRowHaveTVFocus=NO;
         cuvPtr.nextTableView = TVC4;
         [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
     
@@ -1077,6 +1080,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             row++;
             cellContentPtr1=[[CellContentDef alloc] init];
             cellContentPtr1.ccCellTypePtr=cuvPtr;
+            cuvPtr.canMyRowHaveTVFocus=NO;
             cellContentPtr1.ccTableViewCellPtr=nil;
             [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
             
@@ -1280,6 +1284,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",genre]];
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",releaseDate]];
     CellUIView *ctdPtr=[CellUIView mkcuvImageLeft:[aProductDict objectForKey:kProductImageKey] withImageName:movieName andImageSize:picSize andTextsArrayRight:arrayOfStrings useTextSizeTopCell:sizeGlobalTextFontBig useTextSizeAdditionalCells:sizeGlobalTextFontSmall withBackGroundColor:viewBackColor withTextColor:viewTextColor];   //was text size 16
+    ctdPtr.canMyRowHaveTVFocus=NO;
     ctdPtr.enableUserActivity=NO;
     cellContentPtr=[[CellContentDef alloc] init];
     cellContentPtr.ccCellTypePtr=ctdPtr;   //not citPtr
@@ -1343,6 +1348,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         //  cuvPtr = [self buildLocationCell:aLocDict withAlignment:NSTextAlignmentLeft];
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
         cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
+        cuvPtr.canMyRowHaveTVFocus=NO;
         //       cuvPtr.dataBaseDict = aLocDict;
         //        [cuvPtr.dataBaseDictsPtrs setObject:aLocDict forKey:kDictionaryTypeLocation];
         cuvPtr.locDict=aLocDict;
@@ -1378,6 +1384,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             txtTypePtr2=[CellTextDef initCellText:aGroupKey withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontSmall withTextFontName:nil];  //was text font 10
             txtTypePtr2.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
             [cuvPtr.cTextDefsArray addObject:txtTypePtr2];
+            cuvPtr.canMyRowHaveTVFocus=NO;
             row++;
             
             cellContentPtr=[[CellContentDef alloc] init];

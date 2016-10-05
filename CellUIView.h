@@ -20,7 +20,7 @@
 
 @interface CellUIView : CellTypesAll   //<UITextFieldDelegate>
 
-
+@property (nonatomic, readwrite) BOOL canMyRowHaveTVFocus;
 @property (nonatomic, readwrite) UIColor *backgoundColor;
 
 

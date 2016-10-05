@@ -14,7 +14,7 @@
 
 @synthesize backgoundColor;
 
-
+@synthesize canMyRowHaveTVFocus;//tricky - YES if button, or ef in here, NO if just text, unless text is selectable.....(TVC1)
 @synthesize cioPtrArr; //only using element 0
 @synthesize displayTemplate;//image on left or on right if it exists
 
@@ -80,6 +80,7 @@
 }
 -(void) makeUseDefaults:(CellUIView *)nCell
 {
+    nCell.canMyRowHaveTVFocus=NO;   //used by TVOS, tableDEF asked to figure out this answer during runtime
     nCell.enableUserActivity=TRUE;
     nCell.cellclassType=CELLCLASS_UIVIEW;
     backgoundColor= TK_TRANSPARENT_COLOR;
