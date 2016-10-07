@@ -4,6 +4,7 @@
 
 #import "CustomTVCell.h"
 #import "GlobalTableProto.h"
+#import "Runtime.h"
 
 
 #import "TableDef.h"
@@ -219,7 +220,41 @@
         
         //[nextButton.myButtonView checkUserFocusMovie];
     }
-
+    
+    /*
+    //WORKS but is a looper, continue to get this focus message....even after resign first reponder
+    TableDef *currentTabDef;
+      CustomTVCell *nextOne;
+    SectionDef *sectionPtr;
+    CellContentDef *sectionCellsPtr;
+    CellInputField *cifPtr;
+    if ([context.nextFocusedView isKindOfClass:[CustomTVCell class]]) {
+        nextOne=(CustomTVCell*)context.nextFocusedView;
+        NSLog(@"       next section:%d  row:%d",nextOne.dispAsSection,nextOne.dispAsRow);
+        currentTabDef=[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+        
+        sectionPtr=[currentTabDef.tableSections  objectAtIndex:nextOne.dispAsSection];
+        
+        if (!sectionPtr) {
+            return ;
+        }
+        
+        
+        
+        sectionCellsPtr=[sectionPtr.sCellsContentDefArr objectAtIndex:nextOne.dispAsRow];
+        if (!sectionCellsPtr) {
+            return ;
+        }
+        
+        
+        if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellInputField class]]){
+            NSLog(@"");
+            cifPtr=(CellInputField*)sectionCellsPtr.ccCellTypePtr;
+            [cifPtr beFirstResponder];
+        }
+    }
+    */
+    
     /*
     CustomTVCellControl *nextInFocus_cellControlPtr= (CustomTVCellControl *)context.nextFocusedView;
     CustomTVCellControl *prevInFocus_cellControlPtr= (CustomTVCellControl *)context.previouslyFocusedView;

@@ -1285,6 +1285,10 @@
     
     tranCodeData=[[TransactionData alloc]init];    //NEW for passing ZIP
     tranCodeData.queryKey=ZipCodeKey;//NEW
+    if ([gGTPptr.globalZipCode length] < 5) {
+        NSLog(@"EEEEEEEEEEEEE-----Fixing stored zipcode Error was %@ now is 75248",gGTPptr.globalZipCode );
+        gGTPptr.globalZipCode=@"75248";
+    }
     tranCodeData.userDefinedData= gGTPptr.globalZipCode;//@"75248";//NEW
     [activeTableDataPtr.tableVariablesArray addObject:tranCodeData];//NEW
     sleep(1);

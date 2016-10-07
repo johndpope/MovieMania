@@ -289,6 +289,15 @@
     if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
         return NO;
     }
+    
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellTextDef class]]){
+        return NO;
+    }
+    
+    
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellInputField class]]){
+        return YES;
+    }
     return YES;
     
     

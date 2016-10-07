@@ -34,6 +34,9 @@
 @property (nonatomic, readwrite) NSNumber *wrappedTag;  //dictionary keys have to be objects
 @property (nonatomic, readwrite) NSInteger displayTag;  //UIInputText.tag has to be an NSInteger
 @property (nonatomic, readwrite) TransactionData *transDataPtr;
+@property (nonatomic, readwrite) UIView* inputFieldIAV; //input accessory view
+@property (nonatomic, readwrite) UILabel *helpLabel;
+@property (nonatomic, readwrite) CellTextDef *helpTextPtr;
 
 -(void) killYourself;
 

@@ -545,7 +545,7 @@
 }
 -(CGFloat) provideCellHeight:(UITableViewCell*)tvcPtr
 {
-    NSLog(@"CELLTEXTDEF str: %@ ht:%f",self.cellDispTextPtr.textStr,self.cellMaxHeight);
+   // NSLog(@"CELLTEXTDEF str: %@ ht:%f",self.cellDispTextPtr.textStr,self.cellMaxHeight);
     
     if (!self.cellMaxHeight) {
         

@@ -400,7 +400,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    /*
+    
     //n e w   c o d e 2   - c h a n g e   z i p c o d e     no CUV, just EF
     //new code - allow users to change zip code 2
     //
@@ -427,12 +427,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     //Give centered to start up if you want
-    NSString *currentString=[NSString stringWithFormat:@"Current zip code: %@",globalZipCode];
+    NSString *currentString=[NSString stringWithFormat:@"Current zip code is %@",globalZipCode];
     
     
-    txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -446,21 +446,26 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     //DO entryField with PlaceHolder AND Label:   U S E R    I D
     entryFPtr=[[CellInputField alloc]init];
-    
-    placeholderTxt=[CellTextDef initCellText:globalZipCode withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    placeholderTxt=[CellTextDef initCellText:globalZipCode withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
     if (entryFPtr.placeholderTextDefPtr) {
         [entryFPtr.placeholderTextDefPtr killYourself];
     }
     entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New zip code:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
+    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New zip code is" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
+    
+    NSString *helpT=[  @"Replace current zipcode " stringByAppendingString:globalZipCode];
+
+    entryFPtr.helpTextPtr=[CellTextDef initCellText:helpT withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    entryFPtr.helpTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+    
     TransactionData *dataFieldEF=[[TransactionData alloc]init];
     entryFPtr.transDataPtr=dataFieldEF;
-    
+    entryFPtr.keyboardType=UIKeyboardTypeNumberPad;
     //does my key exist in gInputFieldsDict?  Every cellInputField has to have corresponding entry there
     entryFPtr.gInputFieldsDictKey=EFKEY_ZIPCODE;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:entryFPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:entryFPtr ];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -478,7 +483,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //NEED ONE VERIFY BUTTON - how to do that?
     
     
-    CGSize btnSize1 = CGSizeMake(80, 30);
+    CGSize btnSize1 = sizeGlobalButton;
     
     NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize1];
     
@@ -514,8 +519,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     
     
-    
-  */
+   /*
+  //////////////////////prevously using this code   works for iphone but not tvos
     
 //n e w   c o d e    - c h a n g e   z i p c o d e    CUV with entry field.... input doesn't work here
     //new code - allow users to change zip code
@@ -571,7 +576,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [cuvPtr.cInputFieldsArray addObject:entryFPtr];
     
     cuvPtr.canMyRowHaveTVFocus=YES;
-    cuvPtr.enableUserActivity = YES;//NO;//YES; //????
+    cuvPtr.enableUserActivity = YES;
 
     
     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
@@ -614,7 +619,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     return myTable;
-    
+    */
     
     //
     //
@@ -890,7 +895,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }else{
             cuvPtr = [self buildMovieInfoCellTMS:productDict];
         }
-    cuvPtr.canMyRowHaveTVFocus=NO;//TVOS user shouldn't select me
+    cuvPtr.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
         cuvPtr.enableUserActivity = NO;
         cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
         cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
@@ -1285,7 +1290,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",releaseDate]];
     CellUIView *ctdPtr=[CellUIView mkcuvImageLeft:[aProductDict objectForKey:kProductImageKey] withImageName:movieName andImageSize:picSize andTextsArrayRight:arrayOfStrings useTextSizeTopCell:sizeGlobalTextFontBig useTextSizeAdditionalCells:sizeGlobalTextFontSmall withBackGroundColor:viewBackColor withTextColor:viewTextColor];   //was text size 16
     ctdPtr.canMyRowHaveTVFocus=NO;
-    ctdPtr.enableUserActivity=NO;
+    ctdPtr.enableUserActivity=NO;  //tvos should not give focus to me
     cellContentPtr=[[CellContentDef alloc] init];
     cellContentPtr.ccCellTypePtr=ctdPtr;   //not citPtr
     cellContentPtr.ccTableViewCellPtr=nil;

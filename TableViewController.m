@@ -346,7 +346,7 @@
 {
    // return 2;
     NSInteger answer =[self.tableDataPtr.tableSections count];
-    NSLog(@"number of section is %d",answer);
+    //NSLog(@"number of section is %d",answer);
     return answer;
 }
 
@@ -368,7 +368,7 @@
     
     sectionPtr=[self.tableDataPtr.tableSections  objectAtIndex:section];
    NSInteger answer = [sectionPtr.sCellsContentDefArr count];
-    NSLog(@"section %ld number of rows is %ld",section,(long)answer);
+   // NSLog(@"section %ld number of rows is %ld",section,(long)answer);
     return answer;
 }
 //
