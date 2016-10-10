@@ -272,6 +272,7 @@
         return YES;
     }
     CellUIView *cuvPtr;
+    CellTextDef *ctdPtr;
     
     if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellUIView class]]){
         NSLog(@"CellUIView for section %d row %d",thisSection,thisRow);//evaluate what's inside the cellUIView
@@ -291,7 +292,10 @@
     }
     
     if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellTextDef class]]){
-        return NO;
+        ctdPtr=(CellTextDef *)sectionCellsPtr.ccCellTypePtr;
+        //return NO;
+        //return YES;
+        return ctdPtr.canMyRowHaveTVFocus;
     }
     
     

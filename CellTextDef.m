@@ -13,6 +13,7 @@
 
 @synthesize cellDispTextPtr,numberOfLines;
 @synthesize cellSeparatorVisible;
+@synthesize canMyRowHaveTVFocus;
 
 
 
@@ -42,6 +43,7 @@
     nCellTextDef.numberOfLines=1;
     nCellTextDef.cellMaxHeight=0;
     nCellTextDef.cellSeparatorVisible=FALSE;
+    nCellTextDef.canMyRowHaveTVFocus=NO;
    
 
 }

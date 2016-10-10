@@ -18,7 +18,7 @@
 @property (nonatomic, readwrite) DispTText *cellDispTextPtr;
 @property (nonatomic, readwrite) int numberOfLines;
 @property (nonatomic, readwrite) BOOL cellSeparatorVisible;
-
+@property (nonatomic, readwrite) BOOL canMyRowHaveTVFocus;
 
 
 -(void) killYourself;

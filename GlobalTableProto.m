@@ -137,6 +137,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     sizeGlobalTextFontSmall=TK_IOS_TextFontSmall;
     sizeGlobalPoster=CGSizeMake(TK_IOS_PictureWidth, TK_IOS_PictureHeight);  //picture holder
     sizeGlobalButton=CGSizeMake(TK_IOS_ButtonWidth, TK_IOS_ButtonHeight);  //press button
+    sizeGlobalVideo=CGSizeMake(TK_IOS_VideoWidth, TK_IOS_VideoHeight);
     
     #if TARGET_OS_TV
     sizeGlobalTextFontBig=TK_TVOS_TextFontBig;
@@ -144,6 +145,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     sizeGlobalTextFontSmall=TK_TVOS_TextFontSmall;
     sizeGlobalPoster=CGSizeMake(TK_TVOS_PictureWidth, TK_TVOS_PictureHeight);  //picture holder
     sizeGlobalButton=CGSizeMake(TK_TVOS_ButtonWidth, TK_TVOS_ButtonHeight);  //press button
+    sizeGlobalVideo=CGSizeMake(TK_TVOS_VideoWidth, TK_TVOS_VideoHeight);
     #endif
 }
 
@@ -420,6 +422,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cellContentPtr1=[[CellContentDef alloc] init];
     ctdPtr=[CellTextDef initCellText:@"\n" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
     cellContentPtr1.ccCellTypePtr=ctdPtr;
+    
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
 
     
@@ -433,6 +436,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
+    txtTypeCellPtr.canMyRowHaveTVFocus=YES;
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -838,7 +842,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     CellContentDef *cellContentPtr;
     NSMutableDictionary *allLocations = self.liveRuntimePtr.allLocationsHDI;
-    NSArray *allLocationKeys = [[self.liveRuntimePtr.allLocationsHDI allKeys] sortedArrayUsingSelector:@selector(compare:)];;
+    NSArray *allLocationKeys = [[self.liveRuntimePtr.allLocationsHDI allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSString *aKey;
     
     CellUIView *cuvPtr;
@@ -1182,7 +1186,31 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         AVPlayer *player = [AVPlayer playerWithURL:videoURL];
         AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
         playerViewController.player = player;
-        [self.liveRuntimePtr.rtTableViewCtrler presentViewController:playerViewController animated:YES completion:nil];
+        NSLog(@"globaltableproto Pre-presentvideocontroller  makeTVC5:");
+        
+        //has to be rootviewcontroller
+        [self.liveRuntimePtr.holdVCtrler presentViewController:playerViewController animated:YES completion:nil];
+        
+        
+        //3 gives warining  "Presenting view controllers on detached view controllers is discouraged"
+        //3dispatch_async(dispatch_get_main_queue(), ^{
+        //3    [self.liveRuntimePtr.rtTableViewCtrler presentViewController:playerViewController animated:YES completion:nil];
+        //3});
+   
+          //2 tried - constraint warning, adds it but at top left corner, not own view
+        //2[self.liveRuntimePtr.rtTableViewCtrler addChildViewController:playerViewController];
+        //2[self.liveRuntimePtr.rtTableViewCtrler.view addSubview:playerViewController.view];
+        //2[playerViewController didMoveToParentViewController:self.liveRuntimePtr.rtTableViewCtrler];
+        
+        //1 tried - constraint warning, adds it but at top left corner, not own view
+        //1[self.liveRuntimePtr.rtTableViewCtrler addChildViewController:playerViewController];
+        //1[self.liveRuntimePtr.rtTableViewCtrler.view addSubview:playerViewController.view];
+        //1 traps [self.liveRuntimePtr.rtTableViewCtrler presentViewController:playerViewController animated:YES completion:nil];
+        
+        //0gives warining  "Presenting view controllers on detached view controllers is discouraged"
+        //0 [self.liveRuntimePtr.rtTableViewCtrler presentViewController:playerViewController animated:YES completion:nil];
+        
+        //not working [self.liveRuntimePtr.rtTableViewCtrler.parentViewController presentViewController:playerViewController animated:YES completion:nil];
         [player play];
         return nil;
     }else{
