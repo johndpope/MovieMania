@@ -386,31 +386,16 @@
 {
     
     //what is currentbuttonincenter?
-    
-    
+#if TARGET_OS_TV
     NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDragging   ");
-    
+
     return;
+#endif
     
     
     
     
     
-    
-    NSNumber *touchedButton ;
-    
-    
-   // if(currentButtonInCenter != tvfocusAction){
-   //     [self moveToButtonInCenter:tvfocusAction.buttonIndex];
-   //     NSLog(@"       moveToButtonInCenter");
-  //      touchedButton = [NSNumber numberWithInteger:tvfocusAction.buttonTag];
-      //  NSLog(@"   - poseNotification");
-      //  [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
-   // }
-    
-    
-    
-    return;
     
     if (!decelerate){
         [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
@@ -426,11 +411,8 @@
             NSNumber *touchedButton = [NSNumber numberWithInteger:currentButtonInCenter.uiButton.tag];
             NSLog(@"------ scrollviewDidEndDragging postNotification    touchedButton");
            
-            #if TARGET_OS_TV
-           
-            #else
-                [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton]; //old
-            #endif
+                 [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton]; //old
+            
         }
     }
     

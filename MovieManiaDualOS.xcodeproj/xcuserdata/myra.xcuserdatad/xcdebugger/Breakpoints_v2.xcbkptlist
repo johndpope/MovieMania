@@ -148,11 +148,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2554"
-            endingLineNumber = "2554"
+            startingLineNumber = "2556"
+            endingLineNumber = "2556"
             landmarkName = "-makeFixedFooterWithSectionsAndCells"
             landmarkType = "5">
          </BreakpointContent>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2720"
-            endingLineNumber = "2720"
+            startingLineNumber = "2722"
+            endingLineNumber = "2722"
             landmarkName = "-makeTitleSection1_ButtonsSection2Cells"
             landmarkType = "5">
          </BreakpointContent>
@@ -212,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2777"
-            endingLineNumber = "2777"
+            startingLineNumber = "2779"
+            endingLineNumber = "2779"
             landmarkName = "-makeTitleSectionWithStackView"
             landmarkType = "5">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2803"
-            endingLineNumber = "2803"
+            startingLineNumber = "2805"
+            endingLineNumber = "2805"
             landmarkName = "-makeTableHeaderSectionsRowsNoButtons"
             landmarkType = "5">
          </BreakpointContent>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2843"
-            endingLineNumber = "2843"
+            startingLineNumber = "2845"
+            endingLineNumber = "2845"
             landmarkName = "-makeTableHeaderSectionsRowsNoButtons"
             landmarkType = "5">
          </BreakpointContent>
@@ -404,11 +404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1318"
-            endingLineNumber = "1318"
+            startingLineNumber = "1320"
+            endingLineNumber = "1320"
             landmarkName = "-makeTVC6:"
             landmarkType = "5">
          </BreakpointContent>
@@ -420,11 +420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1382"
-            endingLineNumber = "1382"
+            startingLineNumber = "1384"
+            endingLineNumber = "1384"
             landmarkName = "-makeTVC6:"
             landmarkType = "5">
          </BreakpointContent>
@@ -500,11 +500,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1418"
-            endingLineNumber = "1418"
+            startingLineNumber = "1420"
+            endingLineNumber = "1420"
             landmarkName = "-makeTVC6:"
             landmarkType = "5">
          </BreakpointContent>
@@ -852,11 +852,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2401"
-            endingLineNumber = "2401"
+            startingLineNumber = "2403"
+            endingLineNumber = "2403"
             landmarkName = "-buildMovieTrailerButtonsCell:inSection:inRow:fromTrailerArray:"
             landmarkType = "5">
          </BreakpointContent>
@@ -868,11 +868,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1232"
-            endingLineNumber = "1232"
+            startingLineNumber = "1234"
+            endingLineNumber = "1234"
             landmarkName = "-makeTVC5:"
             landmarkType = "5">
          </BreakpointContent>
@@ -884,11 +884,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "497818545.713794"
+            timestampString = "497819219.006844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1199"
-            endingLineNumber = "1199"
+            startingLineNumber = "1200"
+            endingLineNumber = "1200"
             landmarkName = "-makeTVC5:"
             landmarkType = "5">
          </BreakpointContent>
@@ -896,7 +896,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
