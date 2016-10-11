@@ -175,9 +175,9 @@
     
     
     
-#if TARGET_OS_TV
-    [myTextField becomeFirstResponder];  //causes keyboard to appear
-#endif
+//#if TARGET_OS_TV
+  //NOT HERE  [myTextField becomeFirstResponder];  //causes keyboard to appear
+//#endif
 
     
     
@@ -303,9 +303,9 @@
     
     self.cellMaxHeight=returnedUIView.frame.size.height;
     
-#if TARGET_OS_TV
-    [myTextField becomeFirstResponder];  //causes keyboard to appear
-#endif
+//#if TARGET_OS_TV
+   //NOT HERE [myTextField becomeFirstResponder];  //causes keyboard to appear
+//#endif
 
     return returnedUIView;
 }
@@ -315,7 +315,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  UITextField processing
 ////////////////////////////////////////////////////////////////////////////////////////
-
+-(void) enterWasPressed
+{
+    NSLog(@"CellInputField enterWasPressed");
+    [myTextField becomeFirstResponder];
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{   //enter in field
     NSLog(@"CellInputField  textFieldShouldReturn:");
     if ([textField canResignFirstResponder]) {
@@ -325,7 +329,6 @@
 }
 
 
-
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{   //hit tab, after shouldReturn (enter)
    
 NSLog(@"CellInputField  textFieldShouldEndEditing:");
@@ -333,12 +336,27 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
     if (textField.text) {
          [[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.gInputFieldsDictionary setObject:textField.text forKey: self.gInputFieldsDictKey];
     }
-   textField.placeholder = textField.text; //new tvos testing
-    UIColor *pcolor=[UIColor whiteColor];//self.placeholderTextDefPtr.cellDispTextPtr.textColor;//myra putback [UIColor grayColor];
-    textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.text attributes:@{NSForegroundColorAttributeName: pcolor}];
-    //textField.tintColor=[UIColor grayColor];
-    //[textField setNeedsDisplay];
-    [textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    if (textField.inputAccessoryView) {
+        [textField.inputAccessoryView removeFromSuperview];
+
+    }
+    textField.inputAccessoryView=nil;
+    
+    
+    textField.borderStyle =self.borderStyle;// UITextBorderStyleRoundedRect;
+    textField.font = self.placeholderTextDefPtr.cellDispTextPtr.textFontAndSize;//[UIFont systemFontOfSize:15];
+    textField.placeholder = nil;
+    textField.textColor=[UIColor whiteColor];
+    textField.backgroundColor=[UIColor lightGrayColor];
+    textField.borderStyle=UITextBorderStyleLine;
+   
+
+    
+    textField.tintColor=[UIColor orangeColor];
+    
+    NSLog(@"             reset placeholder text to %@",textField.text);
+    
+    
     return YES;
     
     
@@ -382,6 +400,7 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
     
     self.inputFieldIAV=[[UIView alloc]initWithFrame: CGRectMake(0, 0, helpLabel.bounds.size.width + 10, helpLabel.bounds.size.height+10)];
     //self.inputFieldIAV.backgroundColor=[UIColor redColor];
+    self.helpLabel.center = self.inputFieldIAV.center;
     [self.inputFieldIAV addSubview:self.helpLabel];
     
     
@@ -399,6 +418,7 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     
     NSLog(@"CellInputField  textFieldShouldBeginEditing:");
+    textField.text=nil;
     [self setupInputAccessoryView:textField];
     
 
@@ -409,7 +429,7 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     NSLog(@"CellInputField  textFieldDidBeginEditing:");
-      textField.tintColor=[UIColor whiteColor];
+      //textField.tintColor=[UIColor whiteColor];
 }
 
 
