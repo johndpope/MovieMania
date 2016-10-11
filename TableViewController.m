@@ -682,6 +682,15 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
         
     }
     
+    CellInputField *cifPtr;
+    if([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellInputField class]]){
+        NSLog(@"       didSelectRow that is CellInputField class");
+        cifPtr=(CellInputField *)sectionCellsPtr.ccCellTypePtr;
+        [cifPtr enterWasPressed];
+        return;
+    }
+    
+    
     if(!sectionCellsPtr.ccCellTypePtr.enableUserActivity){
          [tableView deselectRowAtIndexPath:indexPath animated:false];
         return;
