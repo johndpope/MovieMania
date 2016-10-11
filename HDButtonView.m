@@ -502,7 +502,15 @@
         
         
     }
+    CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
     
+    NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
+    
+    [UIView animateWithDuration:0.1f animations:^{
+        
+        containerView.contentOffset = scrollViewOffset;
+    }
+                     completion:nil];
 
 
 }
