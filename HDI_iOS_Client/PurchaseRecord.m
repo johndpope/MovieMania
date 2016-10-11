@@ -6,9 +6,9 @@
 //  Copyright © 2016 Hammond Development International. All rights reserved.
 //
 
-#import "PurchaseRecordOld.h"
+#import "PurchaseRecord.h"
 
-@implementation PurchaseRecordOld
+@implementation PurchaseRecord
 @synthesize  aProductDict,allPurchaseTypes, purchaseDate, purchaseTime;
 //@synthesize purchaseLocRec;
 @synthesize purchaseLocDict;

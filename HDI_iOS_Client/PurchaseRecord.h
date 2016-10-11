@@ -11,7 +11,7 @@
 //#import "MovieRecord.h"
 //#import "LocationRecord.h"
 //#import "ProductRecord.h"
-@interface PurchaseRecordOld : NSObject
+@interface PurchaseRecord : NSObject
 @property (nonatomic, retain) NSMutableDictionary *purchaseLocDict;
 @property (nonatomic, retain) NSMutableDictionary *aProductDict;
 @property (nonatomic, retain) NSString *purchaseDate;

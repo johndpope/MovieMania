@@ -25,6 +25,9 @@
 #import <AVKit/AVKit.h>
 #import "YTPlayerView.h"
 #import "YTViewController.h"
+
+#import "PurchaseRecord.h"
+
 @class Runtime;
 @interface GlobalTableProto : NSObject <YTPlayerViewDelegate>
 @property (nonatomic, readwrite) BOOL debugFlag; //TRUE gives prevents automatic startup processing; exposes buttons
