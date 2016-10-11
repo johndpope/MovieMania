@@ -8,7 +8,7 @@
 
 #import "Runtime.h"
 #import "CustomTVCell.h"
-
+#import "PurchaseRecord.h"
 @implementation Runtime
 {
     NSMutableArray *purchaseKeys;
@@ -167,8 +167,7 @@
             allMovieTrailersHDIdictWTD=TRUE;
         }
         
-        
-         
+        self.gGTPptr.selectedDate=[NSDate date];
  
                     
     }
@@ -331,7 +330,7 @@
     self.activeTableDataPtr=thisTDataPtr;
     //load display settings and stuff for this table:    note could be from database, disk, wherever
     [self prepareTheActiveTableDataForDisplay:pressedBtn];
-    self.gGTPptr.selectedDate=[NSDate date];
+//    self.gGTPptr.selectedDate=[NSDate date];// dan - can't reset date here
     self.gGTPptr.selectedProdcuctDict=nil;
     self.gGTPptr.selectedLocDict=nil;
     
@@ -497,7 +496,7 @@
     NSLog(@"setupTVCdata:");
     self.gGTPptr=[GlobalTableProto sharedGlobalTableProto];
 //    ProductRecord *aProduct;
-//    NSMutableDictionary *aProductDict;
+    NSMutableDictionary *aProductDict;
     switch (aQuery.nextTableView){
         case TVC1:
             break;
@@ -509,10 +508,10 @@
             break;
         case TVC5:
             break;
-        case TVC6:
- //            aProductDict =  [self.gGTPptr fetchProductDict:aQuery];
+        case TVC8:
+            aProductDict = aQuery.productDict;// [self.gGTPptr fetchProductDict:aQuery];
 
- //           [aProductDict setObject:[self buildPurchaseDictionaryArrayForAProduct:aQuery] forKey:kPurchaseDictionaryArrayKey];
+           [aProductDict setObject:[self buildPurchaseDictionaryArrayForAProduct:aQuery] forKey:kPurchaseDictionaryArrayKey];
             break;
         case TVC10:
             NSLog(@"");
@@ -3442,12 +3441,12 @@
     return locationProducts;
 }
 */
-/*
+
 -(NSMutableArray*)buildPurchaseDictionaryArrayForAProduct:(ActionRequest *)aProductTimeBtn
 
 {
  //   ProductRecord *aProduct =  aProductTimeBtn.aProduct;// [aProductTimeBtn.dataRecords objectForKey:aProductTimeBtn.dataRecordKey];//    [aProduct.purchaseRecords removeAllObjects];
-     NSMutableDictionary *aProductDict = [self.gGTPptr fetchProductDict:aProductTimeBtn];
+     NSMutableDictionary *aProductDict = aProductTimeBtn.productDict; //[self.gGTPptr fetchProductDict:aProductTimeBtn];
     
     
 //   aProductDict = aProductTimeBtn.aProductDict;
@@ -3483,7 +3482,7 @@
 //    }
 }
 
-*/
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark SAVE

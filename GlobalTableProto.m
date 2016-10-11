@@ -208,13 +208,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 nextTableDef = [self makeTVC6:pressedBtn];
                 //nextTableDef = [self makeTVC106:pressedBtn];
                 break;
-/*
+
             case TVC7:
                 NSLog(@"call makeTVC7");
                 nextTableDef = [self makeTVC7:pressedBtn];
-                //nextTableDef = [self makeTVC107:pressedBtn];
                 break;
-*/
+
             case TVC8:
                 NSLog(@"call makeTVC8");
                 nextTableDef = [self makeTVC8:pressedBtn];
@@ -1446,21 +1445,24 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     return myTable;
 }
 // Build Purchase Order
-/*
--(TableDef *) makeTVC6:(ActionRequest *)pressedBtn
+
+-(TableDef *) makeTVC8:(ActionRequest *)pressedBtn
 {
-    NSLog(@"----makeTVC6");
-     NSMutableDictionary *aProductDict = [self fetchProductDict:pressedBtn];
+    NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
+    [dayFormatter setDateFormat:@"MMM dd"];
+    NSLog(@"----makeTVC8Ticket");
+     NSMutableDictionary *aProductDict = pressedBtn.productDict; //[self fetchProductDict:pressedBtn];
 //    aProductDict = pressedBtn.aProductDict;
-    NSMutableArray *purchaseArray = [aProductDict objectForKey:kPurchaseDictionaryArrayKey];
+    NSMutableArray *purchaseArray =  [aProductDict objectForKey:kPurchaseDictionaryArrayKey];
     PurchaseRecord *aPurchase = [purchaseArray objectAtIndex:0];
-    NSMutableDictionary *aLocDict =  [self.liveRuntimePtr.allLocationsHDI objectForKey:[aProductDict objectForKey:kLocationNameKey]];
-    aPurchase.purchaseLocDict = aLocDict;
-    aPurchase.aProductDict = aProductDict;
-    aPurchase.purchaseDate = [aProductDict objectForKey:kLocationDate]; //aProduct.locationDate;
+//    NSMutableDictionary *aLocDict =  [self.liveRuntimePtr.allLocationsHDI objectForKey:[aProductDict objectForKey:kLocationNameKey]];
+    aPurchase.purchaseLocDict = pressedBtn.locDict;// aLocDict;
+    aPurchase.aProductDict =  aProductDict;
+    aPurchase.purchaseDate = [dayFormatter stringFromDate:selectedDate]; //[aProductDict objectForKey:kLocationDate]; //aProduct.locationDate;
     aPurchase.purchaseTime = pressedBtn.aTime;
      NSString *showingDate = [NSString stringWithFormat:@"%@ %@",aPurchase.purchaseDate,aPurchase.purchaseTime];
-    NSLog(@"Selected Theater = %@, Selecte Movie = %@, Showing Date = %@, Showtime = %@",[aPurchase.purchaseLocDict objectForKey:kLocationNameKey],[aPurchase.purchaseLocDict objectForKey:kProductNameKey], aPurchase.purchaseDate, aPurchase.purchaseTime);
+    NSLog(@"Selected Theater = %@, Selecte Movie = %@, Showing Date = %@, Showtime = %@",[aPurchase.purchaseLocDict objectForKey:kLocationNameKey],[aPurchase.aProductDict   objectForKey:kMovieTitle], aPurchase.purchaseDate, aPurchase.purchaseTime);
     TableDef *myTable;
     CGSize btnSize = CGSizeMake(60, 30);
     myTable=[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];// buttonsScroll:NO];
@@ -1475,10 +1477,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     [myTable.tableSections addObject:sdPtr1];
     CellUIView *cuvPtr;
-    cuvPtr = [self buildLocationCell:aPurchase.purchaseLocDict withAlignment:NSTextAlignmentCenter];
-    
+//    cuvPtr = [self buildLocationCell:aPurchase.purchaseLocDict withAlignment:NSTextAlignmentCenter];
+    cuvPtr = [self buildLocationCell:pressedBtn.locDict withAlignment:NSTextAlignmentCenter withTextColor:viewTextColor andBackGroundColor:viewBackColor];
     CellTextDef  *txtTypePtr1;
-    txtTypePtr1=[CellTextDef initCellText:[aPurchase.aProductDict objectForKey:kProductNameKey] withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:16 withTextFontName:nil];
+    txtTypePtr1=[CellTextDef initCellText:[aPurchase.aProductDict objectForKey:kMovieTitle] withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:16 withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
@@ -1517,7 +1519,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //    cuvPtr.dataRecordKey=pressedBtn.dataRecordKey;
     cuvPtr.nextTableView=TVC8;
     
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr andTableViewCellPtr:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr];// andTableViewCellPtr:nil];
     
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
@@ -1556,7 +1558,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
      CellTextDef *ctdPtr;
     
     CGSize btnSize1 = CGSizeMake(80, 30);
-    NSMutableArray *purchaseViewButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:2 withTotalNumberOfBtns:2 withButtonSize:btnSize1];
+    NSMutableArray *purchaseViewButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:2 withTotalNumberOfBtns:2 withStartingIndex:0 withButtonSize:btnSize1];
+//    NSMutableArray *purchaseViewButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:2 withTotalNumberOfBtns:2 withButtonSize:btnSize1];
 //    NSMutableArray *purchaseViewButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 totalButtonCount:2 startingRecordIndex:0 buttonsPerCell:2 withButtonSize:btnSize1];
     ActionRequest *aBtn = [purchaseViewButtons objectAtIndex:0];
     aBtn.buttonName = @"Update";
@@ -1567,7 +1570,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     aBtn.buttonIndex = pressedBtn.buttonIndex;
     aBtn.nextTableView = TVC7;
 //    aBtn.myParentCell = nil;
-    [self putProductDictInParent:aBtn locDict:aProductDict];
+    aBtn.productDict = aProductDict;
+//    [self putProductDictInParent:aBtn locDict:aProductDict];
 //    aBtn.aProductDict = aProductDict;
     aBtn.aTime = aPurchase.purchaseTime;
     
@@ -1616,7 +1620,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
    // ProductRecord *aProduct = [pressedBtn.dataRecords objectForKey:pressedBtn.dataRecordKey];
 //    ProductRecord *aProduct = pressedBtn.aProduct;
 
-    NSMutableDictionary *aProductDict = [self fetchProductDict:pressedBtn];
+    NSMutableDictionary *aProductDict = pressedBtn.productDict;// [self fetchProductDict:pressedBtn];
 //    aProductDict = pressedBtn.aProductDict;
     NSMutableArray *purchaseRecords = [aProductDict objectForKey:kPurchaseDictionaryArrayKey];
     PurchaseRecord *aPurchase = [purchaseRecords objectAtIndex:0];
@@ -1655,13 +1659,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
     }
     
-       TableDef *tvc7 = [self makeTVC6:pressedBtn];
+       TableDef *tvc7 = [self makeTVC8:pressedBtn];
     
 
     return tvc7;
 }
-*/
-// Go to Fandango to buy tickets
+
+/* Go to Fandango to buy tickets
 
 -(TableDef *)  makeTVC8:(ActionRequest *)pressedBtn
 {
@@ -1680,6 +1684,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:ticketURI]];
     return nil;
 }
+*/
 /*
 -(TableDef *)makeTVC10:(ActionRequest*)pressedBtn
 {

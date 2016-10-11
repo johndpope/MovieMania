@@ -92,10 +92,8 @@
 		B2EB43341D80736C00F7E82F /* mUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42A61D80736C00F7E82F /* mUtils.m */; };
 		B2EB43351D80736C00F7E82F /* NavCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42A81D80736C00F7E82F /* NavCtrl.m */; };
 		B2EB43361D80736C00F7E82F /* NavCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42A81D80736C00F7E82F /* NavCtrl.m */; };
-		B2EB43371D80736C00F7E82F /* ProductRecordOld.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AA1D80736C00F7E82F /* ProductRecordOld.m */; };
-		B2EB43381D80736C00F7E82F /* ProductRecordOld.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AA1D80736C00F7E82F /* ProductRecordOld.m */; };
-		B2EB43391D80736C00F7E82F /* PurchaseRecordOld.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AC1D80736C00F7E82F /* PurchaseRecordOld.m */; };
-		B2EB433A1D80736C00F7E82F /* PurchaseRecordOld.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AC1D80736C00F7E82F /* PurchaseRecordOld.m */; };
+		B2EB43391D80736C00F7E82F /* PurchaseRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AC1D80736C00F7E82F /* PurchaseRecord.m */; };
+		B2EB433A1D80736C00F7E82F /* PurchaseRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42AC1D80736C00F7E82F /* PurchaseRecord.m */; };
 		B2EB433B1D80736C00F7E82F /* select1.png in Resources */ = {isa = PBXBuildFile; fileRef = B2EB42AD1D80736C00F7E82F /* select1.png */; };
 		B2EB433C1D80736C00F7E82F /* select1.png in Resources */ = {isa = PBXBuildFile; fileRef = B2EB42AD1D80736C00F7E82F /* select1.png */; };
 		B2EB433D1D80736C00F7E82F /* stp_card_discover.png in Resources */ = {isa = PBXBuildFile; fileRef = B2EB42AE1D80736C00F7E82F /* stp_card_discover.png */; };
@@ -248,10 +246,8 @@
 		B2EB42A61D80736C00F7E82F /* mUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mUtils.m; sourceTree = "<group>"; };
 		B2EB42A71D80736C00F7E82F /* NavCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavCtrl.h; sourceTree = "<group>"; };
 		B2EB42A81D80736C00F7E82F /* NavCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavCtrl.m; sourceTree = "<group>"; };
-		B2EB42A91D80736C00F7E82F /* ProductRecordOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductRecordOld.h; sourceTree = "<group>"; };
-		B2EB42AA1D80736C00F7E82F /* ProductRecordOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductRecordOld.m; sourceTree = "<group>"; };
-		B2EB42AB1D80736C00F7E82F /* PurchaseRecordOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseRecordOld.h; sourceTree = "<group>"; };
-		B2EB42AC1D80736C00F7E82F /* PurchaseRecordOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseRecordOld.m; sourceTree = "<group>"; };
+		B2EB42AB1D80736C00F7E82F /* PurchaseRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PurchaseRecord.h; path = HDI_iOS_Client/PurchaseRecord.h; sourceTree = "<group>"; };
+		B2EB42AC1D80736C00F7E82F /* PurchaseRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PurchaseRecord.m; path = HDI_iOS_Client/PurchaseRecord.m; sourceTree = "<group>"; };
 		B2EB42AD1D80736C00F7E82F /* select1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select1.png; sourceTree = "<group>"; };
 		B2EB42AE1D80736C00F7E82F /* stp_card_discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stp_card_discover.png; sourceTree = "<group>"; };
 		B2EB42AF1D80736C00F7E82F /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
@@ -413,6 +409,8 @@
 				B2EB42841D80736C00F7E82F /* GlobalCalcVals.m */,
 				B2EB42851D80736C00F7E82F /* GlobalTableProto.h */,
 				B2EB42861D80736C00F7E82F /* GlobalTableProto.m */,
+				B2EB42AB1D80736C00F7E82F /* PurchaseRecord.h */,
+				B2EB42AC1D80736C00F7E82F /* PurchaseRecord.m */,
 				B2EB42871D80736C00F7E82F /* HDButtonView.h */,
 				B2EB42881D80736C00F7E82F /* HDButtonView.m */,
 				B2EB42891D80736C00F7E82F /* HDI_iOS_Client */,
@@ -547,10 +545,6 @@
 				B2EB42A61D80736C00F7E82F /* mUtils.m */,
 				B2EB42A71D80736C00F7E82F /* NavCtrl.h */,
 				B2EB42A81D80736C00F7E82F /* NavCtrl.m */,
-				B2EB42A91D80736C00F7E82F /* ProductRecordOld.h */,
-				B2EB42AA1D80736C00F7E82F /* ProductRecordOld.m */,
-				B2EB42AB1D80736C00F7E82F /* PurchaseRecordOld.h */,
-				B2EB42AC1D80736C00F7E82F /* PurchaseRecordOld.m */,
 				B2EB42AD1D80736C00F7E82F /* select1.png */,
 				B2EB42AE1D80736C00F7E82F /* stp_card_discover.png */,
 				B2EB42AF1D80736C00F7E82F /* Transaction.h */,
@@ -718,7 +712,7 @@
 				B2EB42FE1D80736C00F7E82F /* CellInputField.m in Sources */,
 				B2EB435A1D80736C00F7E82F /* JSONModelClassProperty.m in Sources */,
 				B2EB430E1D80736C00F7E82F /* GlobalCalcVals.m in Sources */,
-				B2EB433A1D80736C00F7E82F /* PurchaseRecordOld.m in Sources */,
+				B2EB433A1D80736C00F7E82F /* PurchaseRecord.m in Sources */,
 				B2EB43561D80736C00F7E82F /* JSONModel+networking.m in Sources */,
 				B2EB43321D80736C00F7E82F /* MasterViewController.m in Sources */,
 				B2EB43621D80736C00F7E82F /* NSArray+JSONModel.m in Sources */,
@@ -728,7 +722,6 @@
 				B2EB43021D80736C00F7E82F /* CellStackView.m in Sources */,
 				B2EB43661D80736C00F7E82F /* SectionDef.m in Sources */,
 				B2EB42EE1D80736C00F7E82F /* ASINSStringAdditions.m in Sources */,
-				B2EB43381D80736C00F7E82F /* ProductRecordOld.m in Sources */,
 				B2EB435C1D80736C00F7E82F /* JSONModelError.m in Sources */,
 				B2EB43181D80736C00F7E82F /* AutomatedXACT.m in Sources */,
 				B2EB436E1D80736C00F7E82F /* ViewController.m in Sources */,
@@ -786,7 +779,7 @@
 				B2EB42FD1D80736C00F7E82F /* CellInputField.m in Sources */,
 				B2EB43591D80736C00F7E82F /* JSONModelClassProperty.m in Sources */,
 				B2EB430D1D80736C00F7E82F /* GlobalCalcVals.m in Sources */,
-				B2EB43391D80736C00F7E82F /* PurchaseRecordOld.m in Sources */,
+				B2EB43391D80736C00F7E82F /* PurchaseRecord.m in Sources */,
 				B2EB43551D80736C00F7E82F /* JSONModel+networking.m in Sources */,
 				B2EB43311D80736C00F7E82F /* MasterViewController.m in Sources */,
 				B2EB43611D80736C00F7E82F /* NSArray+JSONModel.m in Sources */,
@@ -795,7 +788,6 @@
 				B2EB43011D80736C00F7E82F /* CellStackView.m in Sources */,
 				B2EB43651D80736C00F7E82F /* SectionDef.m in Sources */,
 				B2EB42ED1D80736C00F7E82F /* ASINSStringAdditions.m in Sources */,
-				B2EB43371D80736C00F7E82F /* ProductRecordOld.m in Sources */,
 				B2EB435B1D80736C00F7E82F /* JSONModelError.m in Sources */,
 				B2EB43171D80736C00F7E82F /* AutomatedXACT.m in Sources */,
 				B2EB436D1D80736C00F7E82F /* ViewController.m in Sources */,

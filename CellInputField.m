@@ -64,6 +64,8 @@
     nCell.transDataPtr=[[TransactionData alloc]init];
     nCell.gInputFieldsDictKey=@"defaultCellKey";
     
+    nCell.helpTextPtr=[CellTextDef initCellDefaults];
+    nCell.helpTextPtr.cellDispTextPtr.textStr=@"";
     /*
 #if TARGET_OS_TV
 
