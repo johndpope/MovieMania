@@ -430,13 +430,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     //Give centered to start up if you want
-    NSString *currentString=[NSString stringWithFormat:@"Current zip code is %@",globalZipCode];
+    NSString *currentString=[NSString stringWithFormat:@"Current zip code: %@",globalZipCode];
     
     
     txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
-    txtTypeCellPtr.canMyRowHaveTVFocus=YES;
+    
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
     
     
@@ -456,10 +456,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         [entryFPtr.placeholderTextDefPtr killYourself];
     }
     entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New zip code is" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New zip code:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
     
-    NSString *helpT=[  @"Replace current zipcode " stringByAppendingString:globalZipCode];
+    NSString *helpT= @"Enter a zipcode " ;
 
     entryFPtr.helpTextPtr=[CellTextDef initCellText:helpT withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     entryFPtr.helpTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;

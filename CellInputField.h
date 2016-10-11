@@ -46,6 +46,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField;
 -(UITextField *)buildUITextFieldANDsetKey;
+-(void) enterWasPressed;
 -(UIView *) putMeVisibleMaxWidth:(int)maxwidth maxHeight:(int)maxheight withTVC:(UITableViewController *) tvcPtr;
 
 @end
