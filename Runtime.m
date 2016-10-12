@@ -148,11 +148,12 @@
             }
         }
         
+ /*   do this if zip code gets corrupted on disk
+        gGTPptr.globalZipCode=DEFAULT_ZIPCODE;  // dan get rid of this line of code
+        [gInputFieldsDictionary setObject:gGTPptr.globalZipCode forKey:EFKEY_ZIPCODE];
+        [[DiskStore sharedDiskStore] archiveAStoreDictionary:gInputFieldsDictionary withName:DISK_EFSTORE];
         
-        
-        
-        
-        
+*/
         movieImageDictionaryPath=[[NSMutableDictionary alloc]init];
         
         
@@ -168,8 +169,9 @@
         }
         
         self.gGTPptr.selectedDate=[NSDate date];
- 
-                    
+        self.gGTPptr.selectedProdcuctDict=nil;
+        self.gGTPptr.selectedLocDict=nil;
+        
     }
     return self;
 }
@@ -331,8 +333,8 @@
     //load display settings and stuff for this table:    note could be from database, disk, wherever
     [self prepareTheActiveTableDataForDisplay:pressedBtn];
 //    self.gGTPptr.selectedDate=[NSDate date];// dan - can't reset date here
-    self.gGTPptr.selectedProdcuctDict=nil;
-    self.gGTPptr.selectedLocDict=nil;
+//    self.gGTPptr.selectedProdcuctDict=nil;
+//    self.gGTPptr.selectedLocDict=nil;
     
     //use tables VC
     

@@ -208,28 +208,26 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 nextTableDef = [self makeTVC6:pressedBtn];
                 //nextTableDef = [self makeTVC106:pressedBtn];
                 break;
-
+/*
             case TVC7:
                 NSLog(@"call makeTVC7");
                 nextTableDef = [self makeTVC7:pressedBtn];
                 break;
-
+*/
             case TVC8:
                 NSLog(@"call makeTVC8");
                 nextTableDef = [self makeTVC8:pressedBtn];
                 break;
-/*            case TVC9:
-              //  nextTableDef = [self makeTVC9:pressedBtn];
-                nextTableDef = [self makeTVC109:pressedBtn];
-                break;
+            case TVC9:
+                nextTableDef = [self makeTVC9:pressedBtn];
+               break;
+
             case TVC10:
                 nextTableDef = [self makeTVC10:pressedBtn];
-              //  nextTableDef = [self makeTVC110:pressedBtn];
                 break;
-//            case TVCScrollButtonPress:
-                
-               break;
- */
+ 
+ 
+ 
             default:
                 NSLog(@"call default to TVC2");
                 nextTableDef = [self makeTVC2:nil];// [self makeTVCInitDBs:nil];
@@ -1258,11 +1256,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSMutableDictionary *aProductDict = pressedButton.productDict; //[self fetchProductDict:pressedButton];
     NSString *movieName = [aProductDict objectForKey:kMovieTitle];
     self.liveRuntimePtr.rtTableViewCtrler.view.backgroundColor=viewBackColor;
-
-    
-    
-    
-    
     
     SectionDef *sdPtr;
     CellContentDef *cellContentPtr;//,*cellContentPtr1;
@@ -1452,12 +1445,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
     [dayFormatter setDateFormat:@"MMM dd"];
     NSLog(@"----makeTVC8Ticket");
-     NSMutableDictionary *aProductDict = pressedBtn.productDict; //[self fetchProductDict:pressedBtn];
+    NSMutableDictionary *aProductDict = selectedProdcuctDict;//pressedBtn.productDict; //[self fetchProductDict:pressedBtn];
 //    aProductDict = pressedBtn.aProductDict;
     NSMutableArray *purchaseArray =  [aProductDict objectForKey:kPurchaseDictionaryArrayKey];
     PurchaseRecord *aPurchase = [purchaseArray objectAtIndex:0];
 //    NSMutableDictionary *aLocDict =  [self.liveRuntimePtr.allLocationsHDI objectForKey:[aProductDict objectForKey:kLocationNameKey]];
-    aPurchase.purchaseLocDict = pressedBtn.locDict;// aLocDict;
+    aPurchase.purchaseLocDict = selectedLocDict;// pressedBtn.locDict;// aLocDict;
     aPurchase.aProductDict =  aProductDict;
     aPurchase.purchaseDate = [dayFormatter stringFromDate:selectedDate]; //[aProductDict objectForKey:kLocationDate]; //aProduct.locationDate;
     aPurchase.purchaseTime = pressedBtn.aTime;
@@ -1478,7 +1471,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [myTable.tableSections addObject:sdPtr1];
     CellUIView *cuvPtr;
 //    cuvPtr = [self buildLocationCell:aPurchase.purchaseLocDict withAlignment:NSTextAlignmentCenter];
-    cuvPtr = [self buildLocationCell:pressedBtn.locDict withAlignment:NSTextAlignmentCenter withTextColor:viewTextColor andBackGroundColor:viewBackColor];
+    cuvPtr = [self buildLocationCell:selectedLocDict withAlignment:NSTextAlignmentCenter withTextColor:viewTextColor andBackGroundColor:viewBackColor];
     CellTextDef  *txtTypePtr1;
     txtTypePtr1=[CellTextDef initCellText:[aPurchase.aProductDict objectForKey:kMovieTitle] withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:16 withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
@@ -1568,7 +1561,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
  //   aBtn.dataRecordKey = pressedBtn.dataRecordKey;
 //    aBtn.dataRecords= pressedBtn.dataRecords;
     aBtn.buttonIndex = pressedBtn.buttonIndex;
-    aBtn.nextTableView = TVC7;
+    aBtn.nextTableView = TVC9;
+    aBtn.showingInfoDict=pressedBtn.showingInfoDict;
 //    aBtn.myParentCell = nil;
     aBtn.productDict = aProductDict;
 //    [self putProductDictInParent:aBtn locDict:aProductDict];
@@ -1582,10 +1576,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //    aBtn.dataRecordKey = pressedBtn.dataRecordKey;
 //    aBtn.dataRecords= pressedBtn.dataRecords;
     aBtn.buttonIndex = pressedBtn.buttonIndex;
-    aBtn.nextTableView = TVC8;
+    aBtn.nextTableView = TVC10;
+    aBtn.showingInfoDict=pressedBtn.showingInfoDict;
 //    aBtn.myParentCell = nil;
 //    aBtn.aProduct = aProduct;
     aBtn.aTime = aPurchase.purchaseTime;
+    aBtn.productDict=aProductDict;
+    
     
     
     ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:[UIColor blueColor] withCellButtonArray:purchaseViewButtons];// buttonScroll:NO];
@@ -1603,11 +1600,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
 
 // get ticket quantities;
--(TableDef *)  makeTVC7:(ActionRequest *)pressedBtn
+-(TableDef *)  makeTVC9:(ActionRequest *)pressedBtn
 {
 //myra recode this
    // return nil;
-    NSLog(@"----makeTVC7");
+    NSLog(@"----makeTVC9");
     
     
     TableDef *currentTableDef=self.liveRuntimePtr.activeTableDataPtr;
@@ -1620,7 +1617,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
    // ProductRecord *aProduct = [pressedBtn.dataRecords objectForKey:pressedBtn.dataRecordKey];
 //    ProductRecord *aProduct = pressedBtn.aProduct;
 
-    NSMutableDictionary *aProductDict = pressedBtn.productDict;// [self fetchProductDict:pressedBtn];
+    NSMutableDictionary *aProductDict = selectedProdcuctDict;// //pressedBtn.productDict;// [self fetchProductDict:pressedBtn];
 //    aProductDict = pressedBtn.aProductDict;
     NSMutableArray *purchaseRecords = [aProductDict objectForKey:kPurchaseDictionaryArrayKey];
     PurchaseRecord *aPurchase = [purchaseRecords objectAtIndex:0];
@@ -1659,20 +1656,19 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
     }
     
-       TableDef *tvc7 = [self makeTVC8:pressedBtn];
+       TableDef *tvc9 = [self makeTVC8:pressedBtn];
     
 
-    return tvc7;
+    return tvc9;
 }
 
-/* Go to Fandango to buy tickets
+// Go to Fandango to buy tickets
 
--(TableDef *)  makeTVC8:(ActionRequest *)pressedBtn
+-(TableDef *)  makeTVC10:(ActionRequest *)pressedBtn
 {
     NSLog(@"----makeTVC8");
      NSString *ticketURI = [pressedBtn.showingInfoDict objectForKey:kMovieTicketBuyPath];// [aProductDictTMS objectForKey:kTicketURIKey];
-
-    if (!ticketURI){
+       if (!ticketURI){
         NSLog(@"No Fandango URI");
 //        TableDef *tvc2 = [self makeTVC2:nil];
 //        return tvc2;
@@ -1684,7 +1680,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:ticketURI]];
     return nil;
 }
-*/
+
 /*
 -(TableDef *)makeTVC10:(ActionRequest*)pressedBtn
 {
