@@ -657,6 +657,8 @@
             self.gGTPptr.selectedProdcuctDict=pressedBtn.productDict;
             break;
         case kButtonTypeShowTime:
+            self.gGTPptr.selectedProdcuctDict=pressedBtn.productDict;
+            self.gGTPptr.selectedLocDict=pressedBtn.locDict;
             break;
         case kButtonTypeTrailer:
             break;

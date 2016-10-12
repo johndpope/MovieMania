@@ -984,6 +984,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             aBtn.buttonIsOn=YES;
 //            [self putProductDictInParent:aBtn productDict:aProductDict];
             aBtn.productDict=aProductDict;
+            aBtn.buttonType=kButtonTypeProduct;
             keyIndex++;
             if (keyIndex >= allProductNames.count)
                 break;
@@ -2167,6 +2168,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             aShowTimeButton.reloadOnly = NO;
             aShowTimeButton.buttonType = kButtonTypeShowTime;
             aShowTimeButton.productDict = aProductDictHDI;
+            aShowTimeButton.locDict= aLocDict;
             aShowTimeButton.aTime = aShowTimeButton.buttonName;
             ticketURL = [aShowing objectForKey:kMovieTicketBuyPath];
             if (!ticketURL){
