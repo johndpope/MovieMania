@@ -165,8 +165,8 @@
     if (isColumn)
         buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
     if (containerScrolls){
-        //  buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
-        buttonViewXOffset = 0.0;  //dan 4/16/16   NOTE has to be for TVOS
+          buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;    //center
+        //buttonViewXOffset = 0.0;  //dan 4/16/16   NOTE has to be for TVOS     //left
         
     }
     
@@ -444,6 +444,46 @@
     
 }
 
+-(void) centerJustifyScrollViewSelection:(UIScrollView *)scrollView
+{
+    //ONLY CALLED BY TVOS
+    
+    CGPoint currentOffset=scrollView.contentOffset;
+    
+    
+    
+    CGPointMake( containerView.bounds.size.width/2 -  ((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing) /2),0);
+    CGPoint newOffset = containerView.bounds.size.width/2 - buttonWidth/2;
+    //CGPoint newOffset = CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    NSLog(@"** HDRButtonView leftJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
+    
+    int buttonsToMyRight=((int)[currentButtonInCenter.buttonArrayPtr count])-(int)currentButtonInCenter.buttonIndex;
+    if (_originalMaxButtonsVisible > buttonsToMyRight) {
+        NSLog(@"        ****************THIS DOES POP spaceCanShow %d  right %d",_originalMaxButtonsVisible,buttonsToMyRight);
+        //NO   self.bounds=CGRectMake(0, 0, _originalButtonWidth*buttonsToMyRight, _originalFrame.size.height);
+        NSLog(@"");
+        
+    }
+    else{
+        //NO self.bounds=_originalFrame;
+    }
+    //how many buttons fit in the actual view I allocated?
+    //if I have less than that - I have to change my uiView bounds so I don't get weird autoscroll feature - scrollview wants to put max objects on screen
+    //this conflicts with my need to have them left justified for cell navigation in TVOS
+    
+    if (containerScrolls){
+        containerView.contentOffset = newOffset;
+        
+        
+        //[UIView animateWithDuration:0.1f animations:^{
+        //     containerView.contentOffset = newOffset;
+        // }
+        //                 completion:nil];
+        
+    }
+    
+}
+
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
@@ -464,7 +504,7 @@
     }
     
     
-    [self leftJustifyScrollViewSelection:scrollView];
+    [self centerJustifyScrollViewSelection:scrollView];
     return;
 #endif
     
@@ -510,7 +550,7 @@
     }
     
 
-    [self leftJustifyScrollViewSelection:scrollView];
+    [self centerJustifyScrollViewSelection:scrollView];
     return;
 #endif
     
