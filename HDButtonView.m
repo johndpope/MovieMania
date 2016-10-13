@@ -120,11 +120,17 @@
     
     if (containerScrolls){
  //       buttonViewWidth = (buttonSequence.count+ 2) * (buttonWidth + buttonSpacing);
-        buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+        buttonViewXOffset=0;
+        if(firstButton.reloadOnly) {
+            buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+        }
+#if TARGET_OS_TV
+            buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+#endif
         buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
         self.containerView.delegate = self;
         self.containerView.decelerationRate=UIScrollViewDecelerationRateFast;
-        }
+    }
     CGRect frame = CGRectMake( 0,0,buttonViewWidth , container.bounds.size.height);
     self = [super initWithFrame:frame];
     
