@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498066793.770931"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
+            startingLineNumber = "417"
+            endingLineNumber = "417"
             landmarkName = "-leftJustifyScrollViewSelection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "-addButtonsToView"
             landmarkType = "5">
          </BreakpointContent>
@@ -116,39 +116,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
-            landmarkName = "-addButtonsToView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "-addButtonsToView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
@@ -164,7 +132,39 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
+            timestampString = "498072720.483818"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "-addButtonsToView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HDButtonView.m"
+            timestampString = "498072720.483818"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "-addButtonsToView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HDButtonView.m"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
@@ -180,11 +180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "497998577.70701"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "-addButtonsToView"
             landmarkType = "5">
          </BreakpointContent>
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498066793.770931"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "433"
-            endingLineNumber = "433"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "-leftJustifyScrollViewSelection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -212,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498066793.770931"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "5">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498066793.770931"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "-leftJustifyScrollViewSelection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -276,11 +276,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498066793.770931"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
             landmarkName = "-leftJustifyScrollViewSelection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -308,12 +308,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HDButtonView.m"
-            timestampString = "498067212.523638"
+            timestampString = "498072720.483818"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
-            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
+            landmarkName = "-centerJustifyScrollViewSelection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HDButtonView.m"
+            timestampString = "498072809.372834"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
+            landmarkName = "-centerJustifyScrollViewSelection:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

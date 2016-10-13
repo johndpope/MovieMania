@@ -166,12 +166,13 @@
         buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
     if (containerScrolls){
           buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;    //center
+        NSLog(@"****************XOffset %f",buttonViewXOffset);
         //buttonViewXOffset = 0.0;  //dan 4/16/16   NOTE has to be for TVOS     //left
         
     }
     
 #if TARGET_OS_TV
-    buttonViewXOffset = 0.0; //NOTE has to be for TVOS
+    //buttonViewXOffset = 0.0; //NOTE has to be for TVOS
 
 #endif
 
@@ -450,12 +451,11 @@
     
     CGPoint currentOffset=scrollView.contentOffset;
     
+    CGPoint newOffset = CGPointMake(860,0);
     
     
-    CGPointMake( containerView.bounds.size.width/2 -  ((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing) /2),0);
-    CGPoint newOffset = containerView.bounds.size.width/2 - buttonWidth/2;
     //CGPoint newOffset = CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
-    NSLog(@"** HDRButtonView leftJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
+    NSLog(@"** HDRButtonView centerJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
     
     int buttonsToMyRight=((int)[currentButtonInCenter.buttonArrayPtr count])-(int)currentButtonInCenter.buttonIndex;
     if (_originalMaxButtonsVisible > buttonsToMyRight) {
