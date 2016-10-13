@@ -1033,7 +1033,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "482"
             endingLineNumber = "482"
-            landmarkName = "-moveToButtonInCenter:"
+            landmarkName = "-updateButtonInCenter:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
