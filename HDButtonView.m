@@ -50,8 +50,8 @@
     ActionRequest *selectedButton;
     UIColor *textColor;
     UIColor *backColor;
-    
-
+    float buttonViewXOffset;
+    int     numberOfButtonsToMake;
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
 //    int     rowNumber;
@@ -105,9 +105,16 @@
     }else{
         buttonSpacing = buttonWidth/4;
     }
-            
+    numberOfButtonsToMake =(int) buttonSequence.count;
+
+    buttonViewXOffset = buttonViewWidth/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
+    if (isColumn)
+        buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
+    
     if (containerScrolls){
-        buttonViewWidth = (buttonSequence.count+ 2) * (buttonWidth + buttonSpacing);
+ //       buttonViewWidth = (buttonSequence.count+ 2) * (buttonWidth + buttonSpacing);
+        buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+        buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
         self.containerView.delegate = self;
         self.containerView.decelerationRate=UIScrollViewDecelerationRateFast;
         }
@@ -147,22 +154,24 @@
     ActionRequest *aBtn;
     UIView * newButtonView = self;
     newButtonView.backgroundColor = backColor;
-    int     numberOfButtonsToMake =(int) buttonSequence.count;
+//    int     numberOfButtonsToMake =(int) buttonSequence.count;
     float   buttonYOffset = 0;
     
     
     if (isColumn)
         buttonYOffset = buttonWidth/8;
     self.backgroundColor = backColor;
-   
+/*
     float buttonViewXOffset = buttonViewWidth/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
     if (isColumn)
         buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
+
     if (containerScrolls){
-        //  buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
-        buttonViewXOffset = 0.0;  //dan 4/16/16
+          buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+//        buttonViewXOffset = 0.0;  //dan 4/16/16
         
     }
+*/
     //    NSLog(@"newButtonView backgroundImageView.center = (%3.2f, %3.2f)", backgroundImageView.center.x,backgroundImageView.center.y);
     UIButton *nextButton;
     //    UIButton *nextLabel;
