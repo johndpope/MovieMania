@@ -120,9 +120,12 @@
         }
     CGRect frame = CGRectMake( 0,0,buttonViewWidth , container.bounds.size.height);
     self = [super initWithFrame:frame];
+    
     if (self) {
         // Initialization code
-
+        _originalFrame=containerView.frame;
+        _originalMaxButtonsVisible=containerView.frame.size.width / buttonWidth;
+        _originalButtonWidth=buttonWidth;
         UIImage *yellowBoxImage =  [UIImage imageNamed:@"select1.png"];
         selectedBtnBox = [[UIImageView alloc] initWithFrame:CGRectMake(0.0,0.0,firstButton.buttonSize.width ,firstButton.buttonSize.height)];
         [selectedBtnBox setImage:yellowBoxImage];
@@ -269,17 +272,6 @@
         if (actionReq.buttonIsOn || (buttonSeq.count == 1))
             nextButton.alpha = 1.0;
     }
-   //moved [nextButton addTarget: nextButton action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
-   //moved [nextButton addTarget: nextButton action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
-
-    //moved [nextButton addTarget:actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
-   //moved [nextButton addTarget:actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
-//#if TARGET_OS_TV
-    //moved [nextButton addTarget:actionReq action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
- //   UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized:)];
-//    [tapGesture setCancelsTouchesInView:NO];
-//    [tapGesture setDelegate:self];
-//#endif
     [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:actionReq forKey:[NSString stringWithFormat:@"%li",actionReq.buttonTag]];
 }
 -(void)touchUpOnButton:(id)sender   //touchUpInside, touchUpOutside
@@ -353,18 +345,14 @@
     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
     CellContentDef *ccDefPtr = [currentSectionCells objectAtIndex:0];
     
-    //MYRA FIX THIS
-    
-  //  NSString *whatClass= NSStringFromClass([ccDefPtr.ccCellTypePtr class]);//new
-  //  if ([whatClass isEqualToString: @"CellButtonsScroll"]) {               //new
         CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
         ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
         currentButtonInCenter = firstButton;
     
-        //myra changed  [currentButtonInCenter.uiButton addSubview:selectedBtnBox];
+    
     currentButtonInCenter.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
     currentButtonInCenter.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
-  //  }   //new
+ 
     
     
     
@@ -378,12 +366,35 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  Scroll View processing
 ////////////////////////////////////////////////////////////////////////////////////////
-
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    _lastContentOffset = scrollView.contentOffset;
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
    //  [selectedBtnBox removeFromSuperview];
     
-     NSLog(@"HDButtonView scrollViewDidScroll");
+     NSLog(@"HDButtonView scrollViewDidScroll %f", scrollView.contentOffset.x);
+    if (ABS(_lastContentOffset.x - scrollView.contentOffset.x) < ABS(_lastContentOffset.y - scrollView.contentOffset.y)) {
+        NSLog(@"     Scrolled Vertically");
+    } else {
+        NSLog(@"     Scrolled Horizontally");
+    }
+    CGPoint newOffset = CGPointMake(_lastContentOffset.x, _lastContentOffset.y);
+    
+    if (newOffset.x > scrollView.contentOffset.x) {
+        NSLog(@"     Scrolling direction is left");
+    }else{
+        NSLog(@"     Scrolling direction is right");
+    }
+   /* if (scrollView.contentOffset.x <= -1) {
+        [scrollView setScrollEnabled:NO];
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        [scrollView setScrollEnabled:YES];
+    }
+    */
+    
+    
+    
 }
 -(void) logCBCtag
 {
@@ -391,15 +402,111 @@
     aButtontag = [NSNumber numberWithInteger:currentButtonInCenter.buttonTag];
     NSLog(@"      current button in center has tag %@ %@",aButtontag,currentButtonInCenter.buttonName);
 }
+
+-(void) leftJustifyScrollViewSelection:(UIScrollView *)scrollView
+{
+    //ONLY CALLED BY TVOS
+    
+    CGPoint currentOffset=scrollView.contentOffset;
+    
+    
+    
+    
+   
+    CGPoint newOffset = CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    NSLog(@"** HDRButtonView leftJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
+    
+    int buttonsToMyRight=((int)[currentButtonInCenter.buttonArrayPtr count])-(int)currentButtonInCenter.buttonIndex;
+    if (_originalMaxButtonsVisible > buttonsToMyRight) {
+        NSLog(@"        ****************THIS DOES POP spaceCanShow %d  right %d",_originalMaxButtonsVisible,buttonsToMyRight);
+        //NO   self.bounds=CGRectMake(0, 0, _originalButtonWidth*buttonsToMyRight, _originalFrame.size.height);
+        NSLog(@"");
+        
+    }
+    else{
+       //NO self.bounds=_originalFrame;
+    }
+    //how many buttons fit in the actual view I allocated?
+    //if I have less than that - I have to change my uiView bounds so I don't get weird autoscroll feature - scrollview wants to put max objects on screen
+    //this conflicts with my need to have them left justified for cell navigation in TVOS
+    
+    if (containerScrolls){
+        containerView.contentOffset = newOffset;
+        
+        
+        //[UIView animateWithDuration:0.1f animations:^{
+       //     containerView.contentOffset = newOffset;
+       // }
+        //                 completion:nil];
+
+    }
+    
+}
+
+-(void) centerJustifyScrollViewSelection:(UIScrollView *)scrollView
+{
+    //ONLY CALLED BY TVOS
+    
+    CGPoint currentOffset=scrollView.contentOffset;
+    
+    CGPoint newOffset = CGPointMake(860,0);
+    
+    
+    //CGPoint newOffset = CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    NSLog(@"** HDRButtonView centerJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
+    
+    int buttonsToMyRight=((int)[currentButtonInCenter.buttonArrayPtr count])-(int)currentButtonInCenter.buttonIndex;
+    if (_originalMaxButtonsVisible > buttonsToMyRight) {
+        NSLog(@"        ****************THIS DOES POP spaceCanShow %d  right %d",_originalMaxButtonsVisible,buttonsToMyRight);
+        //NO   self.bounds=CGRectMake(0, 0, _originalButtonWidth*buttonsToMyRight, _originalFrame.size.height);
+        NSLog(@"");
+        
+    }
+    else{
+        //NO self.bounds=_originalFrame;
+    }
+    //how many buttons fit in the actual view I allocated?
+    //if I have less than that - I have to change my uiView bounds so I don't get weird autoscroll feature - scrollview wants to put max objects on screen
+    //this conflicts with my need to have them left justified for cell navigation in TVOS
+    
+    if (containerScrolls){
+        containerView.contentOffset = newOffset;
+        
+        
+        //[UIView animateWithDuration:0.1f animations:^{
+        //     containerView.contentOffset = newOffset;
+        // }
+        //                 completion:nil];
+        
+    }
+    
+}
+
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     
     //what is currentbuttonincenter?
 #if TARGET_OS_TV
-    NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDragging   ");
+    NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDragging decelerate:%d  ",decelerate);
+    
+    
 
+    
+    CGPoint newOffset = CGPointMake(_lastContentOffset.x, _lastContentOffset.y);
+    
+    if (newOffset.x > scrollView.contentOffset.x) {
+        NSLog(@"     Scrolling direction is left");
+    }else{
+        NSLog(@"     Scrolling direction is right");
+    }
+    
+    
+    [self centerJustifyScrollViewSelection:scrollView];
     return;
 #endif
+    
+ 
     
     
     
@@ -431,6 +538,17 @@
 {
     NSLog(@"MYRACHANGED HDRButtonView scrollViewDidEndDecelerating");
 #if TARGET_OS_TV
+    
+    CGPoint newOffset = CGPointMake(_lastContentOffset.x, _lastContentOffset.y);
+    
+    if (newOffset.x > scrollView.contentOffset.x) {
+        NSLog(@"     Scrolling direction is left");
+    }else{
+        NSLog(@"     Scrolling direction is right");
+    }
+    
+
+    [self centerJustifyScrollViewSelection:scrollView];
     return;
 #endif
     
