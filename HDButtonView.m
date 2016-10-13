@@ -52,6 +52,13 @@
     UIColor *backColor;
     float buttonViewXOffset;
     int     numberOfButtonsToMake;
+    
+    
+    CGPoint _lastContentOffset;
+    CGRect _originalFrame;
+    int _originalMaxButtonsVisible;
+    int _originalButtonWidth;
+
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
 //    int     rowNumber;
@@ -449,11 +456,12 @@
     
     CGPoint currentOffset=scrollView.contentOffset;
     
-    CGPoint newOffset = CGPointMake(860,0);
     
+    int currentCenterBtnNumber =(int)currentButtonInCenter.buttonIndex;
     
-    //CGPoint newOffset = CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
-    NSLog(@"** HDRButtonView centerJustifyScrollViewSelection old:%@   new:%@",NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
+    CGPoint newOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
+    //CGPointMake((currentButtonInCenter.buttonIndex)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing)/2,0);
+    NSLog(@"** HDRButtonView centerJustifyScrollViewSelection index %d old:%@   new:%@",currentCenterBtnNumber,NSStringFromCGPoint(currentOffset),NSStringFromCGPoint(newOffset));
     
     int buttonsToMyRight=((int)[currentButtonInCenter.buttonArrayPtr count])-(int)currentButtonInCenter.buttonIndex;
     if (_originalMaxButtonsVisible > buttonsToMyRight) {
