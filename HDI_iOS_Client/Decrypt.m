@@ -379,14 +379,25 @@
     NSString *answer=nil;
     NSArray *allKeys=[decryptDict allKeys];
     NSString *customKey=nil;
+    NSMutableArray *arrayAnswer;
+    NSString *lastO;
+    id someObj;
     
     if ([allKeys containsObject:hdiKey]) {
         customKey=[decryptDict valueForKeyPath:hdiKey];
         if (customKey) {
-            answer=[searchDict valueForKeyPath:customKey];
-        }
+            someObj=[searchDict valueForKeyPath:customKey];
+            if ([someObj isKindOfClass:[NSArray class]]) {
+                answer=[[searchDict valueForKeyPath:customKey]lastObject];
+            }
+            else{
+                answer=[searchDict valueForKeyPath:customKey];
+            }
+            
+                  }
     }
-    return answer;
+    NSLog(@"");
+        return answer;
     
 }
 +(NSNumber *)numForHDIKey:(NSString *)hdiKey inDict:(NSMutableDictionary*)searchDict decryptDict:(NSMutableDictionary*)decryptDict

@@ -1303,6 +1303,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSMutableArray *arrayOfStrings=[[NSMutableArray alloc]init];
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",productName]];
     [arrayOfStrings addObject: [NSString stringWithFormat:@"%@",shortDesc]];
+    
     if (rated || runTime) {
         [arrayOfStrings addObject: [NSString stringWithFormat:@"%@ | %@",rated,runTime]];
     }
