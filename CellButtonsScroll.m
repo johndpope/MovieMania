@@ -175,10 +175,10 @@
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
     buttonContainerView.backgroundColor= [UIColor clearColor];
     
-//    buttonContainerView.backgroundColor=[UIColor orangeColor];
+
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
-//    tvcellPtr.backgroundColor=[UIColor blueColor];
+
     
     [tvcellPtr addSubview:buttonContainerView];
  //   buttonContainerView.center=tvcellPtr.center;

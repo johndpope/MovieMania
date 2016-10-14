@@ -436,7 +436,7 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
 
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    NSLog(@"CellInputField textfield did begin editing");
+    NSLog(@"CellInputField shouldChangeChars");
     
     //get the current data strsing inside the text field
     NSString *myTextData = [textField.text stringByReplacingCharactersInRange:range
