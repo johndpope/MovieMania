@@ -85,6 +85,7 @@
 -(void) makeUseDefaults:(TableDef *)nTableDef
 {
     //initialDraw=YES;
+    
     nTableDef.tableDisplayFirstVisibleNotification=FALSE;    //has runtime been notified yet?
 
     nTableDef.dbAllTabTransDict=[[NSMutableDictionary alloc] init];

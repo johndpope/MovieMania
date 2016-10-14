@@ -166,12 +166,17 @@
     [super viewDidAppear:animated];
     
     
-#if !TARGET_OS_TV
+#if TARGET_OS_TV
+    
+        [self setNeedsFocusUpdate];
+        [self updateFocusIfNeeded];
+
+#else
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 #endif
     
     
-  //  [self.tableView reloadData];
+  //  [self.tableView reloadData]; //NO NO NO
 
 }
 
