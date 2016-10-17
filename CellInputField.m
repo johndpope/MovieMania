@@ -312,8 +312,44 @@
     return returnedUIView;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Debug Methods
+#pragma mark keyboard Methods
 /////////////////////////////////////////
+-(void) setupInputAccessoryView:(UITextField *)textField{
+    
+    NSLog(@"current inputAccessoryView %@",textField.inputAccessoryView);
+    
+#if TARGET_OS_TV
+    
+    //its always full screen so have to have accessory view or won't know what you are replacing
+    
+    if (!helpLabel) {
+        return;
+    }
+    
+    self.inputFieldIAV=[[UIView alloc]initWithFrame: CGRectMake(0, 0, helpLabel.bounds.size.width + 10, helpLabel.bounds.size.height+10)];
+    //self.inputFieldIAV.backgroundColor=[UIColor redColor];
+    
+    int textFieldXoffsetCenter=textField.frame.origin.x/2;
+    helpLabel.center=CGPointMake(helpLabel.center.x-textFieldXoffsetCenter, helpLabel.center.y);
+
+    
+    
+   
+    [self.inputFieldIAV addSubview:self.helpLabel];
+    
+    
+    
+    textField.inputAccessoryView= self.inputFieldIAV;
+    NSLog(@"now inputAccessoryView %@",textField.inputAccessoryView);
+    NSLog(@"");
+#endif
+    
+    
+    
+    
+    
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  UITextField processing
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -387,35 +423,6 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
 //ZY    CellInputField *cifPtr;
 //    cifPtr=(CellInputField *)textField.tag;
     NSLog(@"");*/
-}
--(void) setupInputAccessoryView:(UITextField *)textField{
-    
-    NSLog(@"current inputAccessoryView %@",textField.inputAccessoryView);
-    
-#if TARGET_OS_TV
-    
-    //its always full screen so have to have accessory view or won't know what you are replacing
-    
-    if (!helpLabel) {
-        return;
-    }
-    
-    self.inputFieldIAV=[[UIView alloc]initWithFrame: CGRectMake(0, 0, helpLabel.bounds.size.width + 10, helpLabel.bounds.size.height+10)];
-    //self.inputFieldIAV.backgroundColor=[UIColor redColor];
-    self.helpLabel.center = self.inputFieldIAV.center;
-    [self.inputFieldIAV addSubview:self.helpLabel];
-    
-    
-    
-    textField.inputAccessoryView= self.inputFieldIAV;
-    NSLog(@"now inputAccessoryView %@",textField.inputAccessoryView);
-    NSLog(@"");
-#endif
-    
-    
-    
-
-    
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     
