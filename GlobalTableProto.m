@@ -1278,6 +1278,16 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //    sdPtr.sectionFooterContentPtr=nil;
     [myTable.tableSections addObject:sdPtr];
     
+    CellContentDef *floatSecPtr;
+#if TARGET_OS_TV
+    floatSecPtr=sdPtr.sectionHeaderContentPtr;
+    sdPtr.sectionHeaderContentPtr=nil;
+    [sdPtr.sCellsContentDefArr addObject:floatSecPtr];
+    floatSecPtr.ccCellTypePtr.usedByHeaderOrFooter=NO;
+
+#endif
+
+    
     
     
     
