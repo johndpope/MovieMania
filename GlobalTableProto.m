@@ -324,12 +324,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
 
     }
-   //put back [self mkTableDefSplashScreen:myTable]; //screen users will see when data initially downloads
-   //put back return myTable;
+   [self mkTableDefSplashScreen:myTable]; //screen users will see when data initially downloads
+    return myTable;
     
 /////////////////////  Various SPLASH SCREEN TESTERs BELOW
-    [self mkTableDefTesterSplashScreen0:myTable]; //TESTER   FOR TEST SECTION, CELLS   as text  tvos testing - lots of cells - scrollable
-    return myTable;
+   // [self mkTableDefTesterSplashScreen0:myTable]; //TESTER   FOR TEST SECTION, CELLS   as text  tvos testing - lots of cells - scrollable
+   // return myTable; //tvos
     //[self mkTableDefTesterSplashScreen1:myTable]; //TESTER   FOR TEST SECTION, CELLS   as text
     //return myTable;
     
