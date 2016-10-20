@@ -12,6 +12,7 @@
 @property (strong, nonatomic) GlobalTableProto *gGTPptr;
 @property (strong, nonatomic) GlobalCalcVals *gGCVptr;
 @property (nonatomic, readwrite) CGRect _myInitFrame;
+@property (nonatomic, readwrite) BOOL _infoSet;
 @end
 
 @implementation TableViewController
@@ -22,7 +23,7 @@
 - (id)initWithTableDataPtr:(TableDef *)tableDefPtr usingTableViewStyle:(UITableViewStyle)tvcStyle viewFrame:(CGRect)thisFrame
 {
     _myInitFrame=thisFrame;//fixes scrolling problem in sections
-    
+    __infoSet=NO;
     self = [super init];
     if (self) {
        // self.title=@"TablePRO";
@@ -137,6 +138,20 @@
 -(void) viewDidLoad{
     [super viewDidLoad];
     NSLog(@"TVCviewDidLoad");
+    
+    //do only once?
+    if (!__infoSet) {
+        //the following fixes TVOS tableview scrolling over fixed header AND gradient colors at top & bot of scrolling tableview
+        
+        //NSLog(@"0. TBVCTRL frame %@ bounds %@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.view.bounds));
+        self.view.maskView=nil;//tvos test - fixes scroll gradient but now scrolls over fixed header
+        self.view.opaque=NO;//tvos test - fixes scroll gradient but now scrolls over fixed header
+        self.view.clipsToBounds=YES;
+       // NSLog(@"1. TBVCTRL frame %@ bounds %@",NSStringFromCGRect(self.view.frame),NSStringFromCGRect(self.view.bounds));
+        __infoSet=YES;
+    }
+    
+    
     
     /*
 #if TARGET_OS_TV
@@ -411,6 +426,25 @@
     
     
     thisCell.selectionStyle=UITableViewCellSelectionStyleNone;
+  //   thisCell.focusStyle=UITableViewCellFocusStyleCustom;//tvos test- no change
+   // thisCell.maskView=nil;//tvos test - no effect
+   // thisCell.opaque=NO;//tvos test - no effect
+   
+    
+    //do only once? works but moved to viewDidLoad
+ /*   if (!__infoSet) {
+        //the following fixes TVOS tableview scrolling over fixed header AND gradient colors at top & bot of scrolling tableview
+        
+        NSLog(@"0. TBVCTRL frame %@ bounds %@",NSStringFromCGRect(tableView.frame),NSStringFromCGRect(tableView.bounds));
+        tableView.maskView=nil;//tvos test - fixes scroll gradient but now scrolls over fixed header
+        tableView.opaque=NO;//tvos test - fixes scroll gradient but now scrolls over fixed header
+        tableView.clipsToBounds=YES;
+        NSLog(@"1. TBVCTRL frame %@ bounds %@",NSStringFromCGRect(tableView.frame),NSStringFromCGRect(tableView.bounds));
+        __infoSet=YES;
+    }
+*/
+    
+    
     
     //do I have any subviews?
     int subsCount=[[thisCell.contentView subviews] count];

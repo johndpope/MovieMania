@@ -324,11 +324,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
 
     }
-    [self mkTableDefSplashScreen:myTable]; //screen users will see when data initially downloads
-    return myTable;
+   //put back [self mkTableDefSplashScreen:myTable]; //screen users will see when data initially downloads
+   //put back return myTable;
     
 /////////////////////  Various SPLASH SCREEN TESTERs BELOW
-    
+    [self mkTableDefTesterSplashScreen0:myTable]; //TESTER   FOR TEST SECTION, CELLS   as text  tvos testing - lots of cells - scrollable
+    return myTable;
     //[self mkTableDefTesterSplashScreen1:myTable]; //TESTER   FOR TEST SECTION, CELLS   as text
     //return myTable;
     
@@ -3448,6 +3449,33 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     return myTable;
 }
+-(TableDef *) createFixedTableFooterUsingText:(NSString *)thisText forTable:(TableDef *)myTable
+{
+    //IF table nil, makeone
+    
+    if (!myTable) {
+        //makeone
+        myTable=[[TableDef alloc]init];
+    }
+    else{
+        if (myTable.tableFooterContentPtr) {
+            [myTable.tableFooterContentPtr killYourself];
+        }
+    }
+    
+    CellTextDef *ctdPtr=[CellTextDef initCellText:thisText withTextColor:self.viewTextColor withBackgroundColor:self.headerBackColor withTextFontSize:20 withTextFontName:nil];
+    
+    myTable.tableFooterContentPtr.ccCellTypePtr=ctdPtr;
+    ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+    
+    
+    
+    myTable.tableFooterContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+    myTable.tableFooterFixed=TRUE;
+    
+    return myTable;
+}
+
 -(TableDef *) createButtonsForFixedHeaderinTable:(TableDef*)myTable withFooterBtns:(NSArray *)footerNamesPtr withNextTVCs:(NSArray *)nextTVCsPtr withButtonSize:(CGSize)btnSize// buttonsScroll:(BOOL)buttonsScroll
 {
     //    CGSize btnSize = CGSizeMake(60, 30);
@@ -3714,6 +3742,321 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark SPLASH SCREEN DEF Methods
 /////////////////////////////////////////
+-(void)mkTableDefTesterSplashScreen0:(TableDef*)myTable
+{
+    //  this tests displayed text in section header and cells   - preserving background color/text color
+    //  note it you pass nil to textColot cell will put text in black.  default text cell background color is clearColor
+    // IN RUNTIME.M  change the default color to something that will bleed through
+    //   ---->     thistv.backgroundColor=[UIColor magentaColor];//self.gGTPptr.viewBackColor;
+    
+    //CellUIView and CellTextDef contain canMyRowHaveTVFocus
+    
+    SectionDef *sdPtr;
+    SectionDef *sdPtr2;
+    CellTextDef *ctdInSectionptr;
+       myTable = [self createFixedTableHeaderUsingText:@"Fixed Table Header" forTable:myTable];
+    
+    myTable = [self createFixedTableFooterUsingText:@"Fixed Table Footer" forTable:myTable];
+    sdPtr=[SectionDef initSectionHeaderText:@"mySection1" withTextColor:[UIColor blueColor] withBackgroundColor:viewBackColor withTextFontSize:35 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+    ctdInSectionptr=(CellTextDef*) sdPtr.sectionHeaderContentPtr.ccCellTypePtr;
+    ctdInSectionptr.canMyRowHaveTVFocus=YES;
+    
+    
+    [myTable.tableSections addObject:sdPtr];
+    sdPtr2=[SectionDef initSectionHeaderText:@"mySection2" withTextColor:[UIColor blueColor] withBackgroundColor:viewBackColor withTextFontSize:35 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+    [myTable.tableSections addObject: sdPtr2];
+    
+    
+    
+    
+    //create cells in section 1
+    CellContentDef *cellContentPtr1;
+    CellTextDef *ctdPtr;
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R1" withTextColor:[UIColor whiteColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1.ccCellTypePtr=ctdPtr;
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R2" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R3" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R4" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R5" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R6" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R7" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R8" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R9" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    
+    ///
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1 R10" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1 R11" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R12" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R13" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R14" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R15" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R16" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R17" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R18" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec1R19" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    
+    ///
+    //create cells in section 2
+    
+    
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R1" withTextColor:[UIColor whiteColor]withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    ctdPtr.canMyRowHaveTVFocus=YES;
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R2" withTextColor:[UIColor whiteColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R3" withTextColor:[UIColor whiteColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R4" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R5" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R6" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R7" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R8" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R9" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    
+    ///
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2 R10" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2 R11" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    // ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R12" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R13" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R14" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //  ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R15" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R16" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R17" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R18" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    //   ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    cellContentPtr1=[[CellContentDef alloc] init];
+    ctdPtr=[CellTextDef initCellText:@"cellSec2R19" withTextColor:nil withBackgroundColor:nil withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    ctdPtr.cellSeparatorVisible=TRUE;
+    ctdPtr.canMyRowHaveTVFocus=YES;   //added for section header scrolling test, TVOS
+    cellContentPtr1=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+    
+    
+    
+    
+    NSLog(@"");
+    
+    
+}
 
 -(void) mkTableDefSplashScreen:(TableDef*)myTable
 {
