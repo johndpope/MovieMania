@@ -379,6 +379,7 @@
     
     
     [self.rtTableViewCtrler.view setFrame:posCenterRect]; //ALTER offset for tableView
+    gGTPptr.currentActiveTVRect=posCenterRect;
     
     NSLog(@"RUNTIME.M NAV.view(%p) addSubview tableViewController.view (%p)   tableviewcontroller (%p)",self.rtNavCtrler.view,self.rtTableViewCtrler.view,self.rtTableViewCtrler);
     

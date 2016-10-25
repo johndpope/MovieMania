@@ -17,7 +17,7 @@
 @synthesize placeholderTextDefPtr,leftSideDispTextPtr;
 @synthesize autocorrectionType,borderStyle,clearButtonMode,contentVerticalAlignment,keyboardType,returnKeyType;
 
-@synthesize secureEntry;
+@synthesize secureEntry,allowSpeechDetect;
 
 @synthesize  transDataPtr,displayTag, wrappedTag;
 @synthesize gInputFieldsDictKey;
@@ -55,7 +55,7 @@
     nCell.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;
     nCell.keyboardType=UIKeyboardTypeDefault;
     nCell.returnKeyType=UIReturnKeyDone;
-   
+    nCell.allowSpeechDetect=YES;
     nCell.cellMaxHeight=DEF_CELLHEIGHT;
     //nCell.userEntered=nil;   //moved to transactionData
     nCell.leftSideDispTextPtr=[CellTextDef initCellDefaults];
@@ -66,6 +66,7 @@
     
     nCell.helpTextPtr=[CellTextDef initCellDefaults];
     nCell.helpTextPtr.cellDispTextPtr.textStr=@"";
+
     /*
 #if TARGET_OS_TV
 
@@ -311,43 +312,107 @@
 
     return returnedUIView;
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark keyboard Methods
-/////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - accessoryView
+////////////////////////////////////////////////////////////////////////////////////////
 -(void) setupInputAccessoryView:(UITextField *)textField{
     
     NSLog(@"current inputAccessoryView %@",textField.inputAccessoryView);
+    int textFieldXoffsetCenter;
     
-#if TARGET_OS_TV
+    //screensize is already known
+    
+    GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
+    
+    UIButton *nextButton;
+    CGRect buttonRect;
     
     //its always full screen so have to have accessory view or won't know what you are replacing
-    
-    if (!helpLabel) {
+    #if TARGET_OS_TV
+        if (!helpLabel) {
+            return;
+        }
+    #else
+    if (!allowSpeechDetect) {
         return;
     }
+    #endif
     
+    
+    
+    NSLog(@"    helplabel bounds %@",NSStringFromCGRect(helpLabel.bounds));
     self.inputFieldIAV=[[UIView alloc]initWithFrame: CGRectMake(0, 0, helpLabel.bounds.size.width + 10, helpLabel.bounds.size.height+10)];
-    //self.inputFieldIAV.backgroundColor=[UIColor redColor];
+    self.inputFieldIAV.backgroundColor=[UIColor redColor];
+    #if TARGET_OS_TV
+        textFieldXoffsetCenter=textField.frame.origin.x/2;
+        helpLabel.center=CGPointMake(helpLabel.center.x-textFieldXoffsetCenter, helpLabel.center.y);
+    #else
+        buttonRect=CGRectMake(0, 0, gGTPptr.sizeGlobalButton.width, gGTPptr.sizeGlobalButton.height);
+        nextButton = [[UIButton alloc] initWithFrame:buttonRect];
     
-    int textFieldXoffsetCenter=textField.frame.origin.x/2;
-    helpLabel.center=CGPointMake(helpLabel.center.x-textFieldXoffsetCenter, helpLabel.center.y);
+
+        nextButton.hidden = NO;
+        nextButton.userInteractionEnabled =  YES;
+        nextButton.backgroundColor = [UIColor darkGrayColor];//  backColor;// [UIColor blackColor];
+    
+    
+        nextButton.adjustsImageWhenHighlighted = YES;
+    
+        // if (actionReq.buttonImage){
+        
+        //      [nextButton setImage:actionReq.buttonImage forState: UIControlStateNormal];
+        //      nextButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+        //     nextButton.contentVerticalAlignment   = UIControlContentVerticalAlignmentFill;
+        //      nextButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        //  }else{
+            [nextButton setTitle:@"Speak" forState:UIControlStateNormal];
+            nextButton.titleLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
+            [nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            nextButton.titleLabel.numberOfLines = 2;
+            //nextButton.alpha = 0.6;
+        //     if (actionReq.buttonIsOn || (buttonSeq.count == 1))
+        //         nextButton.alpha = 1.0;
+        // }
+
+    
+            [nextButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpInside];
+            [nextButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpOutside];
+    
+    
+            nextButton.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width - (nextButton.frame.size.width/2 + 4), helpLabel.center.y);
+            NSLog(@"    tvc realscreen rect %@",NSStringFromCGRect(gGTPptr.currentActiveTVRect));
+            helpLabel.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width/2, helpLabel.center.y);
+            [self.inputFieldIAV addSubview:nextButton];
+    #endif
 
     
     
    
     [self.inputFieldIAV addSubview:self.helpLabel];
     
-    
+    NSLog(@"    helplabel center %@",NSStringFromCGPoint(helpLabel.center));
     
     textField.inputAccessoryView= self.inputFieldIAV;
     NSLog(@"now inputAccessoryView %@",textField.inputAccessoryView);
     NSLog(@"");
-#endif
+//#endif
     
     
     
     
     
+}
+-(void)touchUpOnSpeakButton:(id)sender   //touchUpInside, touchUpOutside
+{
+    UIButton * uiButtonPressed = sender;
+    NSLog(@"CellINputField    Accessory view     speak button pressed");
+    
+    
+    
+    NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
+    NSString *tagString = [touchedButton stringValue];
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

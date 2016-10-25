@@ -29,6 +29,7 @@
 @property (nonatomic, readwrite) int  clearButtonMode;
 @property (nonatomic, readwrite) int contentVerticalAlignment;
 @property (nonatomic, readwrite) BOOL secureEntry;
+@property (nonatomic, readwrite) BOOL allowSpeechDetect;
 @property (nonatomic, readwrite) NSString *gInputFieldsDictKey;
 
 @property (nonatomic, readwrite) NSNumber *wrappedTag;  //dictionary keys have to be objects
@@ -37,6 +38,7 @@
 @property (nonatomic, readwrite) UIView* inputFieldIAV; //input accessory view
 @property (nonatomic, readwrite) UILabel *helpLabel;
 @property (nonatomic, readwrite) CellTextDef *helpTextPtr;
+
 
 -(void) killYourself;
 

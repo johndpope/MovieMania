@@ -55,7 +55,7 @@
 //    UIImageView *moviePosterView;
 }
 
-@synthesize debugFlag,globalZipCode;
+@synthesize debugFlag,globalZipCode,currentActiveTVRect;
 @synthesize thisUserValid;
 @synthesize runningSimulator;
 @synthesize allButtonsDictionary;
@@ -1210,7 +1210,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         //0 [self.liveRuntimePtr.rtTableViewCtrler presentViewController:playerViewController animated:YES completion:nil];
         
         //not working [self.liveRuntimePtr.rtTableViewCtrler.parentViewController presentViewController:playerViewController animated:YES completion:nil];
-        [player play];
+        [player play];   //this one
         return nil;
     }else{
        // NSDictionary *playerVars = @{
