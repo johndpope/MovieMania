@@ -47,6 +47,10 @@
 #define TK_TVOS_TextFontMiddle 32
 #define TK_TVOS_TextFontSmall 24
 
+///////////////////////////////////////////////////////
+//  S P E E C H
+#define SPCH_CONSTRAIN_NONE  0
+#define SPCH_CONSTRAIN_DIGITS  1
 
 ///////////////////////////////////////////////////////
 #define  DISK_STORAGE_ENABLED YES               // if this is NO, none of the archive and unarchive methods work

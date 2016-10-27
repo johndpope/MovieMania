@@ -11,6 +11,8 @@
 @implementation CellInputField
 {
     UITextField *myTextField;
+    BOOL    speakStart;
+    UIButton *speakButton;
     
 }
 
@@ -29,7 +31,14 @@
 /////////////////////////////////////////
 -(void) killYourself
 {
-    [self.placeholderTextDefPtr killYourself];
+
+   [ [NSNotificationCenter defaultCenter] removeObserver:self ];
+     
+    if(speakButton){
+        [self releaseSpeakButton];
+    }
+        
+      [self.placeholderTextDefPtr killYourself];
     [self.leftSideDispTextPtr killYourself];
     [self.transDataPtr killYourself];
 }
@@ -66,6 +75,7 @@
     
     nCell.helpTextPtr=[CellTextDef initCellDefaults];
     nCell.helpTextPtr.cellDispTextPtr.textStr=@"";
+    [self addNotificationsIWant];
 
     /*
 #if TARGET_OS_TV
@@ -82,6 +92,61 @@
 #pragma mark Access Methods
 /////////////////////////////////////////
 
+-(void) addNotificationsIWant
+{
+    
+       [[NSNotificationCenter defaultCenter] addObserver:self
+     selector:@selector(speechRecoUtterance:)    //method
+     name:ConstUserSpeechUtterance         //const in TableProntoDefines.h
+     object:nil];
+     
+    
+    
+}
+
+- (void) speechRecoUtterance:(NSNotification *) notification
+ {
+ 
+     NSString *uttered=[notification object];
+ // ActionRequest *queryAction = [notification object];
+ 
+ NSLog(@"***CellInputField speechRecoUtterance %@",uttered);
+     [self storeNewSpokenOrTypedData:uttered showInEFDisplay:YES];
+ NSLog(@"");
+ }
+
+
+-(void)touchUpOnSpeakButton:(id)sender   //touchUpInside, touchUpOutside
+{
+    
+#if TARGET_OS_TV
+    return;
+#endif
+    
+    
+   // UIButton * uiButtonPressed = sender;
+    NSLog(@"CellINputField    Accessory view     speak button pressed");
+    //NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
+   // NSString *tagString = [touchedButton stringValue];
+    GlobalSpeech *gGSptr=[GlobalSpeech sharedGlobalSpeech];
+    
+    speakStart=!speakStart;
+    if (speakStart){
+        [speakButton setTitle:@"Stop" forState:UIControlStateNormal];
+        [gGSptr.mySpeechRec startRecAndRecognize];//1[self startRecording];
+        
+        
+    }else{ //STOP pressed
+        [speakButton setTitle:@"Speak" forState:UIControlStateNormal];
+        
+        NSString *recognizedStr=[gGSptr.mySpeechRec lastRecognized];
+        [gGSptr.mySpeechRec finishRecAndRecognize];//1[logArray removeAllObjects]; //1[self stopRecording];
+        [self storeNewSpokenOrTypedData:recognizedStr showInEFDisplay:YES];
+        
+    }
+    
+    
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Assignment Methods
@@ -315,6 +380,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - accessoryView
 ////////////////////////////////////////////////////////////////////////////////////////
+-(void) storeNewSpokenOrTypedData:(NSString*)newData showInEFDisplay:(BOOL)showInEF
+{
+    self.transDataPtr.userDefinedData=newData;//NEW
+    
+    if (newData) {
+        [[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.gInputFieldsDictionary setObject:newData forKey: self.gInputFieldsDictKey];
+    }
+    if (showInEF) {
+        myTextField.text=newData;
+    }
+}
 -(void) setupInputAccessoryView:(UITextField *)textField{
     
     NSLog(@"current inputAccessoryView %@",textField.inputAccessoryView);
@@ -324,7 +400,7 @@
     
     GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
     
-    UIButton *nextButton;
+    
     CGRect buttonRect;
     
     //its always full screen so have to have accessory view or won't know what you are replacing
@@ -347,43 +423,47 @@
         textFieldXoffsetCenter=textField.frame.origin.x/2;
         helpLabel.center=CGPointMake(helpLabel.center.x-textFieldXoffsetCenter, helpLabel.center.y);
     #else
-        buttonRect=CGRectMake(0, 0, gGTPptr.sizeGlobalButton.width, gGTPptr.sizeGlobalButton.height);
-        nextButton = [[UIButton alloc] initWithFrame:buttonRect];
-    
-
-        nextButton.hidden = NO;
-        nextButton.userInteractionEnabled =  YES;
-        nextButton.backgroundColor = [UIColor darkGrayColor];//  backColor;// [UIColor blackColor];
+        helpLabel.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width/2, helpLabel.center.y);
     
     
-        nextButton.adjustsImageWhenHighlighted = YES;
     
-        // if (actionReq.buttonImage){
-        
-        //      [nextButton setImage:actionReq.buttonImage forState: UIControlStateNormal];
-        //      nextButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
-        //     nextButton.contentVerticalAlignment   = UIControlContentVerticalAlignmentFill;
-        //      nextButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        
-        //  }else{
-            [nextButton setTitle:@"Speak" forState:UIControlStateNormal];
-            nextButton.titleLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
-            [nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            nextButton.titleLabel.numberOfLines = 2;
-            //nextButton.alpha = 0.6;
-        //     if (actionReq.buttonIsOn || (buttonSeq.count == 1))
-        //         nextButton.alpha = 1.0;
-        // }
-
-    
-            [nextButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpInside];
-            [nextButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpOutside];
+        GlobalSpeech *gGSptr=[GlobalSpeech sharedGlobalSpeech];
+        int speechConstraintType=SPCH_CONSTRAIN_NONE;
+        switch (keyboardType) {
+            case UIKeyboardTypeNumberPad:
+            case UIKeyboardTypePhonePad:
+                speechConstraintType=SPCH_CONSTRAIN_DIGITS;
+                break;
+            
+            default: //UIKeyboardTypeDefault
+                break;
+        }//end keyboardtype
+        gGSptr.mySpeechRec=[[SpeechRec alloc]initAndSetType:speechConstraintType];
     
     
-            nextButton.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width - (nextButton.frame.size.width/2 + 4), helpLabel.center.y);
+        if (gGSptr.mySpeechRec) {  //did user say no to speech authorization?
+            buttonRect=CGRectMake(0, 0, gGTPptr.sizeGlobalButton.width, gGTPptr.sizeGlobalButton.height);
+            speakButton = [[UIButton alloc] initWithFrame:buttonRect];
+            
+            speakButton.hidden = NO;
+            speakButton.userInteractionEnabled =  YES;
+            speakButton.backgroundColor = [UIColor darkGrayColor];//  backColor;// [UIColor blackColor];
+            speakButton.adjustsImageWhenHighlighted = YES;
+             [speakButton setTitle:@"Speak" forState:UIControlStateNormal];
+            speakButton.titleLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
+            [speakButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            speakButton.titleLabel.numberOfLines = 2;
+            [speakButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpInside];
+            [speakButton addTarget: self action:@selector(touchUpOnSpeakButton:)  forControlEvents:UIControlEventTouchUpOutside];
+            speakButton.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width - (speakButton.frame.size.width/2 + 4), helpLabel.center.y);
             NSLog(@"    tvc realscreen rect %@",NSStringFromCGRect(gGTPptr.currentActiveTVRect));
-            helpLabel.center=CGPointMake(gGTPptr.currentActiveTVRect.size.width/2, helpLabel.center.y);
-            [self.inputFieldIAV addSubview:nextButton];
+            [self.inputFieldIAV addSubview:speakButton];
+        }
+        else{
+            speakButton=nil;
+        }
+
+ 
     #endif
 
     
@@ -403,17 +483,18 @@
     
     
 }
--(void)touchUpOnSpeakButton:(id)sender   //touchUpInside, touchUpOutside
+-(void) releaseSpeakButton
 {
-    UIButton * uiButtonPressed = sender;
-    NSLog(@"CellINputField    Accessory view     speak button pressed");
+    [speakButton removeFromSuperview];
     
-    
-    
-    NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
-    NSString *tagString = [touchedButton stringValue];
+    speakButton=nil;
+    GlobalSpeech *gGSptr=[GlobalSpeech sharedGlobalSpeech];
 
+    [gGSptr.mySpeechRec killYourself];
+    gGSptr.mySpeechRec=nil;
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  UITextField processing
@@ -426,7 +507,12 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{   //enter in field
     NSLog(@"CellInputField  textFieldShouldReturn:");
     if ([textField canResignFirstResponder]) {
+        
         [textField resignFirstResponder];
+        if (speakButton) {
+            [self releaseSpeakButton];
+        }
+
     }
     return YES;
 }
@@ -517,11 +603,13 @@ NSLog(@"CellInputField  textFieldShouldEndEditing:");
     NSLog(@"Current data in text field is %@  usingTag %li", myTextData,(long)fieldTag);
     // NSCharacterSet * set = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
     
-    self.transDataPtr.userDefinedData=myTextData;//NEW
     
-    if (myTextData) {
-        [[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.gInputFieldsDictionary setObject:myTextData forKey: self.gInputFieldsDictKey];
-    }
+    [self storeNewSpokenOrTypedData:myTextData showInEFDisplay:NO];
+    //self.transDataPtr.userDefinedData=myTextData;//NEW
+   //
+   // if (myTextData) {
+  //      [[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.gInputFieldsDictionary setObject:myTextData forKey: self.gInputFieldsDictKey];
+   // }
     
     
     return YES;

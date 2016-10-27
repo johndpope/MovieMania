@@ -15,8 +15,11 @@
 #import "DispTText.h"
 #import "TransactionData.h"
 
+#import "GlobalSpeech.h"
+#if !TARGET_OS_TV
 
-
+#import "SpeechRec.h"
+#endif
 
 @interface CellInputField : CellTypesAll <UITextFieldDelegate>
 @property (nonatomic, readwrite) CellTextDef *placeholderTextDefPtr; //takes care of font, text, color, backcolor

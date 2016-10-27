@@ -77,7 +77,7 @@ NSString* const ConstContinueLoopingTransaction=@"ContinueLoopingTransaction";
 
 
 NSString* const ConstUserFocusMovie = @"UserFocusMovie";
-
+NSString* const ConstUserSpeechUtterance = @"UserSpeechUtterance";
 
 NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 

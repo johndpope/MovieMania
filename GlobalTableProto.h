@@ -73,6 +73,7 @@ extern NSString* const ConstUserTouchInput;
 extern NSString* const ConstUserFocusMovie;
 extern NSString* const ConstContinueLoopingTransaction;
 extern NSString* const ConstNEWZIPstartOver;
+extern NSString* const ConstUserSpeechUtterance;
 
 //-(NSInteger) giveMeUniqueNSInteger;
 
