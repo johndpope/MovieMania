@@ -1493,18 +1493,47 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     txtTypePtr1=[CellTextDef initCellText:showingDate withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
+    int ticketStrLength = 8;
+    int priceStrLength = 6;
+    int qtyStrLength = 4;
+    int totalStrLenth = 6;
+    NSString *ticket = [self leftJustifyString:@"Ticket" withLength:ticketStrLength] ;
+    NSString *price = [self rightJustifyString:@"Price" withLength:priceStrLength];
+    NSString *qty = [self rightJustifyString:@"Qty" withLength:qtyStrLength] ;
+    NSString *total = [self rightJustifyString:@"Total" withLength:totalStrLenth];
+    NSString *hdrStr = [NSString stringWithFormat:@"%@%@%@%@",ticket,price,qty,total];
+    txtTypePtr1=[CellTextDef initCellText:hdrStr withTextColor:[UIColor redColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];
+    txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+    [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
+    
+    
     float totalCost = 0;
     NSMutableDictionary *purchaseInfo;
     NSString *purchaseType;
     NSNumber *purchasePrice;
     NSNumber *purchaseQty;
+    float ticketTypeCost;
+    
+//    int ticketStrLength = 8;
+//    int priceStrLength = 5;
+//    int qtyStrLength = 3;
+//    int totalStrLenth = 6;
     for (purchaseInfo in aPurchase.allPurchaseTypes){
         purchaseType = [purchaseInfo objectForKey:kPurchaseTypeKey];
         purchasePrice = [purchaseInfo objectForKey:kPurchasePriceKey];
         purchaseQty = [purchaseInfo objectForKey:kPurchaseQuantityKey];
         totalCost = totalCost + [purchasePrice floatValue] * [purchaseQty floatValue];
     
-    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@ Price = %2.2f",purchaseType, [purchasePrice floatValue]]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+//    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@ Price = %2.2f",purchaseType, [purchasePrice floatValue]]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    ticketTypeCost = [purchasePrice floatValue] * [purchaseQty integerValue];
+    NSString *leftJustifiedPurchaseType = [self leftJustifyString:purchaseType withLength:ticketStrLength];
+    NSString *rightJustifiedPrice = [self rightJustifyString:[purchasePrice stringValue] withLength:priceStrLength];
+    NSString *rightJustifiedQty = [self rightJustifyString:[purchaseQty stringValue] withLength:qtyStrLength];
+    NSString *rightJustifiedTotal = [self rightJustifyString:[NSString stringWithFormat:@"%3.2f",ticketTypeCost] withLength:totalStrLenth];
+    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@%@%@%@",leftJustifiedPurchaseType, rightJustifiedPrice, rightJustifiedQty, rightJustifiedTotal]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];  // monospaced font
+    
+//    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@      %2.2f    %li      %3.2f",purchaseType, [purchasePrice floatValue], (long)[purchaseQty integerValue], ticketTypeCost ]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
@@ -2567,6 +2596,35 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Helper Methods
 /////////////////////////////////////////
+
+-(NSString *)leftJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
+{
+    NSString *justifiedStr = [aString mutableCopy];
+    NSUInteger aStrLength=[aString length];
+    NSUInteger spacesToAdd = strLength-aStrLength;
+    if (spacesToAdd > 0){
+        for (NSUInteger i = spacesToAdd; i > 0; i --){
+            justifiedStr = [justifiedStr stringByAppendingString:@" "];
+        }
+    }
+ return justifiedStr;
+    
+}
+-(NSString *)rightJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
+{
+    NSString *justifiedStr = @"";//[aString mutableCopy];
+    NSUInteger aStrLength=[aString length];
+    NSUInteger spacesToAdd = strLength-aStrLength;
+    if (spacesToAdd > 0){
+        for (NSUInteger i = spacesToAdd; i > 0; i --){
+            justifiedStr = [justifiedStr stringByAppendingString:@" "];
+        }
+        justifiedStr = [justifiedStr stringByAppendingString:aString];
+    }
+  return justifiedStr;
+}
+
+
 -(NSInteger) giveMeUniqueNSIntegerForDisplayTag
 {
     //this method is missing.  rewrite it
