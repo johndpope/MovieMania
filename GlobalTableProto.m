@@ -1486,13 +1486,66 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //    cuvPtr = [self buildLocationCell:aPurchase.purchaseLocDict withAlignment:NSTextAlignmentCenter];
     cuvPtr = [self buildLocationCell:selectedLocDict withAlignment:NSTextAlignmentCenter withTextColor:viewTextColor andBackGroundColor:viewBackColor];
     CellTextDef  *txtTypePtr1;
-    txtTypePtr1=[CellTextDef initCellText:[aPurchase.aProductDict objectForKey:kMovieTitle] withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    txtTypePtr1=[CellTextDef initCellText:[aPurchase.aProductDict objectForKey:kMovieTitle] withTextColor:[UIColor whiteColor] withBackgroundColor: viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
-    txtTypePtr1=[CellTextDef initCellText:showingDate withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+    txtTypePtr1=[CellTextDef initCellText:showingDate withTextColor:[UIColor whiteColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr];// andTableViewCellPtr:nil];
+    
+    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+    
+    
+ //   cuvPtr = [self buildLocationCell:selectedLocDict withAlignment:NSTextAlignmentCenter withTextColor:viewTextColor andBackGroundColor:viewBackColor];
+    cuvPtr=[[CellUIView alloc] init];
+//    cuvPtr.backgoundColor=[UIColor orangeColor];
+    NSMutableDictionary *purchaseInfo;
+    TransactionData *dataField0;
+    NSString *inputFieldLabel;
+    for (purchaseInfo in aPurchase.allPurchaseTypes){
+        CellTextDef *placeholderTxt;
+        CellInputField *entryFPtr=[[CellInputField alloc]init];
+        NSNumber *quantityNum = [purchaseInfo objectForKey:kPurchaseQuantityKey];
+        NSString *quantityStr = [quantityNum stringValue];
+        
+        placeholderTxt=[CellTextDef initCellText:quantityStr withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor orangeColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+        
+        placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
+        if (entryFPtr.placeholderTextDefPtr) {
+            [entryFPtr.placeholderTextDefPtr killYourself];
+        }
+        inputFieldLabel = [NSString stringWithFormat:@"Number Of %@ Tickets:",[purchaseInfo objectForKey:kPurchaseTypeKey]];
+        entryFPtr.placeholderTextDefPtr=placeholderTxt;
+        entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:inputFieldLabel withTextColor:[UIColor whiteColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+        entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
+        entryFPtr.keyboardType = UIKeyboardTypeNumberPad;
+        
+        
+        NSString *helpT= inputFieldLabel;
+        
+        entryFPtr.helpTextPtr=[CellTextDef initCellText:helpT withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+        entryFPtr.helpTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+        
+        
+        
+        dataField0=[[TransactionData alloc]init];
+        dataField0.queryKey=[purchaseInfo objectForKey:kPurchaseTypeKey];//[request setPostValue:theUserID forKey:@"validUserID"];
+        [myTable.tableVariablesArray addObject:dataField0];//[dbTrans.variablesArray addObject:dataField0];
+        entryFPtr.transDataPtr=dataField0;
+        
+        
+        
+        cellContentPtr=[[CellContentDef alloc] init];
+        cellContentPtr.ccCellTypePtr=entryFPtr;
+        cellContentPtr.ccTableViewCellPtr=nil;
+        [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+        
+    }
+    
+    
+    
     int ticketStrLength = 8;
     int priceStrLength = 6;
     int qtyStrLength = 4;
@@ -1502,13 +1555,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSString *qty = [self rightJustifyString:@"Qty" withLength:qtyStrLength] ;
     NSString *total = [self rightJustifyString:@"Total" withLength:totalStrLenth];
     NSString *hdrStr = [NSString stringWithFormat:@"%@%@%@%@",ticket,price,qty,total];
-    txtTypePtr1=[CellTextDef initCellText:hdrStr withTextColor:[UIColor redColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];
+    txtTypePtr1=[CellTextDef initCellText:hdrStr withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor orangeColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
     
     float totalCost = 0;
-    NSMutableDictionary *purchaseInfo;
+ //   NSMutableDictionary *purchaseInfo;
     NSString *purchaseType;
     NSNumber *purchasePrice;
     NSNumber *purchaseQty;
@@ -1530,7 +1583,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSString *rightJustifiedPrice = [self rightJustifyString:[purchasePrice stringValue] withLength:priceStrLength];
     NSString *rightJustifiedQty = [self rightJustifyString:[purchaseQty stringValue] withLength:qtyStrLength];
     NSString *rightJustifiedTotal = [self rightJustifyString:[NSString stringWithFormat:@"%3.2f",ticketTypeCost] withLength:totalStrLenth];
-    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@%@%@%@",leftJustifiedPurchaseType, rightJustifiedPrice, rightJustifiedQty, rightJustifiedTotal]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];  // monospaced font
+    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@%@%@%@",leftJustifiedPurchaseType, rightJustifiedPrice, rightJustifiedQty, rightJustifiedTotal]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor orangeColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:@"Menlo-Bold"];  // monospaced font
     
 //    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"%@      %2.2f    %li      %3.2f",purchaseType, [purchasePrice floatValue], (long)[purchaseQty integerValue], ticketTypeCost ]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
 
@@ -1542,7 +1595,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
  
    // float totalCost = theShowing.adultPrice*theShowing.numberOfAdults + theShowing.childPrice*theShowing.numberOfChildren + theShowing.matineePrice*theShowing.numberOfMatinees;
-    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"Total Cost = %3.2f",totalCost]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor whiteColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    txtTypePtr1=[CellTextDef initCellText:[NSString stringWithFormat:@"Total Cost = %3.2f",totalCost]  withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor orangeColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
     txtTypePtr1.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
     [cuvPtr.cTextDefsArray addObject:txtTypePtr1];
     
@@ -1557,7 +1610,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr];// andTableViewCellPtr:nil];
     
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
+/*
     TransactionData *dataField0;
     NSString *inputFieldLabel;
     for (purchaseInfo in aPurchase.allPurchaseTypes){
@@ -1599,6 +1652,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
         
     }
+*/
      CellTextDef *ctdPtr;
     
     CGSize btnSize1 = sizeGlobalButton;//CGSizeMake(80, 30);
