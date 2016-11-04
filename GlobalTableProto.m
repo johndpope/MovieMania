@@ -486,8 +486,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     CGSize btnSize1 = sizeGlobalButton;
-    
-    NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize1];
+    NSMutableArray *buttonNames = [[NSMutableArray alloc] initWithObjects:@"Change", nil];
+    NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonCount:1 withButtonNames:buttonNames withButtonSize:btnSize1 buttonType:0];  //  NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize1];
     
     //NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withTotalNumberOfBtns:1 withButtonSize:btnSize];
     //   NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 totalButtonCount:1 startingRecordIndex:0 buttonsPerCell:1 withButtonSize:btnSize];
@@ -519,235 +519,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     return myTable;
     
 
+   }
     
-    
-   /*
-  //////////////////////prevously using this code   works for iphone but not tvos
-    
-//n e w   c o d e    - c h a n g e   z i p c o d e    CUV with entry field.... input doesn't work here
-    //new code - allow users to change zip code
-    //
-    //
-      myTable = [self createFixedTableHeaderUsingText:@"Movies For Zipcode" forTable:nil];
-    sdPtr1=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
-    sdPtr1.sectionHeaderContentPtr=nil;
-    sdPtr1.sectionFooterContentPtr=nil;
-    
-    [myTable.tableSections addObject:sdPtr1];
-    
-    
-    //Give centered to start up if you want
-    NSString *currentString=[NSString stringWithFormat:@"Movies in zipcode: %@",globalZipCode];
-    
-
-    txtTypeCellPtr=[CellTextDef initCellText:currentString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
-    
-    
-    cuvPtr=[[CellUIView alloc]init];
-    
-    cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;
-    // cuvPtr.displayTemplate=kDISP_TEMPLATE_BUTTONSTOP_IMAGEBOTTOM;//kDISP_TEMPLATE_BUTTONSLEFT_LABLESRIGHT;
-    // cuvPtr.displayTemplate=kDISP_TEMPLATE_BUTTONSLEFT_IMAGERIGHT;
-    cuvPtr.displayTemplate=kDISP_TEMPLATE_INPUTFIELDS_ONLY;
-    
-    
-    
-    
-    
-    //DO entryField with PlaceHolder AND Label:   U S E R    I D
-    entryFPtr=[[CellInputField alloc]init];
-    
-    placeholderTxt=[CellTextDef initCellText:globalZipCode withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
-    if (entryFPtr.placeholderTextDefPtr) {
-        [entryFPtr.placeholderTextDefPtr killYourself];
-    }
-    entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"New Zip code:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-
-    entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
-       TransactionData *dataFieldEF=[[TransactionData alloc]init];
-    entryFPtr.transDataPtr=dataFieldEF;
- //does my key exist in gInputFieldsDict?  Every cellInputField has to have corresponding entry there
- entryFPtr.gInputFieldsDictKey=EFKEY_ZIPCODE;
-
-    [cuvPtr.cInputFieldsArray addObject:entryFPtr];
-    
-    cuvPtr.canMyRowHaveTVFocus=YES;
-    cuvPtr.enableUserActivity = YES;
-
-    
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
-    
-    
-    //NEED ONE VERIFY BUTTON - how to do that?
-    
-    
-    CGSize btnSize1 = sizeGlobalButton;//CGSizeMake(80, 30);
-    
-    NSMutableArray *logOnBtn1 = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize1];
-    
-    //NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withTotalNumberOfBtns:1 withButtonSize:btnSize];
-    //   NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 totalButtonCount:1 startingRecordIndex:0 buttonsPerCell:1 withButtonSize:btnSize];
-    ActionRequest *aBtn1 = [logOnBtn1 objectAtIndex:0];
-    CellTextDef *ctdPtr1;
-    aBtn1.buttonName = @"Change"   ;
-    aBtn1.buttonLabel = nil;
-    aBtn1.buttonImage = nil;//aMovie.movieImage;
-    //   aBtn.dataBaseDict = nil;
-    aBtn1.nextTableView = TVCChangeZip;//TVCStartUp;
-    //    aBtn.myParentCell = cuvPtr;
-    aBtn1.transactionKey = @"Authenticate";
-    
-    ctdPtr1=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:logOnBtn1];// buttonScroll:NO];
-    [logOnBtn1 removeAllObjects];
-    logOnBtn1 = nil;
-    cellContentPtr=[[CellContentDef alloc] init];
-    cellContentPtr.ccCellTypePtr=ctdPtr1;
-    cellContentPtr.ccTableViewCellPtr=nil;
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-
-    
-    
-    
-    
-    
-    
-    
-    return myTable;
-    */
-    
-    //
-    //
-    // o l d   c o d e
-    //old code
-    //authentication testing
-    myTable = [self createFixedTableHeaderUsingText:@"Movies For You" forTable:nil];
-    NSString *transactionKey = @"Authenticate";
-    Transaction *dbTrans = [[Transaction alloc]initWithQTitle:@"Authenticate" andQDescr:@"Authenticate" andNumber:0];
-    dbTrans.URL=@"http://97.77.211.34/~Dwain/TABLEproto/indexTEST";
- //   NSString *startUpTVCKey = [NSString stringWithFormat:@"Xaction%i",TVC0];// TVCStartUp];
-    [myTable.dbAllTabTransDict setObject:dbTrans forKey:transactionKey];
-
-    TransactionData *dataField0=[[TransactionData alloc]init];
-    dataField0.queryKey=@"validUserID";//[request setPostValue:theUserID forKey:@"validUserID"];
-    [myTable.tableVariablesArray addObject:dataField0];//[dbTrans.variablesArray addObject:dataField0];
-    
-    TransactionData *dataField1=[[TransactionData alloc]init];
-    dataField1.queryKey=@"validUserPW";//[request setPostValue:theUserPW forKey:@"validUserPW"];
-    [myTable.tableVariablesArray addObject: dataField1];//[dbTrans.variablesArray addObject:dataField1];
-
-    
-
-    
-    
-    
-
-    sdPtr1=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
-    sdPtr1.sectionHeaderContentPtr=nil;
-    sdPtr1.sectionFooterContentPtr=nil;
-    
-    [myTable.tableSections addObject:sdPtr1];
-
-    
-    
-    
-    //Give centered to start up if you want
-    
-    txtTypeCellPtr=[CellTextDef initCellText:@"Welcome. \n You must login to continue!" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:20 withTextFontName:nil];
-    txtTypeCellPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:txtTypeCellPtr ];
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
-    
-    
-    cuvPtr=[[CellUIView alloc]init];
-    
-    cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;
-    // cuvPtr.displayTemplate=kDISP_TEMPLATE_BUTTONSTOP_IMAGEBOTTOM;//kDISP_TEMPLATE_BUTTONSLEFT_LABLESRIGHT;
-    // cuvPtr.displayTemplate=kDISP_TEMPLATE_BUTTONSLEFT_IMAGERIGHT;
-    cuvPtr.displayTemplate=kDISP_TEMPLATE_INPUTFIELDS_ONLY;
-    
-    
-    
-    
-    
-    //DO entryField with PlaceHolder AND Label:   U S E R    I D
-    entryFPtr=[[CellInputField alloc]init];
-    
-    placeholderTxt=[CellTextDef initCellText:@"User ID" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
-    if (entryFPtr.placeholderTextDefPtr) {
-        [entryFPtr.placeholderTextDefPtr killYourself];
-    }
-    entryFPtr.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr.leftSideDispTextPtr=[CellTextDef initCellText:@"Your User ID:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    entryFPtr.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
-    entryFPtr.transDataPtr=dataField0;
-    
-    [cuvPtr.cInputFieldsArray addObject:entryFPtr];
-    
-    //DO entryField with PlaceHolder AND Label:     P A S S W O R D
-    entryFPtr1=[[CellInputField alloc]init];
-    
-    placeholderTxt=[CellTextDef initCellText:@"Password" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    placeholderTxt.cellDispTextPtr.alignMe=NSTextAlignmentLeft;//NSTextAlignmentCenter;
-    if (entryFPtr1.placeholderTextDefPtr) {
-        [entryFPtr1.placeholderTextDefPtr killYourself];
-    }
-    entryFPtr1.placeholderTextDefPtr=placeholderTxt;
-    entryFPtr1.leftSideDispTextPtr=[CellTextDef initCellText:@"Your Password:" withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
-    entryFPtr1.secureEntry=TRUE;
-    entryFPtr1.leftSideDispTextPtr.cellDispTextPtr.alignMe=NSTextAlignmentRight;
-    entryFPtr1.transDataPtr=dataField1;
-    
-    [cuvPtr.cInputFieldsArray addObject:entryFPtr1];
-    
-    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:cuvPtr ];
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
-    
-    
-    //NEED ONE VERIFY BUTTON - how to do that?
-    
-    
-    CGSize btnSize = sizeGlobalButton;//CGSizeMake(80, 30);
-    
-    NSMutableArray *logOnBtn = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withButtonSize:btnSize];
-    
-    //NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 buttonsPerRow:1 withTotalNumberOfBtns:1 withButtonSize:btnSize];
- //   NSMutableArray *logOnBtn = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:0 inRow:0 totalButtonCount:1 startingRecordIndex:0 buttonsPerCell:1 withButtonSize:btnSize];
-    ActionRequest *aBtn = [logOnBtn objectAtIndex:0];
-    CellTextDef *ctdPtr2;
-    aBtn.buttonName = @"LogOnBtn"   ;
-    aBtn.buttonLabel = nil;
-    aBtn.buttonImage = nil;//aMovie.movieImage;
- //   aBtn.dataBaseDict = nil;
-    aBtn.nextTableView = TVCStartUp;
-//    aBtn.myParentCell = cuvPtr;
-    aBtn.transactionKey = @"Authenticate";
-   
-    ctdPtr2=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:logOnBtn];// buttonScroll:NO];
-    [logOnBtn removeAllObjects];
-    logOnBtn = nil;
-    cellContentPtr=[[CellContentDef alloc] init];
-    cellContentPtr.ccCellTypePtr=ctdPtr2;
-    cellContentPtr.ccTableViewCellPtr=nil;
-    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
-    
-     return myTable;
-    
-    
-    
-    
-}
--(TableDef *)makeERRORsplash:(ActionRequest *)pressedButton
+ -(TableDef *)makeERRORsplash:(ActionRequest *)pressedButton
 {
        TableDef *myTable=    [[TableDef alloc]init];
     
@@ -1859,6 +1633,88 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     return myTable;
 }
  */
+ 
+    -(NSString *)leftJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
+    {
+        NSString *justifiedStr = [aString mutableCopy];
+        NSUInteger aStrLength=[aString length];
+        NSUInteger spacesToAdd = strLength-aStrLength;
+        if (spacesToAdd > 0){
+            for (NSUInteger i = spacesToAdd; i > 0; i --){
+                justifiedStr = [justifiedStr stringByAppendingString:@" "];
+            }
+        }
+        return justifiedStr;
+        
+    }
+    -(NSString *)rightJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
+    {
+        NSString *justifiedStr = @"";//[aString mutableCopy];
+        NSUInteger aStrLength=[aString length];
+        NSUInteger spacesToAdd = strLength-aStrLength;
+        if (spacesToAdd > 0){
+            for (NSUInteger i = spacesToAdd; i > 0; i --){
+                justifiedStr = [justifiedStr stringByAppendingString:@" "];
+            }
+            justifiedStr = [justifiedStr stringByAppendingString:aString];
+        }
+        return justifiedStr;
+    }
+    
+    
+   -(void)forceSectionReloadABLEwithMaxCells:(int)maxTVCellsCreating sectionDef:(SectionDef *)sdPtr
+{
+    // maxTVCellsCreated will be created even if they are empty. if more exist than max, they will be deleted
+    //reloadable means memory size cannot change during the reload (specifically - can't get bigger) without access violation (trap)
+    
+    
+    if(maxTVCellsCreating < 2){   //failsafe?
+        maxTVCellsCreating=2;
+        
+        
+    }
+    
+    int builtCnt=(int)[sdPtr.sCellsContentDefArr count];
+    
+    if (builtCnt == maxTVCellsCreating) {
+        return;   //no work to do
+    }
+    
+    if ( builtCnt< maxTVCellsCreating) {
+        
+        for (int index=builtCnt; index<maxTVCellsCreating; index++) {   //create variable amount of  dummy area so don't get access violation on reload
+            CellContentDef* cellContentPtr1=[[CellContentDef alloc] init];
+            cellContentPtr1.ccCellTypePtr=nil;
+            cellContentPtr1.ccTableViewCellPtr=nil;
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+        }
+        return;
+        
+    }
+    
+    
+    
+    
+    
+    if ( builtCnt> maxTVCellsCreating){//row isn't just incremented by 1  in above for loop
+        NSLog(@"");
+        
+        
+        
+        for (int index=builtCnt-1; index> maxTVCellsCreating-1; index--) {   //remove excess can't display;prevent reload's access violation
+            [sdPtr.sCellsContentDefArr removeObjectAtIndex:index];
+        }
+        NSLog(@"");
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Build Movie App Key Directories
 /////////////////////////////////////////
@@ -2114,35 +1970,1074 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //    [cleanArray removeLastObject];
     return cleanArray;
 }
-/*
--(void)putLocationDictInParent:(ActionRequest *)aQuery locDict:(NSMutableDictionary *)aLocDict
-{
-    if (aLocDict)
-        aQuery.locDict=aLocDict;
-//        [aQuery.dataBaseDictsPtrs setObject:aLocDict forKey:kDictionaryTypeLocation];
-}
--(NSMutableDictionary *)fetchLocationDict:(ActionRequest *)aQuery
-{
- //   NSMutableDictionary *locDict = [aQuery.dataBaseDictsPtrs objectForKey:kDictionaryTypeLocation];
- //   return locDict;
-    return aQuery.locDict;
-}
--(void)putProductDictInParent:(ActionRequest *)aQuery productDict:(NSMutableDictionary *)aProductDict
-{
-    if (aProductDict)
-        aQuery.productDict=aProductDict;
-       // [aQuery.dataBaseDictsPtrs setObject:aProductDict forKey:kDictionaryTypeProduct];
-}
--(NSMutableDictionary *)fetchProductDict:(ActionRequest *)aQuery
-{
-//    NSMutableDictionary *productDict = [aQuery.dataBaseDictsPtrs objectForKey:kDictionaryTypeProduct];
-//    return productDict;
-    return aQuery.productDict;
-}
- */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Movie App Methods
 /////////////////////////////////////////
+    
+    -(TableDef *)createSection0ScrollingView:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict forNumberOfDays:(int)numberOfDays withTableTitle:(NSString*)tableTitle
+    {
+        
+        //  Generic Use Code Start
+        
+        SectionDef *sdPtr1;
+        TableDef *myTable = nil; // self.liveRuntimePtr.activeTableDataPtr;
+        CellContentDef *cellContentPtr1;//, *cellContentPtr2;
+        CGSize hdrBtnSize = CGSizeMake(60, 30);
+        CGSize movieBtnSize = CGSizeMake(100, 150);
+        CellButtonsScroll *hdrCell;
+        if (pressedButton.reloadOnly){
+            sdPtr1 = [myTable.tableSections objectAtIndex:0];
+            [myTable.tableSections removeAllObjects];
+            [myTable.tableSections addObject:sdPtr1];
+            cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
+            cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
+        }
+        
+        if (!pressedButton.reloadOnly){
+            myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+            CGSize sechdrBtnSize = CGSizeMake(60, 30);
+            sdPtr1 = nil;
+            sdPtr1 = [self createDateButtonsAsSectionHeader:sdPtr1 sectionNumber:0 inTable:myTable actionReq:pressedButton withButtonSize:sechdrBtnSize];// nextTVC:TVC2];
+            hdrCell = (CellButtonsScroll *)sdPtr1.sectionHeaderContentPtr.ccCellTypePtr;
+            myTable =[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:hdrBtnSize];// buttonsScroll:NO];
+            [self turnOnSelectedDateBtn:selectedDate inCellBtnArray:hdrCell.cellsButtonsArray];
+            
+            [myTable.tableSections addObject:sdPtr1];
+            int section = 0;
+            int row = 0;
+            //C E L L S    F O R        S E C T I O N S
+            
+            //button cells section 1      B U T T O N S
+            CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+            if (cbsPtr.cellsButtonsArray.count){
+                cellContentPtr1=[[CellContentDef alloc] init];
+                cellContentPtr1.ccCellTypePtr=cbsPtr;
+                cellContentPtr1.ccTableViewCellPtr=nil;
+                
+                [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+                
+            }
+        }
+        // Generic Code End
+        return myTable;
+    }
+    
+    
+    -(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
+    {
+        NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
+        [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
+        [dayFormatter setDateFormat:@"MMM dd"];
+        NSMutableArray *showingsForDate = [[NSMutableArray alloc] init];
+        NSMutableDictionary *aShowing;
+        NSString *testDate;
+        NSString *locationID = [aLocationDict objectForKey:kLocationIDKey];
+        NSString *localDate = [dayFormatter stringFromDate:aDate];
+        for (aShowing in showings){
+            NSString* aTheatreID = [aShowing valueForKeyPath:kMovieTheaterID ];//TMS kProductShowingTheatreIDKey];//@"theatre.id"];
+            if ([aTheatreID isEqualToString:locationID]){
+                NSString* aShowingTimeString = [aShowing objectForKey:kMovieShowDateTime];//tms kProductShowingDateTimeKey];//@"dateTime"];
+                NSDate* nsDateFromString = [self convertDateStringToNSDate:aShowingTimeString];// [dateFormatter dateFromString:aShowingTimeString];
+                testDate = [dayFormatter stringFromDate:nsDateFromString];
+                if ([localDate isEqualToString:testDate]){
+                    [showingsForDate addObject:aShowing];
+                    
+                }
+            }
+        }
+        return showingsForDate;
+    }
+    
+    -(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr// is3D:(BOOL)is3D// allShowingCount:(NSInteger)allShowingsCount
+    {
+        ActionRequest *aShowTimeButton;
+        CGSize btnSize2 = CGSizeMake(60,30);
+        NSDate *aShowTime;
+        NSString *tmsShowtimeStr;
+        NSMutableDictionary *aShowing;
+        NSDateFormatter* localTimeZone = [[NSDateFormatter alloc] init];
+        [localTimeZone setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
+        [localTimeZone setDateFormat:@"hh:mm a"];
+        
+        //    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withButtonSize:btnSize2];
+        
+        //    int arrayIndex = 0;
+        //    int rowDelta = 0;
+        
+        for (int arrayIndex = 0; arrayIndex < productShowingsArray.count;){
+            //       NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row+rowDelta buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withButtonSize:btnSize2];
+            NSMutableArray *showTimesBtns = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:buttonsPerRow withTotalNumberOfBtns:productShowingsArray.count withStartingIndex:arrayIndex withButtonSize:btnSize2];
+            
+            //       CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
+            
+            NSString *ticketURL;
+            for (int i = 0; i <showTimesBtns.count; i++){
+                aShowTimeButton = [showTimesBtns objectAtIndex:i]; //      [cButPtr.cellsButtonsArray  objectAtIndex:i];
+                aShowing = [productShowingsArray objectAtIndex:arrayIndex+i];
+                tmsShowtimeStr = [aShowing objectForKey:kMovieShowDateTime];
+                aShowTime = [self convertDateStringToNSDate:tmsShowtimeStr];
+                aShowTimeButton.buttonDate=aShowTime;
+                aShowTimeButton.buttonName = [localTimeZone stringFromDate:aShowTime];
+                aShowTimeButton.showingInfoDict = aShowing;
+                aShowTimeButton.nextTableView = TVC8;
+                aShowTimeButton.buttonArrayPtr= showTimesBtns;// cButPtr.cellsButtonsArray;
+                aShowTimeButton.buttonIndex= i;
+                aShowTimeButton.buttonIsOn = YES;
+                if ([self hasThisTimePassed:aShowTime])
+                    aShowTimeButton.buttonIsOn=NO;
+                aShowTimeButton.reloadOnly = NO;
+                aShowTimeButton.buttonType = kButtonTypeShowTime;
+                aShowTimeButton.productDict = aProductDictHDI;
+                aShowTimeButton.aTime = aShowTimeButton.buttonName;
+                ticketURL = [aShowing objectForKey:kMovieTicketBuyPath];
+                if (!ticketURL){
+                    aShowTimeButton.buttonIsOn=NO;
+                    aShowTimeButton.uiButton.userInteractionEnabled=NO;
+                }
+                aShowTimeButton.locDict = aLocDict;
+                [HDButtonView makeUIButton:aShowTimeButton inButtonSequence:showTimesBtns];
+                
+                
+            }
+            CellContentDef* cellContentPtr=[[CellContentDef alloc] init];
+            //      cellContentPtr.ccCellTypePtr=cButPtr;
+            cellContentPtr.ccTableViewCellPtr=nil;
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
+            row++;
+            arrayIndex = arrayIndex+buttonsPerRow;
+            if (showTimesBtns.count<buttonsPerRow)
+                break;
+        }
+        
+        return row; //cButPtr;
+    }
+    
+    
+    -(BOOL)hasThisTimePassed:(NSDate*)dateTwo
+    {
+        BOOL   timeHasPassed = NO;
+        NSDate *dateOne = [NSDate date];
+        switch ([dateOne compare:dateTwo]) {
+            case NSOrderedAscending:
+                // dateOne is earlier in time than dateTwo
+                
+                break;
+            case NSOrderedSame:
+                // The dates are the same
+                break;
+            case NSOrderedDescending:
+                // dateOne is later in time than dateTwo
+                timeHasPassed = YES;
+                break;
+        }
+        return timeHasPassed;
+    }
+    
+    -(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
+    {
+        
+        //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
+        
+        CellButtonsScroll *ctdPtr = nil;
+        //    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
+        NSInteger numberOfProductsAtLocation = 0;
+        NSMutableArray *productDictNamesAtLoc = [[NSMutableArray alloc] init];
+        NSMutableDictionary *aProductDict;//TMS;
+        //   NSString *productName;
+        NSMutableDictionary *productDictionaryWithNameAsKey = [self buildProductsDictionaryWithNameKey:allProductsDict];
+        NSArray *allProductNames = [[productDictionaryWithNameAsKey allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        for (int j = 0; j < allProductNames.count; j++){   //allProductNames is in alphabetical order
+            
+            aProductDict = [productDictionaryWithNameAsKey objectForKey:[allProductNames objectAtIndex:j]];
+            NSString *productID = [aProductDict objectForKey:kMovieUniqueKey]; //kProductIDKey]; was a tms key
+            NSMutableArray *allInventory = nil;//[self.liveRuntimePtr.allProductInventory_HDI objectForKey:productID];
+            
+            
+            //       BOOL isPlaying = [self addInfoToProductDictTMSonNSDate:aProductDictTMS forLocation:aLocDict onDate:pressedBtn.buttonDate];
+            NSDate *aDate = [NSDate date];
+            if (selectedDate)
+                aDate=selectedDate;
+            NSMutableArray *inventoryAtLoc = [self showingsForNSDate:aDate inShowings:allInventory atLocation:aLocDict];
+            //        BOOL isPlaying =  [self isProductAvailableAtLocationOnDate:aProductDict forLocation:aLocDict onDate:aDate];
+            //        if (!aLocDict || isPlaying){
+            if (!aLocDict || inventoryAtLoc.count){
+                numberOfProductsAtLocation ++;
+                [productDictNamesAtLoc addObject:[aProductDict objectForKey:kMovieTitle]];
+            }
+            
+        }
+        //  NSMutableArray* hdiButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:numberOfProductsAtLocation withTotalNumberOfBtns:numberOfProductsAtLocation withButtonSize:btnSize];
+        
+        
+        
+        NSMutableArray *hdiButtons = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonCount:numberOfProductsAtLocation withButtonNames:productDictNamesAtLoc withButtonSize:btnSize buttonType:0];
+        //    NSMutableArray* hdiButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:numberOfProductsAtLocation withTotalNumberOfBtns:numberOfProductsAtLocation withStartingIndex:0 withButtonSize:btnSize];
+        
+        ActionRequest *aBtn;
+        for(int col = 0; col  <numberOfProductsAtLocation; col++){
+            //    aProductDict = [self.liveRuntimePtr.allMovieInfoOMDB objectForKey:[allMovieInfoOMDBKeys objectAtIndex:keyIndex]];
+            aProductDict = [productDictionaryWithNameAsKey  objectForKey:[productDictNamesAtLoc objectAtIndex:col]];
+            //               [self addProductInfoNewToProductDict:aProductDict];
+            
+            aBtn = [hdiButtons objectAtIndex:col];
+            aBtn.buttonName = [aProductDict objectForKey:kMovieTitle];//tms kProductNameKey];
+            //                aBtn.buttonName = pressedButton.buttonName;
+            aBtn.buttonLabel = nil;
+            aBtn.buttonImage = [aProductDict objectForKey:kProductImageKey];
+            aBtn.retRecordsAsDPtrs = nil;//? why not guaranteed   looping queries re-use
+            aBtn.nextTableView = pressedBtn.nextTableView; //TVCScrollButtonPress;
+            aBtn.buttonIsOn=NO;
+            aBtn.buttonDate = pressedBtn.buttonDate;
+            aBtn.buttonType = kButtonTypeProduct;
+            aBtn.locDict = aLocDict;
+            aBtn.productDict = aProductDict;
+            
+            // Dictionary of Dictionaries
+            //        [self putLocationDictInParent:aBtn locDict:aLocDict];
+            //        [self putProductDictInParent:aBtn productDict:aProductDict];
+            aBtn.reloadOnly = YES;
+        }
+        
+        if (numberOfProductsAtLocation){
+            aBtn = [hdiButtons objectAtIndex:0];
+            pressedBtn.productDict = aBtn.productDict;
+            //      aProductDict = [self fetchProductDict:aBtn];
+            //      [self putProductDictInParent:pressedBtn productDict:aProductDict];
+            ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
+            pressedBtn.buttonName = aBtn.buttonName;
+        }
+        return ctdPtr;
+    }
+    -(NSMutableDictionary *)buildProductsDictionaryWithNameKey:(NSMutableDictionary *)allProductsDict
+    {
+        NSMutableDictionary *productDictionaryWithNameAsKey = [[NSMutableDictionary alloc] init];
+        NSArray *allProductIDs = [allProductsDict allKeys];
+        NSString *aProductID;
+        NSString *productName;
+        NSMutableDictionary *aProductDict;
+        for (aProductID in allProductIDs){
+            aProductDict = [allProductsDict objectForKey:aProductID];
+            productName = [aProductDict objectForKey:kMovieTitle] ;//]kProductNameKey];   //this was a TMS key 'title'
+            [productDictionaryWithNameAsKey setObject:aProductDict forKey:productName];
+        }
+        
+        return productDictionaryWithNameAsKey;
+    }
+    -(CellButtonsScroll*)buildMovieTrailerButtonsCell:(ActionRequest*)pressedBtn inSection:(int)section inRow:(int)row fromTrailerArray:(NSMutableArray*)trailerArray //forNumberOfTrailers:(int)numberOfTrailers
+    {
+        CGSize trailerBtnSize = CGSizeMake(80,60);
+        NSMutableArray  *trailerNames = [[NSMutableArray alloc] init];
+        for (int i = 0; i < trailerArray.count; i++){
+            NSString *aTrailerName =  [NSString stringWithFormat:@"%@ %d",kTrailerBtnName, i];
+            [trailerNames addObject:aTrailerName];
+        }
+        
+        NSMutableArray *movieTrailerBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonCount:trailerArray.count withButtonNames:trailerNames  withButtonSize:trailerBtnSize buttonType:kButtonTypeTrailer];
+        //    NSMutableArray *movieTrailerBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:trailerArray.count withButtonSize:trailerBtnSize];
+        ActionRequest *aBtn;
+        NSMutableDictionary *aTrailerDict;
+        for (int i = 0;i<trailerArray.count;i++){
+            aBtn = [movieTrailerBtns objectAtIndex:i];
+            //        aBtn.buttonName = [NSString stringWithFormat:@"%@ %d",kTrailerBtnName, i];
+            aBtn.nextTableView = TVC5;
+            aBtn.productDict=pressedBtn.productDict;
+            //        aBtn.buttonType = kButtonTypeTrailer;
+            aTrailerDict = [trailerArray objectAtIndex:i];
+            if(self.inAVPlayerVC){
+                
+                NSString *trailerPath = [aTrailerDict objectForKey:kVideoPath];
+                UIImage *trailerImage = [aTrailerDict objectForKey:kVideoImage];
+                aBtn.trailerPath = trailerPath;
+                aBtn.buttonImage = trailerImage;
+            }else{
+                aBtn.trailerPath = [self parseYouTubeStringForID:aTrailerDict];
+            }
+            
+            
+        }
+        //      NSString  *aUrlStr = @"<http://www.totaleclips.com/Bounce/b?eclipid=e127195\u0026bitrateid=457\u0026vendorid=2223\u0026type=.mp4>";
+        
+        
+        
+        CellButtonsScroll *cbsPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:movieTrailerBtns];
+        
+        return cbsPtr;
+    }
+    
+    
+    -(NSMutableDictionary*)buildShowtimesButtonsDictOfArrays:(NSMutableArray*)productShowings
+    {
+        NSMutableDictionary *showTimesDictOfDicts = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *showTimesDictOfArrays = [[NSMutableDictionary alloc] init];
+        NSDictionary *aShowing;
+        //    NSMutableArray *aShowingGroup;
+        NSMutableDictionary *aShowingGroupDict;
+        NSString *groupKey;
+        //    NSString *qualsStr;
+        for (aShowing in productShowings){
+            //        qualsStr = [aShowing objectForKey:kProductQualsKey];
+            //       groupKey = [self parseQualse:qualsStr];
+            groupKey = [self parseQualseAndReturnGroupKey:aShowing];
+            //       if (!groupKey)
+            //           groupKey=@"General Admission";
+            aShowingGroupDict = [showTimesDictOfDicts objectForKey:groupKey];
+            if (!aShowingGroupDict)
+                aShowingGroupDict = [[NSMutableDictionary alloc] init];
+            [aShowingGroupDict setObject:aShowing  forKey:[aShowing objectForKey:kMovieShowDateTime]];//@"dateTime"]];
+            [showTimesDictOfDicts removeObjectForKey:groupKey];
+            [showTimesDictOfDicts setObject:aShowingGroupDict forKey:groupKey];
+            
+        }
+        NSArray *showingGroupKeys = [showTimesDictOfDicts allKeys];
+        NSString *showTimeKey;
+        for (groupKey in showingGroupKeys){
+            aShowingGroupDict = [showTimesDictOfDicts objectForKey:groupKey];
+            NSArray *showTimes = [[aShowingGroupDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
+            
+            NSMutableArray *sortedGroupShowings = [[NSMutableArray alloc] init];
+            for (showTimeKey in showTimes){
+                aShowing = [aShowingGroupDict objectForKey:showTimeKey];
+                [sortedGroupShowings addObject:aShowing];
+                
+            }
+            [showTimesDictOfArrays setObject:sortedGroupShowings forKey:groupKey];
+        }
+        
+        return showTimesDictOfArrays;
+    }
+    -(NSString*)parseQualseAndReturnGroupKey:(NSDictionary*)aShowing
+    {
+        NSString *qualsStr = [aShowing objectForKey:kShowQuals];//kProductQualsKey];
+        NSArray* qualsArray = [qualsStr componentsSeparatedByString: @"|"];
+        NSMutableArray*parsedQualsArray = [[NSMutableArray alloc] init];
+        NSString *aQual;
+        for (aQual in qualsArray){
+            if(![aQual isEqualToString:@"Closed Captioned"]){
+                [parsedQualsArray addObject:aQual];
+            }
+        }
+        NSMutableDictionary *qualsDict = [[NSMutableDictionary alloc] init];
+        for (aQual in parsedQualsArray){
+            [qualsDict setObject:@"Qual" forKey:aQual];
+        }
+        NSArray *sortedQuals = [[qualsDict  allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        NSMutableArray *mutableSortedQuals = [NSMutableArray arrayWithArray:sortedQuals];
+        NSString *parsedQuals = @"General Admission";
+        if (mutableSortedQuals.count){
+            parsedQuals = [self implodeArrayOfStrings:mutableSortedQuals withSeparator:@" - "];
+        }
+        return parsedQuals;
+    }
+    -(NSString *)implodeArrayOfStrings:(NSMutableArray *)stringArray withSeparator:(NSString*)separatorStr
+    {
+        if (!stringArray.count)
+            return nil;
+        NSString *implodedString = [stringArray objectAtIndex:0];
+        if (stringArray.count== 1)
+            return implodedString;
+        NSString *arrayStr;
+        //    for (arrayStr in stringArray){
+        for (int i = 1; i < stringArray.count; i++){
+            
+            arrayStr = [stringArray objectAtIndex:i];
+            implodedString = [implodedString stringByAppendingString:[NSString stringWithFormat:@"%@%@",separatorStr, arrayStr]];
+        }
+        return implodedString;
+    }
+    -(NSString*)parseYouTubeStringForID:(NSMutableDictionary*)trailerDict
+    {
+        NSString *trailerID;
+        NSString *fullTrailerString = [trailerDict objectForKey:@"code"];
+        NSString *stringAfterEmbed =  [self stringAfterString:@"embed/" inString:fullTrailerString];
+        trailerID = [stringAfterEmbed substringToIndex:11];
+        return trailerID;
+    }
+    -(NSString*)stringAfterString:(NSString*)match inString:(NSString*)string
+    {
+        if ([string rangeOfString:match].location != NSNotFound)
+        {
+            NSScanner *scanner = [NSScanner scannerWithString:string];
+            
+            [scanner scanUpToString:match intoString:nil];
+            
+            NSString *postMatch;
+            
+            if(string.length == scanner.scanLocation)
+            {
+                postMatch = [string substringFromIndex:scanner.scanLocation];
+            }
+            else
+            {
+                postMatch = [string substringFromIndex:scanner.scanLocation + match.length];
+            }
+            
+            return postMatch;
+        }
+        else
+        {
+            return string;
+        }
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Helper Methods
+    /////////////////////////////////////////
+    -(NSInteger) giveMeUniqueNSIntegerForDisplayTag
+    {
+        //this method is missing.  rewrite it
+        
+        return 0;
+    }
+    -(TableDef *) makeFixedFooterWithSectionsAndCells
+    {
+        TableDef *myTable;
+        myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor purpleColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor purpleColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
+        
+        
+        myTable.tableFooterFixed=TRUE;
+        
+        
+        SectionDef *sdPtr1;
+        
+        //   sdPtr1=[SectionDef initSectionHeaderText:@"mySection1 Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"MySection1 Footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+        
+        sdPtr1=[[SectionDef alloc]init];
+        [myTable.tableSections addObject:sdPtr1];
+        //C E L L S    F O R        S E C T I O N S
+        
+        
+        CellContentDef *cellContentPtr;
+        CellTextDef *ctdPtr;
+        
+        
+        
+        NSString *cellString;
+        for (int item=0; item<50; item++) {
+            cellString=[NSString stringWithFormat:@"Section 1 Cell %d", item];
+            
+            if (item % 2) { // odd
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:[UIColor blueColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:0 withTextFontName:nil];
+            }
+            else{//even
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:0 withTextFontName:nil];
+            }
+            
+            
+            cellContentPtr=[[CellContentDef alloc] init];
+            cellContentPtr.ccCellTypePtr=ctdPtr;
+            cellContentPtr.ccTableViewCellPtr=nil;
+            [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //    [self.tablesToDisplayArray addObject:myTable];
+        return myTable;
+        
+    }
+    
+    -(TableDef *) makeFixedHeaderWithSectionsAndCells
+    {
+        TableDef *myTable;
+        myTable=[self createTextHeaderinTable:nil withText:@"TABLE HEADER"];
+        
+        
+        myTable.tableHeaderFixed=TRUE;
+        
+        
+        SectionDef *sdPtr1;
+        
+        //   sdPtr1=[SectionDef initSectionHeaderText:@"mySection1 Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"MySection1 Footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+        
+        sdPtr1=[[SectionDef alloc]init];
+        [myTable.tableSections addObject:sdPtr1];
+        //C E L L S    F O R        S E C T I O N S
+        
+        
+        CellContentDef *cellContentPtr;
+        CellTextDef *ctdPtr;
+        
+        
+        //create uiview cell in section 1
+        
+        //debug this--- has a problem with scrollingback up... uiview doesnt use passing colors,etc....
+        // ctdPtr=[CellTextDef initCellText:@"Sec1 Cell1" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+        // ctdPtr=[CellUIView initCellInUIViewWithCellText:@"Sec1 Cell0 0 but this is to span more than 1 row will it actually do that? nobody knows.  It is actually to span more than 3 lines but now a lot more than two is being managed" withTextColor:nil withBackgroundColor:[UIColor greenColor] withTextFontSize:0 withTextFontName:nil andViewBackColor:[UIColor blueColor]];
+        
+        cellContentPtr=[[CellContentDef alloc] init];
+        cellContentPtr.ccCellTypePtr=ctdPtr;
+        cellContentPtr.ccTableViewCellPtr=nil;
+        [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+        
+        
+        
+        ctdPtr=[CellTextDef initCellText:@"Section1 Cell 0 blah blah blah blah blah blah blah.  More more more more more more.  The end" withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:0 withTextFontName:nil];
+        
+        cellContentPtr=[[CellContentDef alloc] init];
+        cellContentPtr.ccCellTypePtr=ctdPtr;
+        cellContentPtr.ccTableViewCellPtr=nil;
+        [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+        
+        
+        NSString *cellString;
+        for (int item=1; item<50; item++) {
+            cellString=[NSString stringWithFormat:@"Section 1 Cell %d", item];
+            
+            if (item % 2) { // odd
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:[UIColor blueColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:0 withTextFontName:nil];
+            }
+            else{//even
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:0 withTextFontName:nil];
+            }
+            
+            
+            cellContentPtr=[[CellContentDef alloc] init];
+            cellContentPtr.ccCellTypePtr=ctdPtr;
+            cellContentPtr.ccTableViewCellPtr=nil;
+            [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //    [self.tablesToDisplayArray addObject:myTable];
+        return myTable;
+        
+    }
+    
+-(TableDef *) makeTableHeaderSectionsRowsNoButtons
+{
+    
+    
+    
+    TableDef *myTable;
+    //H E A D E R     &     F O O T E R
+    myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor whiteColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
+    
+    //S E C T I O N S:    H E A D E R     &     F O O T E R
+    
+    SectionDef *sdPtr1;
+    SectionDef *sdPtr2;
+    SectionDef *sdPtr3;
+    
+    sdPtr1=[SectionDef initSectionHeaderText:@"mySection1 Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"Section 1 Footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+    [myTable.tableSections addObject:sdPtr1];
+    sdPtr2=[SectionDef initSectionHeaderText:@"mySection2 header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"Section2 footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+    [myTable.tableSections addObject:sdPtr2];
+    sdPtr3=[SectionDef initSectionHeaderText:@" Section3 - Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:18 withTextFontName:nil footerText:@" SECTION 3 - Footer" footerTextColor:[UIColor orangeColor] footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+    [myTable.tableSections addObject: sdPtr3];
+    
+    
+    
+    //C E L L S    F O R        S E C T I O N S
+    
+    CellContentDef *cellContentPtr;
+    CellTextDef *ctdPtr;
+    
+    //no cells section 1
+    
+    //create text cells in section 2
+    
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec2 Cell1" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
+    
+    cellContentPtr=[[CellContentDef alloc] init];
+    cellContentPtr.ccCellTypePtr=ctdPtr;
+    cellContentPtr.ccTableViewCellPtr=nil;
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+    
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec2 Cell2 this is a very long long long cell.  SO how many lines can this cell span?  Any information would be interesting for us to see" withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+    
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec2 Cell3 this too is  a very long long long long long cell. As a matter of fact it should take up multiple lines, but I'm not sure my logic will caclulate the maximum height of this cell by determining how many words it contains.  WIll it work or will it fail?  Nobody knows until it decides to display itself.  Can this go on forever" withTextColor:[UIColor orangeColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:0 withTextFontName:nil];
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+    
+    //create cells in section 3
+    
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec3 Cell1" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+    
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec3 Cell2" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+    
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+    
+    ctdPtr=[CellTextDef initCellText:@"Sec3 Cell3" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+    
+    cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr ];
+    [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+    
+    
+    
+    
+    
+    
+    //    [self.tablesToDisplayArray addObject:myTable];
+    return myTable;
+}
+/*
+
+    -(TableDef *) makeTableHeaderSectionsRowsNoButtons
+    {
+        
+        
+        
+        TableDef *myTable;
+        //H E A D E R     &     F O O T E R
+        myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor purpleColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor purpleColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
+        
+        //S E C T I O N S:    H E A D E R     &     F O O T E R
+        
+        SectionDef *sdPtr1;
+        SectionDef *sdPtr2;
+        SectionDef *sdPtr3;
+        
+        sdPtr1=[SectionDef initSectionHeaderText:@"mySection1 Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"Section 1 Footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+        [myTable.tableSections addObject:sdPtr1];
+        sdPtr2=[SectionDef initSectionHeaderText:@"mySection2 header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil footerText:@"Section2 footer" footerTextColor:[UIColor orangeColor]footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+        [myTable.tableSections addObject:sdPtr2];
+        sdPtr3=[SectionDef initSectionHeaderText:@" Section3 - Header" withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:18 withTextFontName:nil footerText:@" SECTION 3 - Footer" footerTextColor:[UIColor orangeColor] footerBackgroundColor:[UIColor blueColor] footerTextFontSize:0 footerTextFontName:nil];
+        [myTable.tableSections addObject: sdPtr3];
+        
+        
+        
+        //C E L L S    F O R        S E C T I O N S
+        
+        CellContentDef *cellContentPtr;
+        CellTextDef *ctdPtr;
+        
+        //no cells section 1
+        
+        //create text cells in section 2
+        
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec2 Cell1" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
+        
+        cellContentPtr=[[CellContentDef alloc] init];
+        cellContentPtr.ccCellTypePtr=ctdPtr;
+        cellContentPtr.ccTableViewCellPtr=nil;
+        [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+        
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec2 Cell2 this is a very long long long cell.  SO how many lines can this cell span?  Any information would be interesting for us to see" withTextColor:[UIColor blackColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+        [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+        
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec2 Cell3 this too is  a very long long long long long cell. As a matter of fact it should take up multiple lines, but I'm not sure my logic will caclulate the maximum height of this cell by determining how many words it contains.  WIll it work or will it fail?  Nobody knows until it decides to display itself.  Can this go on forever" withTextColor:[UIColor orangeColor] withBackgroundColor:[UIColor yellowColor] withTextFontSize:0 withTextFontName:nil];
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+        
+        [sdPtr2.sCellsContentDefArr addObject:cellContentPtr];
+        
+        //create cells in section 3
+        
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec3 Cell1" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+        
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+        [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec3 Cell2" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+        
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+        [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+        
+        ctdPtr=[CellTextDef initCellText:@"Sec3 Cell3" withTextColor:nil withBackgroundColor:nil withTextFontSize:0 withTextFontName:nil];
+        
+        cellContentPtr=[CellContentDef initCellContentDefWithThisCell:ctdPtr andTableViewCellPtr:nil];
+        [sdPtr3.sCellsContentDefArr addObject:cellContentPtr];
+        
+        
+        
+        
+        
+        
+        //    [self.tablesToDisplayArray addObject:myTable];
+        return myTable;
+    }
+    
+*/
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark CREATE Methods
+    /////////////////////////////////////////
+    
+    
+    
+    
+    
+    
+    -(void) createTextCellsForSection:(SectionDef *)thisSectionPtr sectionIdentifier:(NSString *)secIdentifier numberOfTextCells:(int)totalCells
+    {
+        //C E L L S    F O R        S E C T I O N
+        
+        
+        CellContentDef *cellContentPtr;
+        CellTextDef *ctdPtr;
+        NSString *cellString;
+        
+        
+        //create uiview cell in section 0
+        for (int item=0; item<totalCells; item++) {
+            cellString=[NSString stringWithFormat:@"Section %@ Cell %d", secIdentifier, item];
+            
+            if (item % 2) { // odd
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil];
+            }
+            else{//even
+                ctdPtr=[CellTextDef initCellText:cellString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil];
+            }
+            
+            
+            cellContentPtr=[[CellContentDef alloc] init];
+            cellContentPtr.ccCellTypePtr=ctdPtr;
+            cellContentPtr.ccTableViewCellPtr=nil;
+            [thisSectionPtr.sCellsContentDefArr addObject:cellContentPtr];
+        }//end for
+    }
+    -(TableDef *) createTextHeaderinTable:(TableDef*)myTable withText:(NSString*)text
+    {
+        //IF table nil, makeone
+        
+        if (!myTable) {
+            //makeone
+            myTable=[[TableDef alloc]init];
+        }
+        else{
+            if (myTable.tableHeaderContentPtr) {
+                [myTable.tableHeaderContentPtr killYourself];
+            }
+        }
+        myTable.tableHeaderContentPtr.ccCellTypePtr=[CellTextDef initCellText:text withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil];
+        myTable.tableHeaderContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+        myTable.tableHeaderFixed=FALSE;
+        
+        return myTable;
+    }
+    -(TableDef *) createEmptyTableDef:(TableDef *)myTable
+    {
+        if (!myTable) {
+            //makeone
+            myTable=[[TableDef alloc]init];
+        }
+        return myTable;
+        
+    }
+    -(TableDef *) createFixedTableHeaderUsingText:(NSString *)thisText forTable:(TableDef *)myTable
+    {
+        //IF table nil, makeone
+        
+        if (!myTable) {
+            //makeone
+            myTable=[[TableDef alloc]init];
+        }
+        else{
+            if (myTable.tableHeaderContentPtr) {
+                [myTable.tableHeaderContentPtr killYourself];
+            }
+        }
+        
+        CellTextDef *ctdPtr=[CellTextDef initCellText:thisText withTextColor:self.viewTextColor withBackgroundColor:self.headerBackColor withTextFontSize:20 withTextFontName:nil];
+        
+        myTable.tableHeaderContentPtr.ccCellTypePtr=ctdPtr;
+        ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+        
+        
+        
+        myTable.tableHeaderContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+        myTable.tableHeaderFixed=TRUE;
+        
+        return myTable;
+    }
+    /*
+     -(NSMutableArray*)buildDatesButtonsOld:(ActionRequest*)pressedBtn forNumberOfDays:(int)numberOfDays inSection:(int)section withButtonSize:(CGSize)btnSize nextTVC:(NSInteger)nextTVC
+     {
+     
+     NSMutableArray *dateButtons = [self buildBasicButtonArray:BUTTONS_SEC_HEADER inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
+     //    NSMutableDictionary *aLocDicTMS = pressedBtn.locDict;// [self fetchLocationDict:pressedBtn];//pressedBtn.aLocDict;
+     
+     //    [headerDateButtons removeAllObjects];
+     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];;
+     [dateFormatter setDateFormat:@"MMM dd"];
+     NSString *todayStr = [dateFormatter stringFromDate:[NSDate date]];
+     ActionRequest *aDateBtn;
+     NSDate *aDate;// = [NSDate date];
+     for (int i = 0; i < numberOfDays; i++){
+     aDateBtn = [dateButtons objectAtIndex:i];
+     aDate = [[NSDate date] dateByAddingTimeInterval:i*86400];
+     aDateBtn.buttonDate=aDate;
+     NSString *aShowingDate = [dateFormatter stringFromDate:aDate];
+     if ([aShowingDate isEqualToString:todayStr])
+     aShowingDate = @"Today";
+     aDateBtn.buttonName = aShowingDate;
+     aDateBtn.nextTableView=nextTVC;
+     aDateBtn.reloadOnly = NO;
+     //        [self putLocationDictInParent:aDateBtn locDict:aLocDicTMS];
+     aDateBtn.locDict=pressedBtn.locDict;
+     aDateBtn.productDict=pressedBtn.productDict;
+     aDateBtn.retRecordsAsDPtrs = [NSMutableArray arrayWithArray:pressedBtn.retRecordsAsDPtrs];
+     aDateBtn.buttonIndex = i;
+     aDateBtn.buttonType=kButtonTypeDate;
+     }
+     
+     return dateButtons;
+     }
+     */
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark BUTTON SUPPORT Methods
+    /////////////////////////////////////////
+    
+    -(NSMutableArray*)buildSpecialButtons:(int)location inSection:(int)section withButtonNames:(NSArray *)buttonNamesPtr withNextTVCs:(NSArray *)nextTVCptr withButtonSize:(CGSize)btnSize
+    {
+        
+        //    CGSize btnSize = CGSizeMake(60, 30);
+        NSMutableArray *viewButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonCount:buttonNamesPtr.count withButtonNames:buttonNamesPtr withButtonSize:btnSize buttonType:0];
+        //   NSMutableArray *viewButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonsPerRow:buttonNamesPtr.count withButtonSize:btnSize];
+        //    NSMutableArray *viewButtons = [self buildButtonsArray:location inSection:section inRow:0 buttonsPerRow:buttonNamesPtr.count withTotalNumberOfBtns:buttonNamesPtr.count withButtonSize:btnSize];
+        //    NSMutableArray *viewButtons = [self buildButtonsArray:location inSection:section inRow:0 totalButtonCount:buttonNamesPtr.count startingRecordIndex:0 buttonsPerCell:buttonNamesPtr.count withButtonSize:btnSize];
+        ActionRequest *fBtn;
+        for (int i=0; i < buttonNamesPtr.count; i++){
+            fBtn = [viewButtons objectAtIndex:i];
+            fBtn.buttonName= [buttonNamesPtr objectAtIndex:i];
+            if (nextTVCptr)
+                fBtn.nextTableView = [(NSNumber *)[nextTVCptr objectAtIndex:i] integerValue];
+        }
+        
+        
+        fBtn=[viewButtons objectAtIndex:0];
+        NSLog(@"name %@",fBtn.buttonName);
+        
+        return viewButtons;
+    }
+    //-(NSMutableArray *)buildButtonsArray:(int)section inRow:(int)row totalButtonCount:(NSInteger)numberOfButtons startingRecordIndex:(int)startingIndex buttonsPerCell:(NSInteger)buttonsPerCell withButtonSize:(CGSize)btnSize;
+    
+    
+    -(NSMutableArray*)buildDatesButtons:(ActionRequest*)pressedBtn forNumberOfDays:(int)numberOfDays inSection:(int)section withButtonSize:(CGSize)btnSize nextTVC:(NSInteger)nextTVC inLocation:(int)location
+    {
+        //    NSMutableArray *dateButtons = [self buildBasicButtonArray:BUTTONS_SEC_HEADER inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
+        
+        //    NSMutableArray *dateButtons = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
+        
+        //   NSMutableArray *dateButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
+        NSMutableArray *dateNames = [[NSMutableArray alloc] init];
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];;
+        [dateFormatter setDateFormat:@"MMM dd"];
+        NSString *todayStr = [dateFormatter stringFromDate:[NSDate date]];
+        //    ActionRequest *aDateBtn;
+        NSDate *aDate;// = [NSDate date];
+        for (int i = 0; i < numberOfDays; i++){
+            //       aDateBtn = [dateButtons objectAtIndex:i];
+            aDate = [[NSDate date] dateByAddingTimeInterval:i*86400];
+            //        aDateBtn.buttonDate=aDate;
+            NSString *aShowingDate = [dateFormatter stringFromDate:aDate];
+            if ([aShowingDate isEqualToString:todayStr])
+                aShowingDate = @"Today";
+            
+            [dateNames addObject:aShowingDate];
+        }
+        NSMutableArray *dateButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonCount:numberOfDays withButtonNames:dateNames withButtonSize:btnSize buttonType:kButtonTypeDate];
+        ActionRequest *aDateBtn;
+        for (aDateBtn in dateButtons){
+            [HDButtonView makeUIButton:aDateBtn inButtonSequence:dateButtons];
+        }
+        
+        
+        return dateButtons;
+    }
+    
+    -(NSMutableArray *)buildBasicButtonArray:(int)location inSection:(int)section inRow:(int)row buttonCount:(NSInteger)numberOfBtns withButtonNames:(NSMutableArray*)buttonNames withButtonSize:(CGSize)btnSize buttonType:(int)buttonType
+    {
+        
+        ActionRequest *hdiBtn;
+        int sectionMod = kCellSectionModulus;
+        int rowMod = kCellRowModulus;
+        int locMod = kLocationModulus;
+        NSMutableArray  *hdiButtonArray = [[NSMutableArray alloc] init];
+        for (int btnIndex = 0; btnIndex < numberOfBtns; btnIndex ++){
+            hdiBtn = [[ActionRequest alloc] init];
+            hdiBtn.buttonTag = locMod*location + sectionMod*section + rowMod*row + btnIndex;
+            //        hdiBtn.uiButton.tag= hdiBtn.buttonTag;
+            hdiBtn.buttonName = [buttonNames objectAtIndex:btnIndex];
+            hdiBtn.buttonSize = btnSize;
+            hdiBtn.tableRow= row;
+            hdiBtn.tableSection= section;
+            hdiBtn.location= location;
+            hdiBtn.buttonIndex = btnIndex;
+            hdiBtn.reloadOnly = NO;
+            hdiBtn.buttonType = buttonType;
+            [hdiButtonArray addObject:hdiBtn];
+        }
+        return hdiButtonArray;
+    }
+    -(NSMutableArray *)buildButtonsArray:(int)location inSection:(int)section inRow:(int)row buttonsPerRow:(NSInteger)buttonsPerRow withTotalNumberOfBtns:(NSInteger)totalNumberOfButtons withStartingIndex:(int)startingIndex withButtonSize:(CGSize)btnSize// withButtonNames:(NSArray*)buttonNames;
+    {
+        NSMutableArray  *hdiButtonArray = [[NSMutableArray alloc] init];
+        ActionRequest *hdiBtn;
+        int sectionMod = kCellSectionModulus;
+        int rowMod = kCellRowModulus;
+        int locMod = kLocationModulus;
+        NSInteger buttonsToMake = buttonsPerRow;
+        //   NSInteger startingIndex = row*buttonsPerRow;
+        NSInteger endingIndex = startingIndex + buttonsPerRow;
+        if (endingIndex >= totalNumberOfButtons)
+            buttonsToMake =  totalNumberOfButtons-startingIndex;
+        for (int i = 0; i < buttonsToMake; i ++){
+            
+            hdiBtn = [[ActionRequest alloc] init];
+            //        hdiBtn.buttonName = [buttonNames objectAtIndex:row*buttonsPerRow+i];
+            hdiBtn.buttonTag = locMod*location + sectionMod*section + rowMod*row + i;
+            hdiBtn.buttonSize = btnSize;
+            hdiBtn.tableRow= row;
+            hdiBtn.tableSection= section;
+            hdiBtn.buttonIndex = i;
+            hdiBtn.reloadOnly = NO;
+            [hdiButtonArray addObject:hdiBtn];
+        }
+        return hdiButtonArray;
+    }
+    
+    
+    /*
+     -(NSMutableArray *)buildBasicButtonArray:(int)location inSection:(int)section inRow:(int)row buttonsPerRow:(NSInteger)buttonsPerRow withButtonSize:(CGSize)btnSize;
+     {
+     
+     ActionRequest *hdiBtn;
+     int sectionMod = kCellSectionModulus;
+     int rowMod = kCellRowModulus;
+     int locMod = kLocationModulus;
+     NSMutableArray  *hdiButtonArray = [[NSMutableArray alloc] init];
+     for (int btnIndex = 0; btnIndex < buttonsPerRow; btnIndex ++){
+     hdiBtn = [[ActionRequest alloc] init];
+     hdiBtn.buttonTag = locMod*location + sectionMod*section + rowMod*row + btnIndex;
+     hdiBtn.buttonSize = btnSize;
+     hdiBtn.tableRow= row;
+     hdiBtn.tableSection= section;
+     hdiBtn.buttonIndex = btnIndex;
+     hdiBtn.reloadOnly = NO;
+     [hdiButtonArray addObject:hdiBtn];
+     }
+     return hdiButtonArray;
+     }
+     */
+    -(void)turnOnButton:(NSInteger)btnNumber inCellBtnArray:(NSMutableArray *)footerButtons
+    {
+        ActionRequest *aFtrBtn;
+        for (aFtrBtn in footerButtons){
+            aFtrBtn.buttonIsOn = NO;
+            if (aFtrBtn.nextTableView == btnNumber)
+                aFtrBtn.buttonIsOn = YES;
+            
+        }
+    }
+    -(void)turnOnButtonAtIndex:(NSInteger)btnIndex inCellBtnArray:(NSMutableArray *)buttonArray
+    {
+        ActionRequest *aBtn;
+        for (int i = 0; i < buttonArray.count; i++){
+            aBtn = [buttonArray objectAtIndex:i];
+            aBtn.buttonIsOn = NO;
+            if (btnIndex == i)
+                aBtn.buttonIsOn = YES;
+            
+        }
+    }
+    -(void)turnOnSelectedDateBtn:(NSDate *)aDate inCellBtnArray:(NSMutableArray *)buttonArray
+    {
+        ActionRequest *aBtn;
+        NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
+        [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
+        [dayFormatter setDateFormat:@"MMM dd"];
+        NSString *aDateStr = [dayFormatter stringFromDate:aDate];
+        NSString *btnDateStr;
+        if (!aDate)
+            aDate=[NSDate date];
+        for (int i = 0; i < buttonArray.count; i++){
+            aBtn = [buttonArray objectAtIndex:i];
+            aBtn.buttonIsOn = NO;
+            btnDateStr=[dayFormatter stringFromDate:aBtn.buttonDate];
+            if ([aDateStr isEqualToString:btnDateStr])
+                aBtn.buttonIsOn = YES;
+            
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark XTRA SUPPORT Methods
+    /////////////////////////////////////////
+    -(void)logwhatsup
+    {
+        // [self.liveRuntimePtr logwhatsup];
+    }
+    -(TableDef *) createButtonsForFixedFooterinTable:(TableDef*)myTable withFooterBtns:(NSArray *)footerNamesPtr withNextTVCs:(NSArray *)nextTVCsPtr withButtonSize:(CGSize)btnSize// buttonsScroll:(BOOL)buttonsScroll
+    {
+        //IF table nil, makeone
+        //   CGSize btnSize = CGSizeMake(60, 30);
+        NSMutableArray *hdrButtons = [self buildSpecialButtons:BUTTONS_TITLE_FOOTER inSection:0 withButtonNames:footerNamesPtr withNextTVCs:nextTVCsPtr withButtonSize:btnSize];
+        if (!myTable) {
+            //makeone
+            myTable=[[TableDef alloc]init];
+        }
+        else{
+            if (myTable.tableFooterContentPtr) {
+                [myTable.tableFooterContentPtr killYourself];
+            }
+        }
+        
+        myTable.tableFooterContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdrButtons];// buttonScroll:buttonsScroll];
+        myTable.tableFooterContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+        myTable.tableFooterFixed=TRUE;
+        
+        return myTable;
+    }
+    -(SectionDef*) createDateButtonsAsSectionHeader:(SectionDef*)mySection sectionNumber:(int)secNum  inTable:(TableDef *)myTable actionReq:(ActionRequest*)actionReq withButtonSize:(CGSize)btnSize// nextTVC:(NSInteger)nextTVC// withBtnNames:(NSArray *)butNamesPtr withNextTVCs:(NSArray *)nextTVCsPtr withButtonSize:(CGSize)btnSize// buttonsScroll:(BOOL)buttonsScroll
+    {
+        //    CGSize btnSize = CGSizeMake(60, 30);
+        
+        //    NSMutableArray *secButtons = [self buildSpecialButtons:BUTTONS_SEC_HEADER inSection:secNum withButtonNames:butNamesPtr withNextTVCs:nextTVCsPtr withButtonSize:btnSize];
+        NSMutableArray *secButtons = [self buildDatesButtons:actionReq forNumberOfDays:5 inSection:secNum withButtonSize:btnSize nextTVC:actionReq.nextTableView inLocation:BUTTONS_SEC_HEADER];
+        //    NSMutableArray *secButtons = [self buildDatesButtons:actionReq forNumberOfDays:5 inSection:secNum withButtonSize:btnSize nextTVC:actionReq.nextTableView];
+        if (mySection.sectionHeaderContentPtr) {
+            [mySection.sectionHeaderContentPtr killYourself];
+        }
+        
+        
+        else{
+            mySection=[[SectionDef alloc]init];
+            [mySection.sectionFooterContentPtr killYourself];//no footers used here
+            mySection.sectionFooterContentPtr=nil;
+        }
+        mySection.sectionHeaderContentPtr=[[CellContentDef alloc]init];
+        mySection.sectionHeaderContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:secButtons];// buttonScroll:buttonsScroll];
+        mySection.sectionHeaderContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+        mySection.sectionHeaderContentPtr.ccCellTypePtr.cellMaxHeight=btnSize.height+2;
+        return mySection;
+        
+        
+        
+    }
+
+/*
 
 -(TableDef *)createSection0ScrollingView:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict forNumberOfDays:(int)numberOfDays withTableTitle:(NSString*)tableTitle
 {
@@ -2348,53 +3243,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
 }
 
-/*
--(CellButtonsScroll *)buildShowTimesBtnsArray:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict// is3D:(BOOL)is3D// allShowingCount:(NSInteger)allShowingsCount
-{
-    ActionRequest *aShowTimeButton;
-    CGSize btnSize2 = CGSizeMake(80,40);
-    NSDate *aShowTime;
-    NSString *tmsShowtimeStr;
-    NSMutableDictionary *aShowing;
-    NSDateFormatter* localTimeZone = [[NSDateFormatter alloc] init];
-    [localTimeZone setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
-    [localTimeZone setDateFormat:@"hh:mm a"];
-    
-    NSMutableArray *showTimesBtns = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:productShowingsArray.count withButtonSize:btnSize2];
-    CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
-
-    NSString *ticketURL;
-    for (int i = 0; i < productShowingsArray.count; i++){
-        aShowTimeButton = [cButPtr.cellsButtonsArray  objectAtIndex:i];
-        aShowing = [productShowingsArray objectAtIndex:i];
-        tmsShowtimeStr = [aShowing objectForKey:@"dateTime"];
-        aShowTime = [self convertDateStringToNSDate:tmsShowtimeStr];
-        aShowTimeButton.buttonDate=aShowTime;
-        aShowTimeButton.buttonName = [localTimeZone stringFromDate:aShowTime];
-        aShowTimeButton.showingInfoDict = aShowing;
-        aShowTimeButton.nextTableView = TVC8;
-        aShowTimeButton.buttonArrayPtr=cButPtr.cellsButtonsArray;
-        aShowTimeButton.buttonIndex= i;
-        aShowTimeButton.buttonIsOn = YES;
-        if ([self hasThisTimePassed:aShowTime])
-            aShowTimeButton.buttonIsOn=NO;
-        aShowTimeButton.reloadOnly = NO;
-        aShowTimeButton.buttonType = kButtonTypeShowTime;
-        aShowTimeButton.productDict = aProductDictHDI;
- //       [self putProductDictInParent:aShowTimeButton productDict:aProductDictTMS];
-        aShowTimeButton.aTime = aShowTimeButton.buttonName;
-        ticketURL = [aShowing objectForKey:kTicketURIKey];
-        if (!ticketURL){
-           aShowTimeButton.buttonIsOn=NO;
-           aShowTimeButton.uiButton.userInteractionEnabled=NO;
-        }
-        aShowTimeButton.locDict = aLocDict;
- //       [self putLocationDictInParent:aShowTimeButton locDict:aLocDict];
-        
-    }
-    return cButPtr;
-}
-*/
 -(BOOL)hasThisTimePassed:(NSDate*)dateTwo
 {
     BOOL   timeHasPassed = NO;
@@ -2651,40 +3499,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 #pragma mark Helper Methods
 /////////////////////////////////////////
 
--(NSString *)leftJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
-{
-    NSString *justifiedStr = [aString mutableCopy];
-    NSUInteger aStrLength=[aString length];
-    NSUInteger spacesToAdd = strLength-aStrLength;
-    if (spacesToAdd > 0){
-        for (NSUInteger i = spacesToAdd; i > 0; i --){
-            justifiedStr = [justifiedStr stringByAppendingString:@" "];
-        }
-    }
- return justifiedStr;
-    
-}
--(NSString *)rightJustifyString:(NSString*)aString withLength:(NSUInteger)strLength
-{
-    NSString *justifiedStr = @"";//[aString mutableCopy];
-    NSUInteger aStrLength=[aString length];
-    NSUInteger spacesToAdd = strLength-aStrLength;
-    if (spacesToAdd > 0){
-        for (NSUInteger i = spacesToAdd; i > 0; i --){
-            justifiedStr = [justifiedStr stringByAppendingString:@" "];
-        }
-        justifiedStr = [justifiedStr stringByAppendingString:aString];
-    }
-  return justifiedStr;
-}
-
-
--(NSInteger) giveMeUniqueNSIntegerForDisplayTag
-{
-    //this method is missing.  rewrite it
-    
-    return 0;
-}
 -(TableDef *) makeFixedFooterWithSectionsAndCells
 {
     TableDef *myTable;
@@ -3314,20 +4128,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         
         //more text labels inside uiview cell
-    /*    for (int lab=1; lab<6; lab++) {
-            internalLabelString=[NSString stringWithFormat:@"Sec%@ Cell%d Lab%d", secIdentifier, item,lab];
-            CellTextDef *internalLabPtr;
-            if (lab % 2) { // odd
-                internalLabPtr=[CellTextDef initCellText:internalLabelString withTextColor:nil withBackgroundColor:[UIColor whiteColor] withTextFontSize:0 withTextFontName:nil];
-            }
-            else{
-                internalLabPtr=[CellTextDef initCellText:internalLabelString withTextColor:[UIColor greenColor] withBackgroundColor:[UIColor blueColor] withTextFontSize:0 withTextFontName:nil];
-            }
-            [ctdPtr.cTextDefsArray addObject:internalLabPtr];
-     
-        }  //end for labels in cell
-        */
-        
+ 
         CGSize btnSize = sizeGlobalButton;//CGSizeMake(60, 30);
         NSMutableArray *hdrButtons = [self buildSpecialButtons:BUTTONS_NORMAL_CELL inSection:0 withButtonNames:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:btnSize];
         
@@ -3729,26 +4530,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     return dateButtons;
 }
 
-/*
-
--(NSMutableArray*)buildNSDatesArray:(ActionRequest*)pressedBtn forNumberOfDays:(int)numberOfDays
-{
-    
-    NSMutableArray  *datesArray = [[NSMutableArray alloc] init];
-    NSMutableDictionary *aLocDicTMS = [self fetchLocationDict:pressedBtn];//pressedBtn.aLocDict;
-    if (pressedBtn.buttonArrayPtr.count){
-        ActionRequest * newDateButton = [pressedBtn.buttonArrayPtr objectAtIndex:pressedBtn.buttonIndex];
-        [aLocDicTMS setValue:newDateButton.buttonName forKey:kLocationDate];
-    }
-
-    NSDate *aDate;
-    for (int i = 0; i < numberOfDays; i++){
-        aDate = [[NSDate date] dateByAddingTimeInterval:i*86400];
-        [datesArray addObject:aDate];
-    }
-    return datesArray;
-}
-*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark BUTTON SUPPORT Methods
 /////////////////////////////////////////
@@ -3861,9 +4642,39 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 {
     [self.liveRuntimePtr logwhatsup];
 }
+
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark SPLASH SCREEN DEF Methods
 /////////////////////////////////////////
+
+-(TableDef *) createFixedTableFooterUsingText:(NSString *)thisText forTable:(TableDef *)myTable
+{
+    //IF table nil, makeone
+    
+    if (!myTable) {
+        //makeone
+        myTable=[[TableDef alloc]init];
+    }
+    else{
+        if (myTable.tableFooterContentPtr) {
+            [myTable.tableFooterContentPtr killYourself];
+        }
+    }
+    
+    CellTextDef *ctdPtr=[CellTextDef initCellText:thisText withTextColor:self.viewTextColor withBackgroundColor:self.headerBackColor withTextFontSize:20 withTextFontName:nil];
+    
+    myTable.tableFooterContentPtr.ccCellTypePtr=ctdPtr;
+    ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentCenter;
+    
+    
+    
+    myTable.tableFooterContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
+    myTable.tableFooterFixed=TRUE;
+    
+    return myTable;
+}
+
 -(void)mkTableDefTesterSplashScreen0:(TableDef*)myTable
 {
     //  this tests displayed text in section header and cells   - preserving background color/text color
