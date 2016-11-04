@@ -646,9 +646,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
     NSLog(@"----makeTVC2    reloadOnly is %d",pressedButton.reloadOnly);
     TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
-    
-    
-    
+    CellButtonsScroll *footerCell = (CellButtonsScroll *) myTable.tableFooterContentPtr.ccCellTypePtr;
+    [self turnOnButton:TVC2 inCellBtnArray:footerCell.cellsButtonsArray];
         // rebuild section 2 in all cases
         int section = 1;
         int row = 0;
@@ -1973,7 +1972,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Movie App Methods
 /////////////////////////////////////////
-    
+/*
     -(TableDef *)createSection0ScrollingView:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict forNumberOfDays:(int)numberOfDays withTableTitle:(NSString*)tableTitle
     {
         
@@ -2021,8 +2020,71 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         // Generic Code End
         return myTable;
     }
+*/
+-(TableDef *)createSection0ScrollingView:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict forNumberOfDays:(int)numberOfDays withTableTitle:(NSString*)tableTitle
+{
     
+    //  Generic Use Code Start
     
+    SectionDef *sdPtr1;
+    TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
+    CellContentDef *cellContentPtr1;//, *cellContentPtr2;
+    CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+    CGSize movieBtnSize = sizeGlobalPoster;//CGSizeMake(100, 150);
+    CellButtonsScroll *hdrCell;
+    if (pressedButton.reloadOnly){
+        NSLog(@"reloadonly - notcreate table");
+        sdPtr1 = [myTable.tableSections objectAtIndex:0];
+        [myTable.tableSections removeAllObjects];
+        [myTable.tableSections addObject:sdPtr1];
+        cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
+        cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
+    }
+    else{
+        NSLog(@"create table");
+        myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+        CGSize sechdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+        sdPtr1 = nil;
+        sdPtr1 = [self createDateButtonsAsSectionHeader:sdPtr1 sectionNumber:0 inTable:myTable actionReq:pressedButton withButtonSize:sechdrBtnSize];// nextTVC:TVC2];
+        hdrCell = (CellButtonsScroll *)sdPtr1.sectionHeaderContentPtr.ccCellTypePtr;
+        myTable =[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:hdrBtnSize];// buttonsScroll:NO];
+        [self turnOnSelectedDateBtn:selectedDate inCellBtnArray:hdrCell.cellsButtonsArray];
+        
+        [myTable.tableSections addObject:sdPtr1];
+        int section = 0;
+        int row = 0;
+        //C E L L S    F O R        S E C T I O N S
+        
+        
+        
+        //add simple text array for test     MYRA ADDED FOR TEST
+        //a   CellTextDef *ctdPtr;
+        //a   CellContentDef *cellContentPtr1;
+        //a   cellContentPtr1=[[CellContentDef alloc] init];
+        //a   ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor redColor] withTextFontSize:36 withTextFontName:nil];
+        //a   ctdPtr.cellSeparatorVisible=TRUE;
+        //a   cellContentPtr1.ccCellTypePtr=ctdPtr;
+        //a   [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+        
+        
+        
+        //button cells section 1      B U T T O N S
+        CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+        cbsPtr.indicateSelItem=YES;
+        if (cbsPtr.cellsButtonsArray.count){
+            cellContentPtr1=[[CellContentDef alloc] init];
+            cellContentPtr1.ccCellTypePtr=cbsPtr;
+            cellContentPtr1.ccTableViewCellPtr=nil;
+            
+            [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+            
+        }
+    }
+    // Generic Code End
+    return myTable;
+}
+
+/*
     -(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
     {
         NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
@@ -2048,6 +2110,32 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         return showingsForDate;
     }
     
+*/
+-(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
+{
+    NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
+    [dayFormatter setDateFormat:@"MMM dd"];
+    NSMutableArray *showingsForDate = [[NSMutableArray alloc] init];
+    NSMutableDictionary *aShowing;
+    NSString *testDate;
+    NSString *locationID = [aLocationDict objectForKey:kLocationIDKey];
+    NSString *localDate = [dayFormatter stringFromDate:aDate];
+    for (aShowing in showings){
+        NSString* aTheatreID = [aShowing valueForKeyPath:kMovieTheaterID ];//TMS kProductShowingTheatreIDKey];//@"theatre.id"];
+        if ([aTheatreID isEqualToString:locationID]){
+            NSString* aShowingTimeString = [aShowing objectForKey:kMovieShowDateTime];//tms kProductShowingDateTimeKey];//@"dateTime"];
+            NSDate* nsDateFromString = [self convertDateStringToNSDate:aShowingTimeString];// [dateFormatter dateFromString:aShowingTimeString];
+            testDate = [dayFormatter stringFromDate:nsDateFromString];
+            if ([localDate isEqualToString:testDate]){
+                [showingsForDate addObject:aShowing];
+                
+            }
+        }
+    }
+    return showingsForDate;
+}
+
     -(int)buildShowTimesBtnsCells:(NSMutableArray*)productShowingsArray inSection:(int)section inRow:(int)row forProduct:(NSMutableDictionary*)aProductDictHDI inLocation:(NSMutableDictionary*)aLocDict buttonsPerRow:(int)buttonsPerRow  sectionDef:(SectionDef *)sdPtr// is3D:(BOOL)is3D// allShowingCount:(NSInteger)allShowingsCount
     {
         ActionRequest *aShowTimeButton;
@@ -2150,7 +2238,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             
             aProductDict = [productDictionaryWithNameAsKey objectForKey:[allProductNames objectAtIndex:j]];
             NSString *productID = [aProductDict objectForKey:kMovieUniqueKey]; //kProductIDKey]; was a tms key
-            NSMutableArray *allInventory = nil;//[self.liveRuntimePtr.allProductInventory_HDI objectForKey:productID];
+            NSMutableArray *allInventory = [self.liveRuntimePtr.allProductInventory_HDI objectForKey:productID];
             
             
             //       BOOL isPlaying = [self addInfoToProductDictTMSonNSDate:aProductDictTMS forLocation:aLocDict onDate:pressedBtn.buttonDate];
@@ -2848,9 +2936,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         NSString *todayStr = [dateFormatter stringFromDate:[NSDate date]];
         //    ActionRequest *aDateBtn;
         NSDate *aDate;// = [NSDate date];
+        NSMutableArray *showingDates = [[NSMutableArray alloc] init];
         for (int i = 0; i < numberOfDays; i++){
             //       aDateBtn = [dateButtons objectAtIndex:i];
             aDate = [[NSDate date] dateByAddingTimeInterval:i*86400];
+            [showingDates addObject:aDate];
             //        aDateBtn.buttonDate=aDate;
             NSString *aShowingDate = [dateFormatter stringFromDate:aDate];
             if ([aShowingDate isEqualToString:todayStr])
@@ -2860,8 +2950,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
         NSMutableArray *dateButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonCount:numberOfDays withButtonNames:dateNames withButtonSize:btnSize buttonType:kButtonTypeDate];
         ActionRequest *aDateBtn;
-        for (aDateBtn in dateButtons){
+//        for (aDateBtn in dateButtons){
+        for (int i = 0; i < dateButtons.count; i++){
+            
+            aDateBtn = [dateButtons objectAtIndex:i];
             [HDButtonView makeUIButton:aDateBtn inButtonSequence:dateButtons];
+            aDateBtn.nextTableView=pressedBtn.nextTableView;
+            aDateBtn.buttonDate=[showingDates objectAtIndex:i];
         }
         
         
