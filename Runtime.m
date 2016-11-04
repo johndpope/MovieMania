@@ -650,6 +650,8 @@
     switch (pressedBtn.buttonType) {
         case kButtonTypeDate:
             self.gGTPptr.selectedDate=pressedBtn.buttonDate;
+            pressedBtn.productDict=self.gGTPptr.selectedProdcuctDict;
+            pressedBtn.locDict=self.gGTPptr.selectedLocDict;
             break;
         case kButtonTypeLocation:
             self.gGTPptr.selectedLocDict=pressedBtn.locDict;

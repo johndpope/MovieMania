@@ -2187,8 +2187,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 
                 
             }
+            CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
             CellContentDef* cellContentPtr=[[CellContentDef alloc] init];
-            //      cellContentPtr.ccCellTypePtr=cButPtr;
+            cellContentPtr.ccCellTypePtr=cButPtr;
             cellContentPtr.ccTableViewCellPtr=nil;
             [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
             row++;
@@ -2957,6 +2958,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             [HDButtonView makeUIButton:aDateBtn inButtonSequence:dateButtons];
             aDateBtn.nextTableView=pressedBtn.nextTableView;
             aDateBtn.buttonDate=[showingDates objectAtIndex:i];
+//            aDateBtn.productDict=pressedBtn.productDict;
+//            aDateBtn.locDict=pressedBtn.locDict;
         }
         
         
