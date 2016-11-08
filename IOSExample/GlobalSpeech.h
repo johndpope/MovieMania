@@ -14,7 +14,7 @@
 //#import <AVKit/AVKit.h>
 
 #if TARGET_OS_TV
-#import "SpeechRecTV.h"
+//#import "SpeechRecTV.h"
 #else
 #import "SpeechRec.h"
 #endif
@@ -26,7 +26,7 @@
 
 
 #if TARGET_OS_TV
-@property (nonatomic, readwrite) SpeechRecTV *mySpeechRec;
+//@property (nonatomic, readwrite) SpeechRecTV *mySpeechRec;
 #else
 @property (nonatomic, readwrite) SpeechRec *mySpeechRec;
 #endif

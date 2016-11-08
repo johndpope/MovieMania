@@ -121,7 +121,8 @@
     
 #if TARGET_OS_TV
     return;
-#endif
+#else
+
     
     
    // UIButton * uiButtonPressed = sender;
@@ -145,7 +146,7 @@
         
     }
     
-    
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -485,6 +486,10 @@
 }
 -(void) releaseSpeakButton
 {
+#if TARGET_OS_TV
+    return;
+#else
+
     [speakButton removeFromSuperview];
     
     speakButton=nil;
@@ -492,6 +497,7 @@
 
     [gGSptr.mySpeechRec killYourself];
     gGSptr.mySpeechRec=nil;
+#endif  
 }
 
 

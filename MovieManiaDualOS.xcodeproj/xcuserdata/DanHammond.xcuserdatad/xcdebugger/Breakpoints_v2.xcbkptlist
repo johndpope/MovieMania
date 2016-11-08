@@ -105,8 +105,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
             endingLineNumber = "88"
-            landmarkName = "-estimateYourWidth:withFont:"
-            landmarkType = "7">
+            landmarkName = "@implementation CellInputField"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -217,7 +217,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "95"
             endingLineNumber = "95"
-            landmarkName = "-estimateYourWidth:withFont:"
+            landmarkName = "-addNotificationsIWant"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -329,7 +329,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "99"
             endingLineNumber = "99"
-            landmarkName = "-estimateYourWidth:withFont:"
+            landmarkName = "-addNotificationsIWant"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -852,11 +852,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobalTableProto.m"
-            timestampString = "499984532.740167"
+            timestampString = "500325143.679773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3017"
-            endingLineNumber = "3017"
+            startingLineNumber = "2915"
+            endingLineNumber = "2915"
             landmarkName = "-buildButtonsArray:inSection:inRow:buttonsPerRow:withTotalNumberOfBtns:withStartingIndex:withButtonSize:"
             landmarkType = "7">
          </BreakpointContent>
