@@ -12,7 +12,8 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h> 
 #import "CellMovieView.h"
-
+#import "CellCollectionView.h"
+#define kMakeCollectionView 1
 
 /*
 @implementation NSString (NSString_Extended)
@@ -51,6 +52,7 @@
     NSMutableArray *productTypes;
     NSMutableArray *productPrices;
     NSMutableArray *productQuantities;
+
 //    NSMutableDictionary *allMovieInfoOMDBViews;
 //    UIImageView *moviePosterView;
 }
@@ -2069,7 +2071,15 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         
         //button cells section 1      B U T T O N S
-        CellButtonsScroll *cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+        
+#if kMakeCollectionView
+        CellCollectionView *cbsPtr;
+#else
+        CellButtonsScroll *cbsPtr;
+        
+#endif
+        cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
+       
         cbsPtr.indicateSelItem=YES;
         if (cbsPtr.cellsButtonsArray.count){
             cellContentPtr1=[[CellContentDef alloc] init];
@@ -2084,33 +2094,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     return myTable;
 }
 
-/*
-    -(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
-    {
-        NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
-        [dayFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];
-        [dayFormatter setDateFormat:@"MMM dd"];
-        NSMutableArray *showingsForDate = [[NSMutableArray alloc] init];
-        NSMutableDictionary *aShowing;
-        NSString *testDate;
-        NSString *locationID = [aLocationDict objectForKey:kLocationIDKey];
-        NSString *localDate = [dayFormatter stringFromDate:aDate];
-        for (aShowing in showings){
-            NSString* aTheatreID = [aShowing valueForKeyPath:kMovieTheaterID ];//TMS kProductShowingTheatreIDKey];//@"theatre.id"];
-            if ([aTheatreID isEqualToString:locationID]){
-                NSString* aShowingTimeString = [aShowing objectForKey:kMovieShowDateTime];//tms kProductShowingDateTimeKey];//@"dateTime"];
-                NSDate* nsDateFromString = [self convertDateStringToNSDate:aShowingTimeString];// [dateFormatter dateFromString:aShowingTimeString];
-                testDate = [dayFormatter stringFromDate:nsDateFromString];
-                if ([localDate isEqualToString:testDate]){
-                    [showingsForDate addObject:aShowing];
-                    
-                }
-            }
-        }
-        return showingsForDate;
-    }
-    
-*/
 -(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
 {
     NSDateFormatter* dayFormatter = [[NSDateFormatter alloc] init];
@@ -2202,8 +2185,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     
     
-    -(BOOL)hasThisTimePassed:(NSDate*)dateTwo
-    {
+-(BOOL)hasThisTimePassed:(NSDate*)dateTwo
+{
         BOOL   timeHasPassed = NO;
         NSDate *dateOne = [NSDate date];
         switch ([dateOne compare:dateTwo]) {
@@ -2221,14 +2204,16 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
         return timeHasPassed;
     }
-    
-    -(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
+
+//-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
+-(id)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
     {
         
         //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
         
-        CellButtonsScroll *ctdPtr = nil;
-        //    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
+//        CellButtonsScroll *ctdPtr = nil;
+        id ctdPtr = nil;
+//    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
         NSInteger numberOfProductsAtLocation = 0;
         NSMutableArray *productDictNamesAtLoc = [[NSMutableArray alloc] init];
         NSMutableDictionary *aProductDict;//TMS;
@@ -2292,12 +2277,17 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             pressedBtn.productDict = aBtn.productDict;
             //      aProductDict = [self fetchProductDict:aBtn];
             //      [self putProductDictInParent:pressedBtn productDict:aProductDict];
-            ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
+          
+            if (kMakeCollectionView){
+                ctdPtr=[CellCollectionView initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];
+            }else{
+                ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
+            }
             pressedBtn.buttonName = aBtn.buttonName;
         }
-        return ctdPtr;
-    }
-    -(NSMutableDictionary *)buildProductsDictionaryWithNameKey:(NSMutableDictionary *)allProductsDict
+    return ctdPtr;
+}
+-(NSMutableDictionary *)buildProductsDictionaryWithNameKey:(NSMutableDictionary *)allProductsDict
     {
         NSMutableDictionary *productDictionaryWithNameAsKey = [[NSMutableDictionary alloc] init];
         NSArray *allProductIDs = [allProductsDict allKeys];
@@ -2354,7 +2344,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
     
     
-    -(NSMutableDictionary*)buildShowtimesButtonsDictOfArrays:(NSMutableArray*)productShowings
+-(NSMutableDictionary*)buildShowtimesButtonsDictOfArrays:(NSMutableArray*)productShowings
     {
         NSMutableDictionary *showTimesDictOfDicts = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *showTimesDictOfArrays = [[NSMutableDictionary alloc] init];
@@ -2417,7 +2407,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
         return parsedQuals;
     }
-    -(NSString *)implodeArrayOfStrings:(NSMutableArray *)stringArray withSeparator:(NSString*)separatorStr
+-(NSString *)implodeArrayOfStrings:(NSMutableArray *)stringArray withSeparator:(NSString*)separatorStr
     {
         if (!stringArray.count)
             return nil;
@@ -2433,7 +2423,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
         return implodedString;
     }
-    -(NSString*)parseYouTubeStringForID:(NSMutableDictionary*)trailerDict
+-(NSString*)parseYouTubeStringForID:(NSMutableDictionary*)trailerDict
     {
         NSString *trailerID;
         NSString *fullTrailerString = [trailerDict objectForKey:@"code"];
@@ -2441,7 +2431,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         trailerID = [stringAfterEmbed substringToIndex:11];
         return trailerID;
     }
-    -(NSString*)stringAfterString:(NSString*)match inString:(NSString*)string
+-(NSString*)stringAfterString:(NSString*)match inString:(NSString*)string
     {
         if ([string rangeOfString:match].location != NSNotFound)
         {
@@ -2471,13 +2461,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Helper Methods
     /////////////////////////////////////////
-    -(NSInteger) giveMeUniqueNSIntegerForDisplayTag
+-(NSInteger) giveMeUniqueNSIntegerForDisplayTag
     {
         //this method is missing.  rewrite it
         
         return 0;
     }
-    -(TableDef *) makeFixedFooterWithSectionsAndCells
+-(TableDef *) makeFixedFooterWithSectionsAndCells
     {
         TableDef *myTable;
         myTable=[TableDef initTableDefText:@"TABLE LABEL HERE" withTextColor:[UIColor purpleColor] withBackgroundColor:[UIColor clearColor] withTextFontSize:DEF_TITLEFONTSIZE withTextFontName:nil footerText:@"This is a message with enough text to span multiple lines. This text is set at runtime and might be short or long." withFooterTextColor:[UIColor purpleColor] withFooterBackgroundColor:[UIColor yellowColor] withFooterTextFontSize:DEF_TITLEFONTSIZE withFooterTextFontName:nil];
@@ -2531,7 +2521,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
     }
     
-    -(TableDef *) makeFixedHeaderWithSectionsAndCells
+-(TableDef *) makeFixedHeaderWithSectionsAndCells
     {
         TableDef *myTable;
         myTable=[self createTextHeaderinTable:nil withText:@"TABLE HEADER"];

@@ -19,6 +19,12 @@
 		AAE8D3031BA5CEBC0003A4DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE8D3021BA5CEBC0003A4DF /* main.m */; };
 		AAE8D3061BA5CEBC0003A4DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE8D3051BA5CEBC0003A4DF /* AppDelegate.m */; };
 		AAE8D30E1BA5CEBC0003A4DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAE8D30D1BA5CEBC0003A4DF /* Assets.xcassets */; };
+		B21A35E11DD501E20066475A /* CellCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35DF1DD501E20066475A /* CellCollectionView.m */; };
+		B21A35E21DD501E20066475A /* CellCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35DF1DD501E20066475A /* CellCollectionView.m */; };
+		B21A35E51DD50BA50066475A /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E41DD50BA50066475A /* CollectionViewController.m */; };
+		B21A35E61DD50BA50066475A /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E41DD50BA50066475A /* CollectionViewController.m */; };
+		B21A35E91DD50EA90066475A /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E81DD50EA90066475A /* MovieCollectionViewCell.m */; };
+		B21A35EA1DD50EA90066475A /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E81DD50EA90066475A /* MovieCollectionViewCell.m */; };
 		B23237351D808B2E00732FA8 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42E01D80736C00F7E82F /* YTPlayerView.m */; };
 		B23237361D808B3B00732FA8 /* YTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EB42E21D80736C00F7E82F /* YTViewController.m */; };
 		B2B8AFEF1DAD5F0C00A6EC4E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8AFEE1DAD5F0C00A6EC4E /* libz.tbd */; };
@@ -180,6 +186,12 @@
 		AAE8D3051BA5CEBC0003A4DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AAE8D30D1BA5CEBC0003A4DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAE8D30F1BA5CEBC0003A4DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B21A35DF1DD501E20066475A /* CellCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellCollectionView.m; sourceTree = "<group>"; };
+		B21A35E01DD501E20066475A /* CellCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellCollectionView.h; sourceTree = "<group>"; };
+		B21A35E31DD50B9A0066475A /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		B21A35E41DD50BA50066475A /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		B21A35E71DD50EA90066475A /* MovieCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieCollectionViewCell.h; sourceTree = "<group>"; };
+		B21A35E81DD50EA90066475A /* MovieCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieCollectionViewCell.m; sourceTree = "<group>"; };
 		B2B8AFEC1DAD5EF900A6EC4E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		B2B8AFEE1DAD5F0C00A6EC4E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		B2EB425A1D80736C00F7E82F /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
@@ -386,6 +398,12 @@
 				B2EB426A1D80736C00F7E82F /* buffy100x100.png */,
 				B2EB426B1D80736C00F7E82F /* CellButtonsScroll.h */,
 				B2EB426C1D80736C00F7E82F /* CellButtonsScroll.m */,
+				B21A35E01DD501E20066475A /* CellCollectionView.h */,
+				B21A35DF1DD501E20066475A /* CellCollectionView.m */,
+				B21A35E31DD50B9A0066475A /* CollectionViewController.h */,
+				B21A35E41DD50BA50066475A /* CollectionViewController.m */,
+				B21A35E71DD50EA90066475A /* MovieCollectionViewCell.h */,
+				B21A35E81DD50EA90066475A /* MovieCollectionViewCell.m */,
 				B2EB426D1D80736C00F7E82F /* CellContentDef.h */,
 				B2EB426E1D80736C00F7E82F /* CellContentDef.m */,
 				B2EB426F1D80736C00F7E82F /* CellImageLTextR.h */,
@@ -705,6 +723,7 @@
 				B2EB434C1D80736C00F7E82F /* IDentifyUModel.m in Sources */,
 				B2EB432E1D80736C00F7E82F /* LocationRecordOld.m in Sources */,
 				B2EB431E1D80736C00F7E82F /* Decrypt.m in Sources */,
+				B21A35E61DD50BA50066475A /* CollectionViewController.m in Sources */,
 				B2EB42EA1D80736C00F7E82F /* ASIInputStream.m in Sources */,
 				B2EB43101D80736C00F7E82F /* GlobalTableProto.m in Sources */,
 				B2EB43041D80736C00F7E82F /* CellTextDef.m in Sources */,
@@ -713,6 +732,7 @@
 				B2EB43281D80736C00F7E82F /* HoldViewController.m in Sources */,
 				B2EB43361D80736C00F7E82F /* NavCtrl.m in Sources */,
 				B2EB436A1D80736C00F7E82F /* TableViewController.m in Sources */,
+				B21A35E21DD501E20066475A /* CellCollectionView.m in Sources */,
 				B2EB434E1D80736C00F7E82F /* JSONAPI.m in Sources */,
 				B2EB435E1D80736C00F7E82F /* JSONValueTransformer.m in Sources */,
 				B2EB43721D80736C00F7E82F /* YTViewController.m in Sources */,
@@ -722,6 +742,7 @@
 				B2EB42E81D80736C00F7E82F /* ASIHTTPRequest.m in Sources */,
 				B2EB43501D80736C00F7E82F /* JSONHTTPClient.m in Sources */,
 				B2EB43581D80736C00F7E82F /* JSONModelArray.m in Sources */,
+				B21A35EA1DD50EA90066475A /* MovieCollectionViewCell.m in Sources */,
 				B2EB43001D80736C00F7E82F /* CellMovieView.m in Sources */,
 				B2EB430A1D80736C00F7E82F /* DeviceDetection.m in Sources */,
 				B2EB43421D80736C00F7E82F /* TransactionData.m in Sources */,
@@ -784,13 +805,16 @@
 				B2EB43351D80736C00F7E82F /* NavCtrl.m in Sources */,
 				B2EB43691D80736C00F7E82F /* TableViewController.m in Sources */,
 				B2EB434D1D80736C00F7E82F /* JSONAPI.m in Sources */,
+				B21A35E91DD50EA90066475A /* MovieCollectionViewCell.m in Sources */,
 				B2EB435D1D80736C00F7E82F /* JSONValueTransformer.m in Sources */,
 				B2EB433F1D80736C00F7E82F /* Transaction.m in Sources */,
+				B21A35E51DD50BA50066475A /* CollectionViewController.m in Sources */,
 				4B533C1B1D8342E8002436C8 /* CustomCellUIView.m in Sources */,
 				B2EB43251D80736C00F7E82F /* DiskStore.m in Sources */,
 				B2EB42E71D80736C00F7E82F /* ASIHTTPRequest.m in Sources */,
 				B2EB434F1D80736C00F7E82F /* JSONHTTPClient.m in Sources */,
 				B2EB43571D80736C00F7E82F /* JSONModelArray.m in Sources */,
+				B21A35E11DD501E20066475A /* CellCollectionView.m in Sources */,
 				B2EB42FF1D80736C00F7E82F /* CellMovieView.m in Sources */,
 				B2EB43091D80736C00F7E82F /* DeviceDetection.m in Sources */,
 				B2EB43411D80736C00F7E82F /* TransactionData.m in Sources */,
