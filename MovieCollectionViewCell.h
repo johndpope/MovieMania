@@ -11,7 +11,7 @@
 
 @interface MovieCollectionViewCell : UICollectionViewCell
 
-@property (retain, nonatomic) UIImageView *posterImageView;
+@property (retain, nonatomic) UIView *posterView;
 @property (retain, nonatomic) UILabel *titleLabel;
 @property (nonatomic, assign) NSIndexPath *indexPath;
 @property (nonatomic, retain) UIButton *myButton;

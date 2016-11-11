@@ -496,15 +496,13 @@
     // NSString *specificCell=[NSString stringWithFormat:@"Cell-%d-%d",i,c ];
     // NSLog(@"make cell %p text %@ withrect %@",cell,specificCell, NSStringFromCGRect(cell.contentView.frame));
     
-
-    
-    
-    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){// self.reloadOnly){
-        //[sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
-        
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellCollectionView class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){
+        CellCollectionView *aCollectionView = (CellCollectionView*)sectionCellsPtr.ccCellTypePtr;
+        [thisCell addSubview:aCollectionView.collectionView];
+        return thisCell;
+    }
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
-
-
         [thisCell addSubview:aButtonView.buttonContainerView];
         
     }else{
@@ -976,4 +974,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     NSLog(@"COLLECTIONviewCNTRLR Swiped Down");
     NSLog(@"");
 }
+
+
+
 @end

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Christian Lysne. All rights reserved.
 //
 
-#import "CollectionViewController.h"
+#import "CollectionViewHolder.h"
 #import "MovieCollectionViewCell.h"
 //#import "Movie.h"
 //#import "RestHandler.h"
@@ -25,12 +25,12 @@
 
 //@end
 
-@implementation CollectionViewController
+@implementation CollectionViewHolder
 {
     HDButtonView *myButtonView;
     //    NSMutableArray *myButtons;
-    UIScrollView* buttonContainerView;
-    CGSize dateBtnSize;
+//    UIScrollView* buttonContainerView;
+//    CGSize dateBtnSize;
     CGFloat height;
     int location;
 //    UICollectionView *collectionView;
@@ -41,14 +41,16 @@
 
 #pragma mark - Lifecycle
 
-- (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame
+- (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame
 {
     
-    self = [super init];
+//    self = [super init];
     if (self) {
+        self.myButtons=buttons;
         
-        self.view.frame = thisFrame;
-        
+  //      self.view = [[UIView alloc] initWithFrame:thisFrame];
+  //      NSLog(@"collectionViewFrame = (%f, %f)", self.view.frame.size.width, self.view.frame.size.height);
+        [self setUpCollectionView:thisFrame];
         return self;
         
     }
@@ -57,19 +59,18 @@
 
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    height = (CGRectGetHeight(self.view.frame)-(2*COLLECTION_VIEW_PADDING))/2;
-//    self.movies = [NSMutableArray new];
-    
-//        [self fetchMovies];
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+-(void)setUpCollectionView:(CGRect)cvFrame
+{
+    height = (CGRectGetHeight(self.frame)-(2*COLLECTION_VIEW_PADDING))/2;
+    ActionRequest *aBtn = [myButtons objectAtIndex:0];
 
-//        _movies = [[RestHandler sharedInstance] fetchMovies];
-        dateBtnSize = CGSizeMake(height * (9.0/16.0) * 0.8, height * 0.8);
- //       dateBtnSize = CGSizeMake(60,40);
+ //       dateBtnSize = CGSizeMake(height * (9.0/16.0) * 0.8, height * 0.8);
+
         location = BUTTONS_NORMAL_CELL;
 //        myButtons = [self buildDatesButtons:nil forNumberOfDays:(int)_movies.count inSection:0 withButtonSize:dateBtnSize nextTVC:0 inLocation:location];
-        buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, dateBtnSize.width, dateBtnSize.height)];
+//        buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, dateBtnSize.width, dateBtnSize.height)];
 //        myButtonView = [[HDButtonView alloc] initWithContainer:buttonContainerView buttonSequence:myButtons rowNumbr:0 withTVC:0];
     //custom flow layout http://stackoverflow.com/questions/20626744/uicollectionview-current-index-path-for-page-control
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
@@ -78,17 +79,17 @@
     
     
     
+    NSLog(@"collectionViewFrame = (%f, %f)", self.frame.size.width, self.frame.size.height);
     
-    
-    collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
-    
+//    collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
+//    collectionView=self;
     NSLog(@"layout minimum line spacing %f",layout.minimumLineSpacing);
     layout.minimumLineSpacing = 10000.0f;
     
     NSLog(@"layout minimum interitem spacing %f",layout.minimumInteritemSpacing);
     layout.minimumInteritemSpacing=0;
     
-    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:cvFrame collectionViewLayout:layout];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     
@@ -96,7 +97,7 @@
     
     [collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
     
-    [collectionView setBackgroundColor:[UIColor redColor]];
+    [collectionView setBackgroundColor:[UIColor orangeColor]];
     
     // [_collectionView setBounces:TRUE];
     // [_collectionView setAlwaysBounceVertical:TRUE];
@@ -123,38 +124,23 @@
     
 #endif
     
+  //  [collectionView reloadData];
     
     
-    [self.view addSubview:collectionView];
-
     
 }
 
-#pragma mark - Data
-/*
-- (void)fetchMovies {
-    [[RestHandler sharedInstance] fetchMovies:^(NSArray *movies) {
-       
-        self.movies = [NSMutableArray arrayWithArray:movies];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.collectionView reloadData];
-            
-        });
-        
-    } failure:^(NSError *error) {
-        
-    }];
-}
-*/
+
 #pragma mark - UICollectionView
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
- //   CGFloat height = (CGRectGetHeight(self.view.frame)-(2*COLLECTION_VIEW_PADDING))/2;
+//    CGFloat height = (CGRectGetHeight(self.view.frame)-(2*COLLECTION_VIEW_PADDING))/2;
     
     return CGSizeMake(height * (9.0/16.0), height);
  // return dateBtnSize;
+ //    ActionRequest *aBtn = [myButtons objectAtIndex:0];
+ //   return aBtn.buttonSize;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -169,6 +155,12 @@
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MovieCollectionViewCell* cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"movieCell"
                                                                            forIndexPath:indexPath];
+    if (!cell)
+    {
+        cell = [[MovieCollectionViewCell alloc] init];
+    }
+
+    
     cell.indexPath = indexPath;
     NSLog(@"indexPath.row  = %ld",(long)indexPath.row);
 //    Movie *movie = [self.movies objectAtIndex:indexPath.row];
@@ -176,14 +168,18 @@
     ActionRequest *actionReq = [myButtons objectAtIndex:indexPath.row];
     UIButton *aButton = actionReq.uiButton;
     cell.myButton=aButton;
-    cell.titleLabel.text
-     = [NSString stringWithFormat:@"Movie %li",(long)indexPath.row];
-    [cell.posterImageView addSubview:aButton];
+ //   cell.titleLabel.text
+//     = [NSString stringWithFormat:@"Movie %li",(long)indexPath.row];
     
-    aButton.center = cell.posterImageView.center;
+//    cell.posterView = [[UIView alloc] initWithFrame:CGRectMake(0,0,actionReq.buttonSize.width,actionReq.buttonSize.height)];
+//    UIImageView *posterImageView = [[UIImageView alloc] initWithImage:actionReq.buttonImage];
+//    [cell.posterView addSubview:posterImageView];
+    
+//    aButton.center = cell.posterView.center;
+    CGSize cellSize = cell.contentView.bounds.size;
     [cell.contentView addSubview:aButton];
-    
-    
+    aButton.center=cell.contentView.center;
+//    [cell addSubview:aButton];
     
     
     if (cell.gestureRecognizers.count == 0) {
@@ -194,6 +190,25 @@
     
     return cell;
 }
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+ //   self.collectionView.frame = self.contentSize.bounds;
+}
+
+- (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath
+{
+//    self.collectionView.dataSource = dataSourceDelegate;
+//    self.collectionView.delegate = dataSourceDelegate;
+//    self.collectionView.indexPath = indexPath;
+//    [self.collectionView setContentOffset:self.collectionView.contentOffset animated:NO];
+    
+    [self.collectionView reloadData];
+}
+
+
 
 #pragma mark - GestureRecognizer
 - (void)tappedMovie:(UITapGestureRecognizer *)gesture {
@@ -232,21 +247,6 @@
         
  //       touchInput = touchInput + 88;
         NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
-/*      Redundant code, already done when Buttons were made
-        CellContentDef* ccontentDefPtr = [sectionPtr.sCellsContentDefArr objectAtIndex:indexPath.row];
-        CellTypesAll *aCell = ccontentDefPtr.ccCellTypePtr;
-        ActionRequest *cellButton = [[ActionRequest alloc]init];
-        cellButton.tableSection = indexPath.section;
-        cellButton.tableRow = indexPath.row;
-        cellButton.buttonTag = touchInput;
-        cellButton.nextTableView = aCell.nextTableView;
-        cellButton.buttonIndex = 0;
-        cellButton.buttonDate = aCell.cellDate;
-        cellButton.productDict=aCell.productDict;
-        cellButton.locDict=aCell.locDict;
-        cellButton.buttonType=aCell.buttonType;
-        [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:cellButton forKey:[NSString stringWithFormat:@"%li",cellButton.buttonTag]];
-*/
         [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
 
         
@@ -274,58 +274,5 @@
         cell.titleLabel.textColor = [UIColor redColor];
     }
 }
--(NSMutableArray*)buildDatesButtons:(ActionRequest*)pressedBtn forNumberOfDays:(int)numberOfDays inSection:(int)section withButtonSize:(CGSize)btnSize nextTVC:(NSInteger)nextTVC inLocation:(int)location
-{
-//    NSMutableArray *dateButtons = [self buildBasicButtonArray:BUTTONS_SEC_HEADER inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
-    
-//    NSMutableArray *dateButtons = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
-    
-    NSMutableArray *dateButtons = [self buildBasicButtonArray:location inSection:section inRow:0 buttonsPerRow:numberOfDays withButtonSize:btnSize];
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"CST"]];;
-    [dateFormatter setDateFormat:@"MMM dd"];
-    NSString *todayStr = [dateFormatter stringFromDate:[NSDate date]];
-    ActionRequest *aDateBtn;
-    NSDate *aDate;// = [NSDate date];
-    for (int i = 0; i < numberOfDays; i++){
-        aDateBtn = [dateButtons objectAtIndex:i];
-        aDate = [[NSDate date] dateByAddingTimeInterval:i*86400];
-        aDateBtn.buttonDate=aDate;
-        NSString *aShowingDate = [dateFormatter stringFromDate:aDate];
-        if ([aShowingDate isEqualToString:todayStr])
-            aShowingDate = @"Today";
-        aDateBtn.buttonName = aShowingDate;
-//        aDateBtn.nextTableView=nextTVC;
-        aDateBtn.reloadOnly = NO;
-        //        [self putLocationDictInParent:aDateBtn locDict:aLocDicTMS];
-//        aDateBtn.locDict=pressedBtn.locDict;
-//        aDateBtn.productDict=pressedBtn.productDict;
-//        aDateBtn.retRecordsAsDPtrs = [NSMutableArray arrayWithArray:pressedBtn.retRecordsAsDPtrs];
-        aDateBtn.buttonIndex = i;
-        aDateBtn.buttonType=kButtonTypeDate;
-    }
-    
-    return dateButtons;
-}
 
--(NSMutableArray *)buildBasicButtonArray:(int)location inSection:(int)section inRow:(int)row buttonsPerRow:(NSInteger)buttonsPerRow withButtonSize:(CGSize)btnSize;
-{
-    
-    ActionRequest *hdiBtn;
-    int sectionMod = kCellSectionModulus;
-    int rowMod = kCellRowModulus;
-    int locMod = kLocationModulus;
-    NSMutableArray  *hdiButtonArray = [[NSMutableArray alloc] init];
-    for (int btnIndex = 0; btnIndex < buttonsPerRow; btnIndex ++){
-        hdiBtn = [[ActionRequest alloc] init];
-        hdiBtn.buttonTag = locMod*location + sectionMod*section + rowMod*row + btnIndex;
-        hdiBtn.buttonSize = btnSize;
-        hdiBtn.tableRow= row;
-        hdiBtn.tableSection= section;
-        hdiBtn.buttonIndex = btnIndex;
-        hdiBtn.reloadOnly = NO;
-        [hdiButtonArray addObject:hdiBtn];
-    }
-    return hdiButtonArray;
-}
 @end

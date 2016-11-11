@@ -13,6 +13,7 @@
 #import "GlobalCalcVals.h"
 #import "ActionRequest.h"
 #import "CellMovieView.h"
+#import "CellCollectionView.h"
 //#import "YTPlayerView.h"
 
 @interface TableViewController : UITableViewController <UIGestureRecognizerDelegate, UITableViewDelegate>//<YTPlayerViewDelegate>

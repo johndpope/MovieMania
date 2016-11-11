@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CollectionViewController : UIViewController <UICollectionViewDelegate,UICollectionViewDataSource>
+@interface CollectionViewHolder : UICollectionView <UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, retain) NSMutableArray *myButtons;
 @property (nonatomic, retain) UICollectionView *collectionView;
 - (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame;

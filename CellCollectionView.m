@@ -9,13 +9,13 @@
 #import "CellCollectionView.h"
 #import "ActionRequest.h"
 #import "TableProtoDefines.h"
-#import "CollectionViewController.h"
+#import "CollectionViewHolder.h"
 @implementation CellCollectionView
 
 
-
+@synthesize collectionView;
 @synthesize backgoundColor;
-@synthesize buttonContainerView;
+//@synthesize buttonContainerView;
 @synthesize cellsButtonsArray;
 @synthesize buttonView;
 @synthesize indicateSelItem;
@@ -40,7 +40,7 @@
         }
     }
     cellsButtonsArray=nil;
-    buttonContainerView=nil;
+//    buttonContainerView=nil;
     
 }
 -(id) init
@@ -152,39 +152,34 @@
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
     
     
-    if (self.buttonContainerView) {
-        self.buttonContainerView=nil;   //kill it?
-    }
+//    if (self.buttonContainerView) {
+//        self.buttonContainerView=nil;   //kill it?
+//    }
     for (ActionRequest *aBtn in cellsButtonsArray){
         [HDButtonView makeUIButton:aBtn inButtonSequence:cellsButtonsArray];
     }
  // create collectionVC here with these ARs.
-    UIViewController *collectionVC = [[CollectionViewController alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-    UIView *returnedUIView = collectionVC.view;
-/*
-    self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
-    buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-    
- */
-    [buttonContainerView addSubview:returnedUIView];
-    returnedUIView.backgroundColor=[UIColor clearColor];
+    CollectionViewHolder *collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
+    collectionView=collectionVH.collectionView;
+//    [collectionView reloadData];
+     //  [buttonContainerView addSubview:returnedUIView];
+//    collectionView.backgroundColor=[UIColor greenColor];
     
     if (self.buttonView) {
         self.buttonView=nil; //kill it?
     }
     
-    self.buttonView = [NSArray arrayWithObject:returnedUIView];
+    self.buttonView = [NSArray arrayWithObject:collectionView];
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
-    buttonContainerView.backgroundColor= [UIColor clearColor];
+//    buttonContainerView.backgroundColor= [UIColor clearColor];
     
 
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
 
     
-    [tvcellPtr addSubview:buttonContainerView];
-    
+ //   [tvcellPtr addSubview:buttonContainerView];
+    [tvcellPtr addSubview:collectionView];
     
   
     

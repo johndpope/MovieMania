@@ -18,7 +18,8 @@
 
 @property (nonatomic, readwrite) UIColor *backgoundColor;
 @property (nonatomic, readwrite) NSMutableArray *cellsButtonsArray;
-@property (nonatomic, readwrite) UIView *buttonContainerView; //UIScrollView* buttonContainerView;
+@property (nonatomic, readwrite) UICollectionView *collectionView;
+//@property (nonatomic, readwrite) UIView *buttonContainerView; //UIScrollView* buttonContainerView;
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 
