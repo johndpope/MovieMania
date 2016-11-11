@@ -91,7 +91,7 @@
     NSLog(@"layout minimum interitem spacing %f",layout.minimumInteritemSpacing);
     layout.minimumInteritemSpacing=0;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:cvFrame collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     

@@ -179,7 +179,7 @@
     
  //   [tvcellPtr addSubview:buttonContainerView];
     [tvcellPtr addSubview:collectionVH];
-    [collectionVH.collectionView reloadData];
+//    [collectionVH.collectionView reloadData];
     
   
     
