@@ -31,7 +31,7 @@
     //    NSMutableArray *myButtons;
 //    UIScrollView* buttonContainerView;
 //    CGSize dateBtnSize;
-    CGFloat height;
+ //   CGFloat height;
     int location;
 //    UICollectionView *collectionView;
 }
@@ -64,32 +64,23 @@
 //    [super viewDidLoad];
 -(void)setUpCollectionView:(CGRect)cvFrame
 {
-    height = (CGRectGetHeight(self.frame)-(2*COLLECTION_VIEW_PADDING))/2;
+//    height = (CGRectGetHeight(self.frame)-(2*COLLECTION_VIEW_PADDING))/2;
     ActionRequest *aBtn = [myButtons objectAtIndex:0];
-
- //       dateBtnSize = CGSizeMake(height * (9.0/16.0) * 0.8, height * 0.8);
-
-        location = BUTTONS_NORMAL_CELL;
-//        myButtons = [self buildDatesButtons:nil forNumberOfDays:(int)_movies.count inSection:0 withButtonSize:dateBtnSize nextTVC:0 inLocation:location];
-//        buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, dateBtnSize.width, dateBtnSize.height)];
-//        myButtonView = [[HDButtonView alloc] initWithContainer:buttonContainerView buttonSequence:myButtons rowNumbr:0 withTVC:0];
+    location = BUTTONS_NORMAL_CELL;
     //custom flow layout http://stackoverflow.com/questions/20626744/uicollectionview-current-index-path-for-page-control
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-//    layout.estimatedItemSize = CGSizeMake(50, 100);
     layout.estimatedItemSize=CGSizeMake(aBtn.buttonSize.width, aBtn.buttonSize.height);
     
     
     
     NSLog(@"collectionViewFrame = (%f, %f)", self.frame.size.width, self.frame.size.height);
     
-//    collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
-//    collectionView=self;
     NSLog(@"layout minimum line spacing %f",layout.minimumLineSpacing);
-    layout.minimumLineSpacing = 10000.0f;
+//    layout.minimumLineSpacing = 10000.0f;
     
     NSLog(@"layout minimum interitem spacing %f",layout.minimumInteritemSpacing);
-    layout.minimumInteritemSpacing=0;
+//    layout.minimumInteritemSpacing=0;
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     [collectionView setDataSource:self];
