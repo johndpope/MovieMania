@@ -498,7 +498,7 @@
     
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellCollectionView class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){
         CellCollectionView *aCollectionView = (CellCollectionView*)sectionCellsPtr.ccCellTypePtr;
-        [thisCell addSubview:aCollectionView.collectionView];
+        [thisCell addSubview:aCollectionView.collectionVH];
         return thisCell;
     }
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){

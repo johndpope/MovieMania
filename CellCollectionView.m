@@ -9,11 +9,10 @@
 #import "CellCollectionView.h"
 #import "ActionRequest.h"
 #import "TableProtoDefines.h"
-#import "CollectionViewHolder.h"
 @implementation CellCollectionView
 
 
-@synthesize collectionView;
+@synthesize collectionVH;
 @synthesize backgoundColor;
 //@synthesize buttonContainerView;
 @synthesize cellsButtonsArray;
@@ -149,7 +148,7 @@
  //   self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, maxH)];
     ActionRequest *aBtn =    [cellsButtonsArray objectAtIndex:0];
     
-    self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
+    self.cellMaxHeight = aBtn.buttonSize.height*1.5;
     
     
 //    if (self.buttonContainerView) {
@@ -159,8 +158,8 @@
         [HDButtonView makeUIButton:aBtn inButtonSequence:cellsButtonsArray];
     }
  // create collectionVC here with these ARs.
-    CollectionViewHolder *collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-    collectionView=collectionVH.collectionView;
+    collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
+ //   collectionView=collectionVH.collectionView;
 //    [collectionView reloadData];
      //  [buttonContainerView addSubview:returnedUIView];
 //    collectionView.backgroundColor=[UIColor greenColor];
@@ -169,7 +168,7 @@
         self.buttonView=nil; //kill it?
     }
     
-    self.buttonView = [NSArray arrayWithObject:collectionView];
+    self.buttonView = [NSArray arrayWithObject:collectionVH];
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
 //    buttonContainerView.backgroundColor= [UIColor clearColor];
     
@@ -179,7 +178,8 @@
 
     
  //   [tvcellPtr addSubview:buttonContainerView];
-    [tvcellPtr addSubview:collectionView];
+    [tvcellPtr addSubview:collectionVH];
+    [collectionVH.collectionView reloadData];
     
   
     

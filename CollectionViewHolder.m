@@ -44,12 +44,13 @@
 - (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame
 {
     
-//    self = [super init];
+    self = [super initWithFrame:thisFrame];
     if (self) {
         self.myButtons=buttons;
         
   //      self.view = [[UIView alloc] initWithFrame:thisFrame];
   //      NSLog(@"collectionViewFrame = (%f, %f)", self.view.frame.size.width, self.view.frame.size.height);
+       
         [self setUpCollectionView:thisFrame];
         return self;
         
@@ -75,7 +76,8 @@
     //custom flow layout http://stackoverflow.com/questions/20626744/uicollectionview-current-index-path-for-page-control
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.estimatedItemSize = CGSizeMake(1, 1);
+//    layout.estimatedItemSize = CGSizeMake(50, 100);
+    layout.estimatedItemSize=CGSizeMake(aBtn.buttonSize.width, aBtn.buttonSize.height);
     
     
     
@@ -124,10 +126,10 @@
     
 #endif
     
-  //  [collectionView reloadData];
+    [collectionView reloadData];
     
-    
-    
+    [self addSubview:collectionView];
+//    [collectionView reloadData];
 }
 
 
@@ -137,10 +139,10 @@
     
 //    CGFloat height = (CGRectGetHeight(self.view.frame)-(2*COLLECTION_VIEW_PADDING))/2;
     
-    return CGSizeMake(height * (9.0/16.0), height);
+ //   return CGSizeMake(height * (9.0/16.0), height);
  // return dateBtnSize;
- //    ActionRequest *aBtn = [myButtons objectAtIndex:0];
- //   return aBtn.buttonSize;
+     ActionRequest *aBtn = [myButtons objectAtIndex:0];
+    return aBtn.buttonSize;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -195,7 +197,7 @@
 {
     [super layoutSubviews];
     
- //   self.collectionView.frame = self.contentSize.bounds;
+    self.collectionView.frame = self.bounds;
 }
 
 - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath

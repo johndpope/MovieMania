@@ -206,8 +206,8 @@
             [newButtonView addSubview:nextButton];
              [nextButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
              [nextButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
-            [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
-            [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
+//            [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
+//            [nextButton addTarget: aBtn action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
             
             
 #if TARGET_OS_TV
@@ -268,7 +268,8 @@
     //    buttonViewXOffset = buttonViewXOffset + buttonWidth + buttonSpacing;
     
     nextButton.adjustsImageWhenHighlighted = YES;
-    
+    [nextButton addTarget: actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
+    [nextButton addTarget: actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
     if (actionReq.buttonImage){
         
         [nextButton setImage:actionReq.buttonImage forState: UIControlStateNormal];
