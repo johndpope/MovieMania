@@ -104,7 +104,7 @@
     
     [collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
     
-    [collectionView setBackgroundColor:[UIColor orangeColor]];
+    [collectionView setBackgroundColor:[UIColor greenColor]];
     
     // [_collectionView setBounces:TRUE];
     // [_collectionView setAlwaysBounceVertical:TRUE];
@@ -501,7 +501,7 @@
     return;
 #endif
     
-    
+    return;
     
     
     [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
