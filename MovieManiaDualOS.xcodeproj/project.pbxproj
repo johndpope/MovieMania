@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37785C811DD7856800371CF8 /* CellButtonsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 37785C801DD7856800371CF8 /* CellButtonsContainer.m */; };
 		4B01EAF51D6E2E32002BEBC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B01EAF41D6E2E32002BEBC9 /* main.m */; };
 		4B01EAF81D6E2E32002BEBC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B01EAF71D6E2E32002BEBC9 /* AppDelegate.m */; };
 		4B01EB001D6E2E32002BEBC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B01EAFF1D6E2E32002BEBC9 /* Assets.xcassets */; };
@@ -166,6 +167,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37785C7F1DD7856800371CF8 /* CellButtonsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellButtonsContainer.h; sourceTree = "<group>"; };
+		37785C801DD7856800371CF8 /* CellButtonsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellButtonsContainer.m; sourceTree = "<group>"; };
 		4B01EAF11D6E2E32002BEBC9 /* IOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B01EAF41D6E2E32002BEBC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B01EAF61D6E2E32002BEBC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -396,6 +399,8 @@
 				B2EB42681D80736C00F7E82F /* ActionRequest.m */,
 				B2EB42691D80736C00F7E82F /* Assets.bundle */,
 				B2EB426A1D80736C00F7E82F /* buffy100x100.png */,
+				37785C7F1DD7856800371CF8 /* CellButtonsContainer.h */,
+				37785C801DD7856800371CF8 /* CellButtonsContainer.m */,
 				B2EB426B1D80736C00F7E82F /* CellButtonsScroll.h */,
 				B2EB426C1D80736C00F7E82F /* CellButtonsScroll.m */,
 				B21A35E01DD501E20066475A /* CellCollectionView.h */,
@@ -801,6 +806,7 @@
 				B2EB43031D80736C00F7E82F /* CellTextDef.m in Sources */,
 				B2EB42EB1D80736C00F7E82F /* ASINetworkQueue.m in Sources */,
 				B2EB42F91D80736C00F7E82F /* CellImageLTextR.m in Sources */,
+				37785C811DD7856800371CF8 /* CellButtonsContainer.m in Sources */,
 				B2EB43271D80736C00F7E82F /* HoldViewController.m in Sources */,
 				B2EB43351D80736C00F7E82F /* NavCtrl.m in Sources */,
 				B2EB43691D80736C00F7E82F /* TableViewController.m in Sources */,

@@ -18,6 +18,8 @@
 @synthesize cellsButtonsArray;
 @synthesize buttonView;
 @synthesize indicateSelItem;
+ 
+ 
 //@synthesize reloadOnly;
 
 //@synthesize buttonView;
@@ -31,15 +33,15 @@
 -(void) killYourself
 {
 
-    backgoundColor=nil;
+    self.backgoundColor=nil;
 
-    if (cellsButtonsArray.count){
+    if (self.cellsButtonsArray.count){
         for (int i=0; i<[self.cellsButtonsArray count]; i++) {
             [[self.cellsButtonsArray objectAtIndex:i] killYourself];    //array contents kill yourself....  if its an object
         }
     }
-    cellsButtonsArray=nil;
-    buttonContainerView=nil;
+    self.cellsButtonsArray=nil;
+    self.buttonContainerView=nil;
     
 }
 -(id) init
@@ -57,7 +59,7 @@
     nCell.enableUserActivity=TRUE;
     nCell.cellclassType=CELLCLASS_BUTTONS_SCROLL;
   //!  backgoundColor = [UIColor redColor];
-    backgoundColor=TK_TRANSPARENT_COLOR;
+    self.backgoundColor=TK_TRANSPARENT_COLOR;
 //    nCell.cellsButtonsArray=[[NSMutableArray alloc]init];
     nCell.cellMaxHeight=DEF_CELLHEIGHT;   //sections won't display without some non 0 value here
    // nCell.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectZero];
@@ -128,7 +130,7 @@
     //CALLED for individual Section's Cell content
     //will migrate to stackviews  (through cell's contentView)
     
-    if (!cellsButtonsArray.count)
+    if (!self.cellsButtonsArray.count)
         return;
     
     
@@ -146,7 +148,7 @@
  
     
  //   self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, maxH)];
-    ActionRequest *aBtn =    [cellsButtonsArray objectAtIndex:0];
+    ActionRequest *aBtn =    [self.cellsButtonsArray objectAtIndex:0];
     
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
     
@@ -159,9 +161,9 @@
 //    cellsButtonsArray = [[NSMutableArray alloc] init];
     
 //    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0 containerScrolls:buttonViewScrolls withTVC:(TableViewController *)tvcontrollerPtr];
-    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
-    buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-    [buttonContainerView addSubview:returnedUIView];
+    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
+    self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
+    [self.buttonContainerView addSubview:returnedUIView];
     returnedUIView.backgroundColor=[UIColor clearColor];
  //   returnedUIView.center=buttonContainerView.center;
     
@@ -173,14 +175,14 @@
     
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
-    buttonContainerView.backgroundColor= [UIColor clearColor];
+    self.buttonContainerView.backgroundColor= [UIColor clearColor];
     
 
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
 
     
-    [tvcellPtr addSubview:buttonContainerView];
+    [tvcellPtr addSubview:self.buttonContainerView];
  //   buttonContainerView.center=tvcellPtr.center;
     
 //    returnedUIView.userInteractionEnabled=NO;
@@ -206,14 +208,14 @@
     //return  UIView to display this stuff
     
     // Dan return button view
-    if (!cellsButtonsArray.count)
+    if (!self.cellsButtonsArray.count)
         return nil;
-    ActionRequest *aBtn = [cellsButtonsArray objectAtIndex:0];
+    ActionRequest *aBtn = [self.cellsButtonsArray objectAtIndex:0];
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
-    NSLog(@"CellBUttonScroll putMeVisibleMaxWidth %d indicateSel %d",maxwidth,indicateSelItem);
+    NSLog(@"CellBUttonScroll putMeVisibleMaxWidth %d indicateSel %d",maxwidth,self.indicateSelItem);
     
     if (self.buttonContainerView) {
-        buttonContainerView=nil;
+        self.buttonContainerView=nil;
     }
     
     
@@ -221,15 +223,15 @@
     
   
     
-    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr];
-    buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-    [buttonContainerView addSubview:returnedUIView];
+    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr];
+    self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
+    [self.buttonContainerView addSubview:returnedUIView];
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
 //    buttonContainerView.scrollEnabled = thisViewScrolls;
-    buttonContainerView.backgroundColor=self.backgoundColor;
+    self.buttonContainerView.backgroundColor=self.backgoundColor;
     
   //  returnedUIView.backgroundColor=self.backgoundColor;
-    return buttonContainerView;
+    return self.buttonContainerView;
     
     
 }

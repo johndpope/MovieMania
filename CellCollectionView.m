@@ -12,18 +12,13 @@
 @implementation CellCollectionView
 
 
-//@synthesize collectionVH;
+/*
 @synthesize backgoundColor;
-//@synthesize buttonContainerView;
+@synthesize buttonContainerView;
 @synthesize cellsButtonsArray;
 @synthesize buttonView;
 @synthesize indicateSelItem;
-//@synthesize reloadOnly;
-
-//@synthesize buttonView;
-
-//@synthesize buttonViewScrolls;
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Initialize
@@ -31,14 +26,14 @@
 -(void) killYourself
 {
 
-    backgoundColor=nil;
+    self.backgoundColor=nil;
 
-    if (cellsButtonsArray.count){
+    if (self.cellsButtonsArray.count){
         for (int i=0; i<[self.cellsButtonsArray count]; i++) {
             [[self.cellsButtonsArray objectAtIndex:i] killYourself];    //array contents kill yourself....  if its an object
         }
     }
-    cellsButtonsArray=nil;
+    self.cellsButtonsArray=nil;
 //    buttonContainerView=nil;
     
 }
@@ -57,7 +52,7 @@
     nCell.enableUserActivity=TRUE;
     nCell.cellclassType=CELLCLASS_BUTTONS_SCROLL;
   //!  backgoundColor = [UIColor redColor];
-    backgoundColor=TK_TRANSPARENT_COLOR;
+    self.backgoundColor=TK_TRANSPARENT_COLOR;
 //    nCell.cellsButtonsArray=[[NSMutableArray alloc]init];
     nCell.cellMaxHeight=DEF_CELLHEIGHT;   //sections won't display without some non 0 value here
    // nCell.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectZero];
@@ -128,7 +123,7 @@
     //CALLED for individual Section's Cell content
     //will migrate to stackviews  (through cell's contentView)
     
-    if (!cellsButtonsArray.count)
+    if (!self.cellsButtonsArray.count)
         return;
     
     
@@ -146,7 +141,7 @@
  
     
  //   self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, maxH)];
-    ActionRequest *aBtn =    [cellsButtonsArray objectAtIndex:0];
+    ActionRequest *aBtn =    [self.cellsButtonsArray objectAtIndex:0];
     
     self.cellMaxHeight = aBtn.buttonSize.height*1.5;
     
@@ -156,11 +151,11 @@
     }
     
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-    for (ActionRequest *aBtn in cellsButtonsArray){
-        [HDButtonView makeUIButton:aBtn inButtonSequence:cellsButtonsArray];
+    for (ActionRequest *aBtn in self.cellsButtonsArray){
+        [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
     }
  // create collectionVC here with these ARs.
-    CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
+    CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
     
     if (self.buttonView) {
         self.buttonView=nil; //kill it?

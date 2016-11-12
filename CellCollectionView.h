@@ -14,23 +14,18 @@
 #import "HDButtonView.h"
 #import "TableViewController.h"
 #import "CollectionViewHolder.h"
+#import "CellButtonsContainer.h"
 @interface CellCollectionView : CellTypesAll
 
 
 @property (nonatomic, readwrite) UIColor *backgoundColor;
 @property (nonatomic, readwrite) NSMutableArray *cellsButtonsArray;
-//@property (nonatomic, readwrite) CollectionViewHolder *collectionVH;
 @property (nonatomic, readwrite) UIScrollView* buttonContainerView;
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 
-//@property (nonatomic, readwrite) BOOL reloadOnly;//@property (nonatomic, readwrite) BOOL buttonViewScrolls;
-//@property (nonatomic, readwrite) HDButtonView* buttonView;
-
-//To expose new method specific for this cell type, also add to CellTypesAll.h
 + (id )initCellDefaults;
 
-//+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)cellButtonArray;
 + (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray; //buttonScroll:(BOOL)buttonsScroll;
 
 -(UIColor *) giveCellBackColor;

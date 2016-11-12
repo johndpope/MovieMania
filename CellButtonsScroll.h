@@ -13,8 +13,10 @@
 #import "DispTText.h"
 #import "HDButtonView.h"
 #import "TableViewController.h"
-@interface CellButtonsScroll : CellTypesAll
+#import "CellButtonsContainer.h"
 
+//@interface CellButtonsScroll : CellButtonsContainer
+@interface CellButtonsScroll : CellTypesAll
 
 @property (nonatomic, readwrite) UIColor *backgoundColor;
 @property (nonatomic, readwrite) NSMutableArray *cellsButtonsArray;
@@ -22,10 +24,6 @@
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 
-//@property (nonatomic, readwrite) BOOL reloadOnly;//@property (nonatomic, readwrite) BOOL buttonViewScrolls;
-//@property (nonatomic, readwrite) HDButtonView* buttonView;
-
-//To expose new method specific for this cell type, also add to CellTypesAll.h
 + (id )initCellDefaults;
 
 //+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)cellButtonArray;

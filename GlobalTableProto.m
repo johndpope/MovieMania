@@ -13,7 +13,8 @@
 #import <MediaPlayer/MediaPlayer.h> 
 #import "CellMovieView.h"
 #import "CellCollectionView.h"
-//#define kMakeCollectionView 0
+//#import "CellButtonsContainer.h"
+
 
 /*
 @implementation NSString (NSString_Extended)
@@ -187,7 +188,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
             case TVC2:
                 NSLog(@"call makeTVC2");
-                makeCollectionView=YES;
+             //   makeCollectionView=YES;
                 nextTableDef = [self makeTVC2:pressedBtn];
                 break;
             case TVC3:
@@ -658,9 +659,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         sdPtr2.sectionFooterContentPtr=nil;
         [myTable.tableSections addObject:sdPtr2];
     
-    
- 
-    
         NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
   //       NSString *productName = [productDict objectForKey:kProductNameKey];
         CellUIView *cuvPtr;
@@ -695,9 +693,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
             
     //return myTable;   //myra fix this
-    
-    
-    
     
     
     CellButtonsScroll *cbsPtr = [self buildMovieTrailerButtonsCell:pressedButton inSection:section inRow:row fromTrailerArray:trailerArray]; //forNumberOfTrailers:3];
@@ -2058,9 +2053,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //C E L L S    F O R        S E C T I O N S
 //button cells section 1      B U T T O N S
         
+ //       CellButtonsContainer *cbsPtr;
         if (makeCollectionView){
-            CellCollectionView *cbsPtr1;
-            cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+           CellCollectionView* cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
         
             cbsPtr1.indicateSelItem=YES;
             if (cbsPtr1.cellsButtonsArray.count){
@@ -2069,23 +2064,22 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 cellContentPtr1.ccTableViewCellPtr=nil;
             
                 [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
-        
             }
         }else{
-                CellButtonsScroll *cbsPtr2;
-                cbsPtr2 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
-                
-                cbsPtr2.indicateSelItem=YES;
-                if (cbsPtr2.cellsButtonsArray.count){
-                    cellContentPtr1=[[CellContentDef alloc] init];
-                    cellContentPtr1.ccCellTypePtr=cbsPtr2;
-                    cellContentPtr1.ccTableViewCellPtr=nil;
-            
-                    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
-                }
-            }
         
+            CellButtonsScroll * cbsPtr2 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+        
+            cbsPtr2.indicateSelItem=YES;
+            if (cbsPtr2.cellsButtonsArray.count){
+                cellContentPtr1=[[CellContentDef alloc] init];
+                cellContentPtr1.ccCellTypePtr=cbsPtr2;
+                cellContentPtr1.ccTableViewCellPtr=nil;
+            
+                [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+            }
+        }
     }
+
     // Generic Code End
     return myTable;
 }
@@ -2207,8 +2201,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
         
-//        CellButtonsScroll *ctdPtr = nil;
         id ctdPtr = nil;
+//       CellButtonsContainer *ctdPtr;
 //    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
         NSInteger numberOfProductsAtLocation = 0;
         NSMutableArray *productDictNamesAtLoc = [[NSMutableArray alloc] init];
