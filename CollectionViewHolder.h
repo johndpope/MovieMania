@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CollectionViewHolder : UIView <UICollectionViewDelegate,UICollectionViewDataSource>
+@class ActionRequest;
+@interface CollectionViewHolder : UIView <UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate,UIGestureRecognizerDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic, retain) NSMutableArray *myButtons;
 @property (nonatomic, retain) UICollectionView *collectionView;
+@property (nonatomic, retain) UIImageView *selectedBtnBox;
+@property (nonatomic, readwrite) ActionRequest *tvfocusAction;
+
 - (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame;
 @end
 

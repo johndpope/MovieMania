@@ -55,10 +55,9 @@
     
     
     CGPoint _lastContentOffset;
-    CGRect _originalFrame;
     int _originalMaxButtonsVisible;
     int _originalButtonWidth;
-
+    CGRect _originalFrame;
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
 //    int     rowNumber;
@@ -368,13 +367,13 @@
     currentButtonInCenter.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
  
     
-    
+/*
     
     for (int index=0; index < [firstButtonRow.cellsButtonsArray count]; index++) {
         ActionRequest *aButton = [firstButtonRow.cellsButtonsArray objectAtIndex:index];
         aButton.myButtonView=self;
     }
-    
+*/    
     [self logCBCtag];
 }
 ////////////////////////////////////////////////////////////////////////////////////////

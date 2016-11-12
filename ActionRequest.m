@@ -36,7 +36,7 @@
 @synthesize errorDisplayText;
 @synthesize buttonOrigin;
 
-@synthesize myButtonView;
+//@synthesize myButtonView;
 //@synthesize buttonDate;
 
 -(id) init

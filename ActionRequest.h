@@ -31,7 +31,7 @@
 @property (nonatomic, readwrite)                    CGSize buttonSize;
 @property (nonatomic, readwrite)                    CGPoint buttonOrigin;
 @property (nonatomic, readwrite, nullable)          NSMutableArray *buttonArrayPtr;
-@property (nonatomic, readwrite,nullable)          HDButtonView *myButtonView;
+//@property (nonatomic, readwrite,nullable)          HDButtonView *myButtonView;
 
 @property (nonatomic, readwrite)                    NSInteger nextTableView;
 @property (nonatomic, readwrite, nullable)          NSString *transactionKey;
