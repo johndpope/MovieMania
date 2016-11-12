@@ -19,8 +19,6 @@
 		AAE8D3031BA5CEBC0003A4DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE8D3021BA5CEBC0003A4DF /* main.m */; };
 		AAE8D3061BA5CEBC0003A4DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE8D3051BA5CEBC0003A4DF /* AppDelegate.m */; };
 		AAE8D30E1BA5CEBC0003A4DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAE8D30D1BA5CEBC0003A4DF /* Assets.xcassets */; };
-		B21A35E11DD501E20066475A /* CellCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35DF1DD501E20066475A /* CellCollectionView.m */; };
-		B21A35E21DD501E20066475A /* CellCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35DF1DD501E20066475A /* CellCollectionView.m */; };
 		B21A35E51DD50BA50066475A /* CollectionViewHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E41DD50BA50066475A /* CollectionViewHolder.m */; };
 		B21A35E61DD50BA50066475A /* CollectionViewHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E41DD50BA50066475A /* CollectionViewHolder.m */; };
 		B21A35E91DD50EA90066475A /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B21A35E81DD50EA90066475A /* MovieCollectionViewCell.m */; };
@@ -186,8 +184,6 @@
 		AAE8D3051BA5CEBC0003A4DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AAE8D30D1BA5CEBC0003A4DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAE8D30F1BA5CEBC0003A4DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B21A35DF1DD501E20066475A /* CellCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellCollectionView.m; sourceTree = "<group>"; };
-		B21A35E01DD501E20066475A /* CellCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellCollectionView.h; sourceTree = "<group>"; };
 		B21A35E31DD50B9A0066475A /* CollectionViewHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewHolder.h; sourceTree = "<group>"; };
 		B21A35E41DD50BA50066475A /* CollectionViewHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewHolder.m; sourceTree = "<group>"; };
 		B21A35E71DD50EA90066475A /* MovieCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieCollectionViewCell.h; sourceTree = "<group>"; };
@@ -398,8 +394,6 @@
 				B2EB426A1D80736C00F7E82F /* buffy100x100.png */,
 				B2EB426B1D80736C00F7E82F /* CellButtonsScroll.h */,
 				B2EB426C1D80736C00F7E82F /* CellButtonsScroll.m */,
-				B21A35E01DD501E20066475A /* CellCollectionView.h */,
-				B21A35DF1DD501E20066475A /* CellCollectionView.m */,
 				B21A35E31DD50B9A0066475A /* CollectionViewHolder.h */,
 				B21A35E41DD50BA50066475A /* CollectionViewHolder.m */,
 				B21A35E71DD50EA90066475A /* MovieCollectionViewCell.h */,
@@ -732,7 +726,6 @@
 				B2EB43281D80736C00F7E82F /* HoldViewController.m in Sources */,
 				B2EB43361D80736C00F7E82F /* NavCtrl.m in Sources */,
 				B2EB436A1D80736C00F7E82F /* TableViewController.m in Sources */,
-				B21A35E21DD501E20066475A /* CellCollectionView.m in Sources */,
 				B2EB434E1D80736C00F7E82F /* JSONAPI.m in Sources */,
 				B2EB435E1D80736C00F7E82F /* JSONValueTransformer.m in Sources */,
 				B2EB43721D80736C00F7E82F /* YTViewController.m in Sources */,
@@ -814,7 +807,6 @@
 				B2EB42E71D80736C00F7E82F /* ASIHTTPRequest.m in Sources */,
 				B2EB434F1D80736C00F7E82F /* JSONHTTPClient.m in Sources */,
 				B2EB43571D80736C00F7E82F /* JSONModelArray.m in Sources */,
-				B21A35E11DD501E20066475A /* CellCollectionView.m in Sources */,
 				B2EB42FF1D80736C00F7E82F /* CellMovieView.m in Sources */,
 				B2EB43091D80736C00F7E82F /* DeviceDetection.m in Sources */,
 				B2EB43411D80736C00F7E82F /* TransactionData.m in Sources */,

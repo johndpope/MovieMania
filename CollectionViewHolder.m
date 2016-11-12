@@ -851,7 +851,7 @@
     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
     CellContentDef *ccDefPtr = [currentSectionCells objectAtIndex:0];
     
-    CellCollectionView* firstButtonRow = (CellCollectionView*)ccDefPtr.ccCellTypePtr;
+    CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
     ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
     currentButtonInCenter = firstButton;
     
