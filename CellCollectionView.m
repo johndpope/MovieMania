@@ -12,7 +12,7 @@
 @implementation CellCollectionView
 
 
-@synthesize collectionVH;
+//@synthesize collectionVH;
 @synthesize backgoundColor;
 //@synthesize buttonContainerView;
 @synthesize cellsButtonsArray;
@@ -151,35 +151,29 @@
     self.cellMaxHeight = aBtn.buttonSize.height*1.5;
     
     
-//    if (self.buttonContainerView) {
-//        self.buttonContainerView=nil;   //kill it?
-//    }
+    if (self.buttonContainerView) {
+        self.buttonContainerView=nil;   //kill it?
+    }
+    
+    self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
     for (ActionRequest *aBtn in cellsButtonsArray){
         [HDButtonView makeUIButton:aBtn inButtonSequence:cellsButtonsArray];
     }
  // create collectionVC here with these ARs.
-    collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
- //   collectionView=collectionVH.collectionView;
-//    [collectionView reloadData];
-     //  [buttonContainerView addSubview:returnedUIView];
-//    collectionView.backgroundColor=[UIColor greenColor];
+    CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
     
     if (self.buttonView) {
         self.buttonView=nil; //kill it?
     }
-    
     self.buttonView = [NSArray arrayWithObject:collectionVH];
- //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
-//    buttonContainerView.backgroundColor= [UIColor clearColor];
-    
-
+    self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
+    [self.buttonContainerView addSubview:collectionVH];
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
 
     
- //   [tvcellPtr addSubview:buttonContainerView];
+    [tvcellPtr addSubview:self.buttonContainerView];
     [tvcellPtr addSubview:collectionVH];
-//    [collectionVH.collectionView reloadData];
     
   
     

@@ -35,6 +35,7 @@
 @synthesize buttonType;
 @synthesize errorDisplayText;
 @synthesize buttonOrigin;
+@synthesize buttonIndexPath;
 
 //@synthesize myButtonView;
 //@synthesize buttonDate;

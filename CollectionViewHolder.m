@@ -43,16 +43,16 @@
 @synthesize collectionView;
 @synthesize myButtons;
 @synthesize tvfocusAction;
-
+@synthesize containerView;
 #pragma mark - Lifecycle
 
-- (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame
+- (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container
 {
     
     self = [super initWithFrame:thisFrame];
     if (self) {
         self.myButtons=buttons;
-        
+        self.containerView=container;
   //      self.view = [[UIView alloc] initWithFrame:thisFrame];
   //      NSLog(@"collectionViewFrame = (%f, %f)", self.view.frame.size.width, self.view.frame.size.height);
        
@@ -176,7 +176,9 @@
 //    Movie *movie = [self.movies objectAtIndex:indexPath.row];
 //    [cell updateCellForMovie:movie];
     ActionRequest *actionReq = [myButtons objectAtIndex:indexPath.row];
+    actionReq.buttonIndexPath=indexPath;
     UIButton *aButton = actionReq.uiButton;
+    
     cell.myButton=aButton;
  //   cell.titleLabel.text
 //     = [NSString stringWithFormat:@"Movie %li",(long)indexPath.row];
@@ -376,9 +378,8 @@
     //this conflicts with my need to have them left justified for cell navigation in TVOS
     
 //    if (containerScrolls){
-    
-//        containerView.contentOffset = newOffset;
-    collectionView.contentOffset=newOffset;
+    containerView.contentOffset = newOffset;
+//    collectionView.contentOffset=newOffset;
     
         //[UIView animateWithDuration:0.1f animations:^{
         //     containerView.contentOffset = newOffset;
@@ -421,7 +422,7 @@
         
         
         //[UIView animateWithDuration:0.1f animations:^{
-        //     containerView.contentOffset = newOffset;
+//        containerView.contentOffset = newOffset;
     
     collectionView.contentOffset=newOffset;
         // }
@@ -581,15 +582,15 @@
     CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
     
     NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
-    
+/*
     [UIView animateWithDuration:0.1f animations:^{
         
  //       containerView.contentOffset = scrollViewOffset;
         collectionView.contentOffset=scrollViewOffset;
     }
                      completion:nil];
-    
-    
+*/
+    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 -(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
 {
@@ -815,9 +816,10 @@
     if(!aQuery)
         return;
     
+    aQuery.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
+    aQuery.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
     
-    
-    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+//    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
     return;
     
     

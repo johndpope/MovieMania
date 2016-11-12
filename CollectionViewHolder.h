@@ -13,7 +13,8 @@
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UIImageView *selectedBtnBox;
 @property (nonatomic, readwrite) ActionRequest *tvfocusAction;
+@property (nonatomic, strong) UIScrollView          *containerView;
 
-- (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame;
+- (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container;
 @end
 

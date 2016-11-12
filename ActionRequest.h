@@ -32,7 +32,7 @@
 @property (nonatomic, readwrite)                    CGPoint buttonOrigin;
 @property (nonatomic, readwrite, nullable)          NSMutableArray *buttonArrayPtr;
 //@property (nonatomic, readwrite,nullable)          HDButtonView *myButtonView;
-
+@property (nonatomic, readwrite)                    NSIndexPath *buttonIndexPath;
 @property (nonatomic, readwrite)                    NSInteger nextTableView;
 @property (nonatomic, readwrite, nullable)          NSString *transactionKey;
 @property (nonatomic, readwrite, nullable)          NSString *dbResponseString;
@@ -57,5 +57,5 @@
 -(void)killYourself;
 -(void)touchUpOnButton:(id)sender;
 -(void)touchDownOnButton:(id)sender;
--(void)initButton;
+//-(void)initButton;
 @end
