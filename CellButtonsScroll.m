@@ -18,6 +18,7 @@
 @synthesize cellsButtonsArray;
 @synthesize buttonView;
 @synthesize indicateSelItem;
+@synthesize isCollectionView;
  
  
 //@synthesize reloadOnly;
@@ -79,12 +80,14 @@
 #pragma mark Exposed Initialization
 /////////////////////////////////////////
 //+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray
-+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray //buttonScroll:(BOOL)buttonsScroll;
++ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray isCollectionView:(BOOL)isCollectionView //buttonScroll:(BOOL)buttonsScroll;
 {
     CellButtonsScroll* nCell=[[CellButtonsScroll alloc]init];    //calls makeUseDefaults
     nCell.cellsButtonsArray = [[NSMutableArray alloc] init];
     [nCell.cellsButtonsArray addObjectsFromArray:buttonArray];
     nCell.backgoundColor=  backColor;
+    nCell.isCollectionView=isCollectionView;
+    
  //   nCell.buttonViewScrolls = buttonsScroll;
     return nCell;
 }
@@ -136,13 +139,7 @@
     
     //remove subviews in my contentView, because it is for another cell
     [[tvcellPtr.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];    //new
-    
-    
-    
-    
-    
-    
-    
+        
     //put my displayable contents in a passed table view cell
     //tvcPtr.textLabel.backgroundColor=self.backgoundColor;
  
@@ -156,24 +153,33 @@
     if (self.buttonContainerView) {
         self.buttonContainerView=nil;   //kill it?
     }
-    
-    self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-//    cellsButtonsArray = [[NSMutableArray alloc] init];
-    
-//    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0 containerScrolls:buttonViewScrolls withTVC:(TableViewController *)tvcontrollerPtr];
-    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
-    self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-    [self.buttonContainerView addSubview:returnedUIView];
-    returnedUIView.backgroundColor=[UIColor clearColor];
- //   returnedUIView.center=buttonContainerView.center;
-    
-    // returnedUIView.backgroundColor=self.backgoundColor;
-    
     if (self.buttonView) {
         self.buttonView=nil; //kill it?
     }
     
-    self.buttonView = [NSArray arrayWithObject:returnedUIView];
+    self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
+    if(!isCollectionView){
+        HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
+        self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
+        [self.buttonContainerView addSubview:returnedUIView];
+        self.buttonView = [NSArray arrayWithObject:returnedUIView];
+    }
+    if(isCollectionView){
+        for (ActionRequest *aBtn in self.cellsButtonsArray){
+            [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
+        }
+        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
+        self.buttonView = [NSArray arrayWithObject:collectionVH];
+        self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
+        [self.buttonContainerView addSubview:collectionVH];
+        
+        
+    }
+    
+ 
+    
+    
+    
  //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
     self.buttonContainerView.backgroundColor= [UIColor clearColor];
     

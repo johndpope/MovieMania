@@ -156,10 +156,6 @@
     }
  // create collectionVC here with these ARs.
     CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
-    
-    if (self.buttonView) {
-        self.buttonView=nil; //kill it?
-    }
     self.buttonView = [NSArray arrayWithObject:collectionVH];
     self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
     [self.buttonContainerView addSubview:collectionVH];

@@ -14,7 +14,6 @@
 #import "HDButtonView.h"
 #import "TableViewController.h"
 #import "CollectionViewHolder.h"
-#import "CellButtonsContainer.h"
 @interface CellCollectionView : CellTypesAll
 
 

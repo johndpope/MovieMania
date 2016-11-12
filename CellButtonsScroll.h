@@ -13,8 +13,8 @@
 #import "DispTText.h"
 #import "HDButtonView.h"
 #import "TableViewController.h"
-#import "CellButtonsContainer.h"
-
+//#import "CellButtonsContainer.h"
+#import "CollectionViewHolder.h"
 //@interface CellButtonsScroll : CellButtonsContainer
 @interface CellButtonsScroll : CellTypesAll
 
@@ -23,11 +23,12 @@
 @property (nonatomic, readwrite) UIScrollView* buttonContainerView;
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
+@property (nonatomic, readwrite) BOOL isCollectionView;
 
 + (id )initCellDefaults;
 
 //+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)cellButtonArray;
-+ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray; //buttonScroll:(BOOL)buttonsScroll;
++ (id )initCellDefaultsWithBackColor:(UIColor *)backColor withCellButtonArray:(NSMutableArray *)buttonArray isCollectionView:(BOOL)isCollectionView;
 
 -(UIColor *) giveCellBackColor;
 

@@ -12,7 +12,7 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h> 
 #import "CellMovieView.h"
-#import "CellCollectionView.h"
+//#import "CellCollectionView.h"
 //#import "CellButtonsContainer.h"
 
 
@@ -188,7 +188,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
             case TVC2:
                 NSLog(@"call makeTVC2");
-             //   makeCollectionView=YES;
+                makeCollectionView=YES;
                 nextTableDef = [self makeTVC2:pressedBtn];
                 break;
             case TVC3:
@@ -503,7 +503,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     //    aBtn.myParentCell = cuvPtr;
     aBtn1.transactionKey = @"Authenticate";
     
-    ctdPtr1=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:logOnBtn1];// buttonScroll:NO];
+    ctdPtr1=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:logOnBtn1 isCollectionView:NO];// buttonScroll:NO];
     [logOnBtn1 removeAllObjects];
     logOnBtn1 = nil;
     cellContentPtr=[[CellContentDef alloc] init];
@@ -761,7 +761,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                         
         }
         
-        ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
+        ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons isCollectionView:NO];// buttonScroll:YES];
         [hdiButtons removeAllObjects];
         hdiButtons = nil;
         //       ctdPtr.dataRecords = pressedButton.dataRecords;
@@ -1459,7 +1459,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     
     
-    ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:[UIColor blueColor] withCellButtonArray:purchaseViewButtons];// buttonScroll:NO];
+    ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:[UIColor blueColor] withCellButtonArray:purchaseViewButtons isCollectionView:NO];// buttonScroll:NO];
     [purchaseViewButtons removeAllObjects];
     purchaseViewButtons = nil;
     cellContentPtr=[[CellContentDef alloc] init];
@@ -2054,8 +2054,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //button cells section 1      B U T T O N S
         
  //       CellButtonsContainer *cbsPtr;
-        if (makeCollectionView){
-           CellCollectionView* cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+ //       if (makeCollectionView){
+            CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
         
             cbsPtr1.indicateSelItem=YES;
             if (cbsPtr1.cellsButtonsArray.count){
@@ -2065,6 +2065,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             
                 [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
             }
+/*
         }else{
         
             CellButtonsScroll * cbsPtr2 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
@@ -2078,6 +2079,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
             }
         }
+ */
     }
 
     // Generic Code End
@@ -2160,7 +2162,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 
                 
             }
-            CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns];
+            CellButtonsScroll * cButPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:showTimesBtns isCollectionView:NO];
             CellContentDef* cellContentPtr=[[CellContentDef alloc] init];
             cellContentPtr.ccCellTypePtr=cButPtr;
             cellContentPtr.ccTableViewCellPtr=nil;
@@ -2196,12 +2198,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
 
 //-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
--(id)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize isCollectionView:(BOOL)isCollectionView// forLocation:(NSMutableDictionary*)aLocDicTMS
+-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize isCollectionView:(BOOL)isCollectionView// forLocation:(NSMutableDictionary*)aLocDicTMS
     {
         
         //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
-        
-        id ctdPtr = nil;
+        CellButtonsScroll* ctdPtr;
+//        id ctdPtr = nil;
 //       CellButtonsContainer *ctdPtr;
 //    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
         NSInteger numberOfProductsAtLocation = 0;
@@ -2267,14 +2269,15 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             pressedBtn.productDict = aBtn.productDict;
             //      aProductDict = [self fetchProductDict:aBtn];
             //      [self putProductDictInParent:pressedBtn productDict:aProductDict];
-          
+  /*
             if (isCollectionView){
                 ctdPtr=[CellCollectionView initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];
             }else{
-                ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
-            }
-            pressedBtn.buttonName = aBtn.buttonName;
+   */
+            ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons isCollectionView:isCollectionView];
         }
+            pressedBtn.buttonName = aBtn.buttonName;
+  //      }
     return ctdPtr;
 }
 -(NSMutableDictionary *)buildProductsDictionaryWithNameKey:(NSMutableDictionary *)allProductsDict
@@ -2328,7 +2331,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         
         
-        CellButtonsScroll *cbsPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:movieTrailerBtns];
+        CellButtonsScroll *cbsPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:movieTrailerBtns isCollectionView:NO];
         
         return cbsPtr;
     }
@@ -2957,7 +2960,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             }
         }
         
-        myTable.tableFooterContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdrButtons];// buttonScroll:buttonsScroll];
+        myTable.tableFooterContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdrButtons isCollectionView:NO];// buttonScroll:buttonsScroll];
         myTable.tableFooterContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
         myTable.tableFooterFixed=TRUE;
         
@@ -2981,7 +2984,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         mySection.sectionFooterContentPtr=nil;
     }
     mySection.sectionHeaderContentPtr=[[CellContentDef alloc]init];
-    mySection.sectionHeaderContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:secButtons];// buttonScroll:buttonsScroll];
+    mySection.sectionHeaderContentPtr.ccCellTypePtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:secButtons isCollectionView:NO];// buttonScroll:buttonsScroll];
     mySection.sectionHeaderContentPtr.ccCellTypePtr.usedByHeaderOrFooter=TRUE;
     mySection.sectionHeaderContentPtr.ccCellTypePtr.cellMaxHeight=btnSize.height+2;
     return mySection;
