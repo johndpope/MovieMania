@@ -13,7 +13,7 @@
 #import <MediaPlayer/MediaPlayer.h> 
 #import "CellMovieView.h"
 #import "CellCollectionView.h"
-#define kMakeCollectionView 1
+//#define kMakeCollectionView 0
 
 /*
 @implementation NSString (NSString_Extended)
@@ -52,6 +52,7 @@
     NSMutableArray *productTypes;
     NSMutableArray *productPrices;
     NSMutableArray *productQuantities;
+    BOOL makeCollectionView;
 
 //    NSMutableDictionary *allMovieInfoOMDBViews;
 //    UIImageView *moviePosterView;
@@ -157,6 +158,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 /////////////////////////////////////////
 -(TableDef *)makeTVC:(ActionRequest *)pressedBtn
 {
+    makeCollectionView=NO;
     NSInteger nextTVC = TVC0;
     TableDef * nextTableDef;
     
@@ -181,34 +183,31 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC1:
                 NSLog(@"call makeTVC1");
                 nextTableDef = [self makeTVC1:pressedBtn];
-                // nextTableDef = [self makeTVC101:pressedBtn];
+        
                 break;
             case TVC2:
                 NSLog(@"call makeTVC2");
-              //  nextTableDef = [self makeTVC2m:pressedBtn];
-                    nextTableDef = [self makeTVC2:pressedBtn];
-              //   nextTableDef = [self makeTVC102:pressedBtn];
+                makeCollectionView=YES;
+                nextTableDef = [self makeTVC2:pressedBtn];
                 break;
             case TVC3:
                 NSLog(@"call makeTVC3");
                 nextTableDef = [self makeTVC3:pressedBtn];
-              //  nextTableDef = [self makeTVC103:pressedBtn];
+              
                 break;
             case TVC4:
                 NSLog(@"call makeTVC4");
                 nextTableDef = [self makeTVC4:pressedBtn];
-               // nextTableDef = [self makeTVC4scrollView:pressedBtn];// forDate:nil];
-               // nextTableDef = [self makeTVC4NewCellBuilders:pressedBtn];
                 break;
             case TVC5:
- //               NSLog(@"call makeTVC5");
+
                 nextTableDef = [self makeTVC5:pressedBtn];
                 break;
 
             case TVC6:
                 NSLog(@"call makeTVC6");
                 nextTableDef = [self makeTVC6:pressedBtn];
-                //nextTableDef = [self makeTVC106:pressedBtn];
+                
                 break;
 /*
             case TVC7:
@@ -2055,40 +2054,37 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         [myTable.tableSections addObject:sdPtr1];
         int section = 0;
         int row = 0;
-        //C E L L S    F O R        S E C T I O N S
         
+//C E L L S    F O R        S E C T I O N S
+//button cells section 1      B U T T O N S
         
+        if (makeCollectionView){
+            CellCollectionView *cbsPtr1;
+            cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
         
-        //add simple text array for test     MYRA ADDED FOR TEST
-        //a   CellTextDef *ctdPtr;
-        //a   CellContentDef *cellContentPtr1;
-        //a   cellContentPtr1=[[CellContentDef alloc] init];
-        //a   ctdPtr=[CellTextDef initCellText:@"cellSec11" withTextColor:[UIColor whiteColor] withBackgroundColor:[UIColor redColor] withTextFontSize:36 withTextFontName:nil];
-        //a   ctdPtr.cellSeparatorVisible=TRUE;
-        //a   cellContentPtr1.ccCellTypePtr=ctdPtr;
-        //a   [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
-        
-        
-        
-        //button cells section 1      B U T T O N S
-        
-#if kMakeCollectionView
-        CellCollectionView *cbsPtr;
-#else
-        CellButtonsScroll *cbsPtr;
-        
-#endif
-        cbsPtr = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize];
-       
-        cbsPtr.indicateSelItem=YES;
-        if (cbsPtr.cellsButtonsArray.count){
-            cellContentPtr1=[[CellContentDef alloc] init];
-            cellContentPtr1.ccCellTypePtr=cbsPtr;
-            cellContentPtr1.ccTableViewCellPtr=nil;
+            cbsPtr1.indicateSelItem=YES;
+            if (cbsPtr1.cellsButtonsArray.count){
+                cellContentPtr1=[[CellContentDef alloc] init];
+                cellContentPtr1.ccCellTypePtr=cbsPtr1;
+                cellContentPtr1.ccTableViewCellPtr=nil;
             
-            [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+                [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+        
+            }
+        }else{
+                CellButtonsScroll *cbsPtr2;
+                cbsPtr2 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+                
+                cbsPtr2.indicateSelItem=YES;
+                if (cbsPtr2.cellsButtonsArray.count){
+                    cellContentPtr1=[[CellContentDef alloc] init];
+                    cellContentPtr1.ccCellTypePtr=cbsPtr2;
+                    cellContentPtr1.ccTableViewCellPtr=nil;
             
-        }
+                    [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+                }
+            }
+        
     }
     // Generic Code End
     return myTable;
@@ -2206,7 +2202,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     }
 
 //-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
--(id)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
+-(id)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize isCollectionView:(BOOL)isCollectionView// forLocation:(NSMutableDictionary*)aLocDicTMS
     {
         
         //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
@@ -2278,7 +2274,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             //      aProductDict = [self fetchProductDict:aBtn];
             //      [self putProductDictInParent:pressedBtn productDict:aProductDict];
           
-            if (kMakeCollectionView){
+            if (isCollectionView){
                 ctdPtr=[CellCollectionView initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];
             }else{
                 ctdPtr=[CellButtonsScroll initCellDefaultsWithBackColor:viewBackColor withCellButtonArray:hdiButtons];// buttonScroll:YES];
