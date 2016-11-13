@@ -118,8 +118,8 @@
     //_collectionView.contentInset = UIEdgeInsetsMake(0, (self.view.frame.size.width-pageSize)/2, 0, (self.view.frame.size.width-pageSize)/2);
     
     
-    
-    
+    collectionView.decelerationRate=UIScrollViewDecelerationRateNormal
+    ;
     
 #if TARGET_OS_TV
     // tvOS-specific code
@@ -435,6 +435,7 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    return;
     
     //what is currentbuttonincenter?
 #if TARGET_OS_TV
@@ -466,8 +467,8 @@
     if (!decelerate){
         [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
         
-        CGPoint offset = scrollView.contentOffset;
-        CGPoint offsetsv = scrollView.contentOffset;
+        CGPoint offset = collectionView.contentOffset;
+        CGPoint offsetsv = collectionView.contentOffset;
         
         NSLog(@"------ controlContainerLine1.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
         NSLog(@"------ scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
@@ -508,9 +509,10 @@
     
     [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     
-    CGPoint offset = scrollView.contentOffset;
-    CGPoint offsetsv = scrollView.contentOffset;
-    
+//    CGPoint offset = scrollView.contentOffset;
+//    CGPoint offsetsv = scrollView.contentOffset;
+    CGPoint offset = collectionView.contentOffset;
+    CGPoint offsetsv = collectionView.contentOffset;
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
     
@@ -538,11 +540,14 @@
     CGPoint adjustedOffSet;// = CGPointMake(offset.x+containerView.bounds.size.width/2,containerView.bounds.size.height/2);
     int sel = 0;
     float closestDistance = 9999;
-    
+    float aSabOffset;
+    CGPoint aSabCenter;
     for (int i = 0; i < buttonSequence.count; i++){
         ActionRequest *aSab = [buttonSequence objectAtIndex:i];
         adjustedOffSet = CGPointMake(offset.x+aSab.uiButton.bounds.size.width/2, offset.y);
-        int testDistance = [self distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSab.uiButton.center];
+        aSabOffset = i*(aSab.buttonSize.width+buttonSpacing)+(aSab.buttonSize.width/2);
+        aSabCenter = CGPointMake(aSabOffset, offset.y);
+        int testDistance = [self distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSabCenter];// aSab.uiButton.center];
         if ( testDistance < closestDistance){
             closestDistance= testDistance;
             sel = i;//+1;
@@ -817,10 +822,8 @@
     if(!aQuery)
         return;
     
-    aQuery.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
-    aQuery.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
     
-//    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
     return;
     
     
@@ -830,6 +833,7 @@
     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
     CellButtonsScroll *aButtonsCell;
     CellContentDef *ccDefPtr;
+    
     
     HDButtonView *aMMBtnView;
     for (ccDefPtr in currentSectionCells){
