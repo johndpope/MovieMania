@@ -60,6 +60,7 @@
   //      NSLog(@"collectionViewFrame = (%f, %f)", self.view.frame.size.width, self.view.frame.size.height);
        
         [self setUpCollectionView:thisFrame];
+        self.backgroundColor=[UIColor redColor];
         return self;
         
     }
@@ -99,7 +100,9 @@
     buttonSpacing=aBtn.buttonSize.width/10;
     layout.minimumInteritemSpacing=buttonSpacing;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+//    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+
+    self.collectionView = [[UICollectionView alloc] initWithFrame:cvFrame collectionViewLayout:layout];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     
@@ -107,7 +110,7 @@
     
     [collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
     
-    [collectionView setBackgroundColor:[UIColor greenColor]];
+    [collectionView setBackgroundColor:[UIColor blueColor]];
     
     // [_collectionView setBounces:TRUE];
     // [_collectionView setAlwaysBounceVertical:TRUE];
@@ -579,7 +582,7 @@
                 //[currentButtonInCenter.uiButton addSubview:selectedBtnBox];
                 currentButtonInCenter.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
                 currentButtonInCenter.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
-                NSLog(@"-----MoveToButtonInCenter setButtonCenter %d",i);
+                NSLog(@"-----MoveToButtonInCenter buttonIndex = %d, title = %@",i,currentButtonInCenter.buttonName);
                 
                 
             }
@@ -601,7 +604,7 @@
     }
                      completion:nil];
 */
-    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 -(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
 {
