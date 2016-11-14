@@ -38,6 +38,8 @@
     CGPoint _lastContentOffset;
     int _originalMaxButtonsVisible;
     float buttonSpacing;;// = buttonWidth/10;
+    BOOL containerScrolls;
+    BOOL buttonWasPressed;
 }
 
 @synthesize collectionView;
@@ -46,13 +48,14 @@
 @synthesize containerView;
 #pragma mark - Lifecycle
 
-- (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container
+- (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls
 {
     
     self = [super initWithFrame:thisFrame];
     if (self) {
         self.myButtons=buttons;
         self.containerView=container;
+        containerScrolls=viewScrolls;
   //      self.view = [[UIView alloc] initWithFrame:thisFrame];
   //      NSLog(@"collectionViewFrame = (%f, %f)", self.view.frame.size.width, self.view.frame.size.height);
        
@@ -309,6 +312,8 @@
     
     if (pressedAction.reloadOnly){
         
+        buttonWasPressed=YES;
+        NSLog(@"buttonWasPressed = YES");
         [self moveToButtonInCenter:pressedAction.buttonIndex];
     }
     NSLog(@"myra disabled postNotification ConstUserTouchInput from CollectionViewHolder touchUpOnButton");
@@ -323,6 +328,7 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    return;
     //  [selectedBtnBox removeFromSuperview];
     
     NSLog(@"CollectionViewHolder scrollViewDidScroll %f", scrollView.contentOffset.x);
@@ -378,22 +384,10 @@
     else{
         //NO self.bounds=_originalFrame;
     }
-    //how many buttons fit in the actual view I allocated?
-    //if I have less than that - I have to change my uiView bounds so I don't get weird autoscroll feature - scrollview wants to put max objects on screen
-    //this conflicts with my need to have them left justified for cell navigation in TVOS
-    
-//    if (containerScrolls){
+     if (containerScrolls){
 
-    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-//    containerView.contentOffset = newOffset;
-//    collectionView.contentOffset=newOffset;
-    
-        //[UIView animateWithDuration:0.1f animations:^{
-        //     containerView.contentOffset = newOffset;
-        // }
-        //                 completion:nil];
-        
-//    }
+         [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+     }
     
 }
 
@@ -424,30 +418,19 @@
     else{
         //NO self.bounds=_originalFrame;
     }
-    //how many buttons fit in the actual view I allocated?
-    //if I have less than that - I have to change my uiView bounds so I don't get weird autoscroll feature - scrollview wants to put max objects on screen
-    //this conflicts with my need to have them left justified for cell navigation in TVOS
-    
-//    if (containerScrolls){
-//        containerView.contentOffset = newOffset;
-        
-        
-        //[UIView animateWithDuration:0.1f animations:^{
-//        containerView.contentOffset = newOffset;
-    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
   
- //   collectionView.contentOffset=newOffset;
-        // }
-        //                 completion:nil];
-        
-//    }
+    
+    if (containerScrolls){
+        [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        }
+  
     
 }
 
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    return;
+//    return;
     
     //what is currentbuttonincenter?
 #if TARGET_OS_TV
@@ -477,14 +460,19 @@
     
     
     if (!decelerate){
-        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+//        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
         
         CGPoint offset = collectionView.contentOffset;
         CGPoint offsetsv = collectionView.contentOffset;
         
         NSLog(@"------ controlContainerLine1.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
         NSLog(@"------ scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
-        
+        if (buttonWasPressed){
+            buttonWasPressed=NO;
+            NSLog(@"buttonWasPressed = NO 1");
+            return;
+        }
+        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
         [self updateButtonInCenter:offset];
         if (currentButtonInCenter.reloadOnly){
             NSNumber *touchedButton = [NSNumber numberWithInteger:currentButtonInCenter.uiButton.tag];
@@ -516,10 +504,10 @@
 #endif
     
 
-    return;
+//    return;
     
     
-    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+//    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     
 //    CGPoint offset = scrollView.contentOffset;
 //    CGPoint offsetsv = scrollView.contentOffset;
@@ -527,7 +515,12 @@
     CGPoint offsetsv = collectionView.contentOffset;
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
-    
+    if (buttonWasPressed){
+        buttonWasPressed=NO;
+        NSLog(@"buttonWasPressed = NO 2");
+        return;
+    }
+    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     [self updateButtonInCenter:offset];// forScrollView:scrollView];
     if (currentButtonInCenter.reloadOnly){
         NSNumber *touchedButton = [NSNumber numberWithInteger:currentButtonInCenter.uiButton.tag];
@@ -839,9 +832,12 @@
         return;
     
     
-    aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
-    return;
+  //  aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+  //  return;
     
+    for (ActionRequest *aBtn in myButtons){
+        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+    }
     
 /*
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;

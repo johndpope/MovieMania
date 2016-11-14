@@ -15,6 +15,6 @@
 @property (nonatomic, readwrite) ActionRequest *tvfocusAction;
 @property (nonatomic, strong) UIScrollView          *containerView;
 
-- (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container;
+- (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls;
 @end
 

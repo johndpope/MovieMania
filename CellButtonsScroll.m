@@ -168,7 +168,7 @@
         for (ActionRequest *aBtn in self.cellsButtonsArray){
             [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
         }
-        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView];
+        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight) forContainer:self.buttonContainerView viewScrolls:YES];
         self.buttonView = [NSArray arrayWithObject:collectionVH];
         self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
         [self.buttonContainerView addSubview:collectionVH];
