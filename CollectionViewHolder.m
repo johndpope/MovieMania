@@ -37,15 +37,26 @@
     NSMutableArray *buttonSequence;
     CGPoint _lastContentOffset;
     int _originalMaxButtonsVisible;
-    float buttonSpacing;;// = buttonWidth/10;
     BOOL containerScrolls;
     BOOL buttonWasPressed;
+    float   buttonWidth;
+    float   buttonHeight;
+    float   buttonViewWidth;
+    float   buttonSpacing;
+    float   buttonViewHeight;
+    UITableViewController *tvc;
+    int     numberOfButtonsToMake;
+    float buttonViewXOffset;
+
+    UIColor *textColor;
+    UIColor *backColor;
 }
 
 @synthesize collectionView;
-@synthesize myButtons;
+@synthesize buttonSequence;// myButtons;
 @synthesize tvfocusAction;
 @synthesize containerView;
+@synthesize rowNumber;
 #pragma mark - Lifecycle
 
 - (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls
@@ -53,7 +64,8 @@
     
     self = [super initWithFrame:thisFrame];
     if (self) {
-        self.myButtons=buttons;
+//        self.myButtons=buttons;
+        self.buttonSequence=buttons;
         self.containerView=container;
         containerScrolls=viewScrolls;
   //      self.view = [[UIView alloc] initWithFrame:thisFrame];
@@ -68,21 +80,108 @@
     
 
 }
+- (id)initWithContainer:(UIScrollView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr withTVC:(TableViewController *)tvcPtr// leftJustifyPartial:(BOOL)
+{
+    
+    tvc = tvcPtr;
+    //    [self addTestButtonsToArray:btnSequence];
+    self.containerView = container;
+    
+    self.buttonSequence = btnSequence;
+    self.rowNumber = rowNmbr;
+    textColor = [GlobalTableProto sharedGlobalTableProto].viewTextColor;
+    backColor =  [GlobalTableProto sharedGlobalTableProto].viewBackColor;
 
+    ActionRequest *firstButton = [buttonSequence objectAtIndex:0];
+
+    buttonViewWidth =  containerView.bounds.size.width;
+    buttonViewHeight = containerView.bounds.size.height;
+    //   buttonViewHeight = 100;
+    buttonWidth = firstButton.buttonSize.width;// buttonViewHeight;
+    buttonHeight = firstButton.buttonSize.height;
+/*
+    isColumn = NO;
+    if (buttonViewHeight > buttonViewWidth)
+        isColumn = YES;
+    if (isColumn)
+        buttonWidth = buttonViewWidth;
+*/
+    //   buttonSpacing = buttonWidth/2;
+    buttonSpacing = buttonWidth/10;
+    
+    //    if (kAutoScroll){
+    containerScrolls = NO;
+    
+    if (buttonViewWidth < (buttonSequence.count * (buttonWidth + buttonSpacing))){
+        containerScrolls = YES;
+        
+    }else{
+        buttonSpacing = buttonWidth/4;
+    }
+    numberOfButtonsToMake =(int) buttonSequence.count;
+    
+    buttonViewXOffset = buttonViewWidth/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
+/*
+    if (isColumn)
+        buttonViewXOffset = buttonViewHeight/2 - numberOfButtonsToMake * (buttonWidth/2 + buttonSpacing/2) + buttonSpacing/2;
+*/
+    if (containerScrolls){
+        //       buttonViewWidth = (buttonSequence.count+ 2) * (buttonWidth + buttonSpacing);
+        buttonViewXOffset=0;
+        if(firstButton.reloadOnly) {
+            buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+        }
+#if TARGET_OS_TV
+        buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+#endif
+        buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
+        self.containerView.delegate = self;
+        self.containerView.decelerationRate=UIScrollViewDecelerationRateFast;
+    }
+    CGRect frame = CGRectMake( 0,0,buttonViewWidth , container.bounds.size.height);
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        // Initialization code
+//        _originalFrame=containerView.frame;
+        _originalMaxButtonsVisible=containerView.frame.size.width / buttonWidth;
+//        _originalButtonWidth=buttonWidth;
+/*
+        UIImage *yellowBoxImage =  [UIImage imageNamed:@"select1.png"];
+        selectedBtnBox = [[UIImageView alloc] initWithFrame:CGRectMake(0.0,0.0,firstButton.buttonSize.width ,firstButton.buttonSize.height)];
+        [selectedBtnBox setImage:yellowBoxImage];
+        selectedBtnBox.backgroundColor = [UIColor clearColor];
+        
+*/
+     //   [self addButtonsToView];//:containerScrolls ];//] buttonSequence:btnSequence];
+        
+        [self setUpCollectionView:frame];
+        
+        
+        
+        
+        
+    }
+    return self;
+    
+    
+}
 //- (void)viewDidLoad {
 //    [super viewDidLoad];
 -(void)setUpCollectionView:(CGRect)cvFrame
 {
-    buttonSequence=myButtons;
+ //   buttonSequence=myButtons;
     
 //    height = (CGRectGetHeight(self.frame)-(2*COLLECTION_VIEW_PADDING))/2;
-    ActionRequest *aBtn;
-    for (aBtn in myButtons){
+    ActionRequest *aBtn;    for (ActionRequest *aBtn in buttonSequence){
+        [HDButtonView makeUIButton:aBtn inButtonSequence:buttonSequence];
+//
+//    for (aBtn in buttonSequence){
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
     }
     
-    aBtn = [myButtons objectAtIndex:0];
+    aBtn = [buttonSequence objectAtIndex:0];
     location = BUTTONS_NORMAL_CELL;
     //custom flow layout http://stackoverflow.com/questions/20626744/uicollectionview-current-index-path-for-page-control
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
@@ -124,8 +223,8 @@
     //_collectionView.contentInset = UIEdgeInsetsMake(0, (self.view.frame.size.width-pageSize)/2, 0, (self.view.frame.size.width-pageSize)/2);
     
     
-    collectionView.decelerationRate=UIScrollViewDecelerationRateNormal
-    ;
+        collectionView.decelerationRate=UIScrollViewDecelerationRateNormal;
+    
     
 #if TARGET_OS_TV
     // tvOS-specific code
@@ -155,7 +254,7 @@
     
  //   return CGSizeMake(height * (9.0/16.0), height);
  // return dateBtnSize;
-     ActionRequest *aBtn = [myButtons objectAtIndex:0];
+     ActionRequest *aBtn = [buttonSequence objectAtIndex:0];
     return aBtn.buttonSize;
 }
 
@@ -164,7 +263,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
-    return self.myButtons.count;
+    return self.buttonSequence.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -181,7 +280,7 @@
     NSLog(@"indexPath.row  = %ld",(long)indexPath.row);
 //    Movie *movie = [self.movies objectAtIndex:indexPath.row];
 //    [cell updateCellForMovie:movie];
-    ActionRequest *actionReq = [myButtons objectAtIndex:indexPath.row];
+    ActionRequest *actionReq = [buttonSequence objectAtIndex:indexPath.row];
     actionReq.buttonIndexPath=indexPath;
     UIButton *aButton = actionReq.uiButton;
     
@@ -464,17 +563,20 @@
     
     if (!decelerate){
 //        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
-        
-        CGPoint offset = collectionView.contentOffset;
-        CGPoint offsetsv = collectionView.contentOffset;
+        CGPoint offset = scrollView.contentOffset;
+        CGPoint offsetsv = scrollView.contentOffset;
+//        CGPoint offset = collectionView.contentOffset;
+//        CGPoint offsetsv = collectionView.contentOffset;
         
         NSLog(@"------ controlContainerLine1.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
         NSLog(@"------ scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
+/*
         if (buttonWasPressed){
             buttonWasPressed=NO;
             NSLog(@"buttonWasPressed = NO 1");
             return;
         }
+*/
         [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
         [self updateButtonInCenter:offset];
         if (currentButtonInCenter.reloadOnly){
@@ -512,17 +614,18 @@
     
 //    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     
-//    CGPoint offset = scrollView.contentOffset;
-//    CGPoint offsetsv = scrollView.contentOffset;
-    CGPoint offset = collectionView.contentOffset;
-    CGPoint offsetsv = collectionView.contentOffset;
+    CGPoint offset = scrollView.contentOffset;
+    CGPoint offsetsv = scrollView.contentOffset;
+//    CGPoint offset = collectionView.contentOffset;
+//    CGPoint offsetsv = collectionView.contentOffset;
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offset.x,offset.y);
     NSLog(@"----- scrollView.contentOffset = (%4.2f, %4.2f)", offsetsv.x,offsetsv.y);
+/*
     if (buttonWasPressed){
         buttonWasPressed=NO;
         NSLog(@"buttonWasPressed = NO 2");
         return;
-    }
+}*/
     [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     [self updateButtonInCenter:offset];// forScrollView:scrollView];
     if (currentButtonInCenter.reloadOnly){
@@ -596,15 +699,15 @@
     CGPoint scrollViewOffset = CGPointMake((currentCenterBtnNumber)*(currentButtonInCenter.uiButton.bounds.size.width+buttonSpacing),0);
     
     NSLog(@"moveToButtonInCenter = (%4.2f,%4.2f)",scrollViewOffset.x, scrollViewOffset.y);
-/*
+
     [UIView animateWithDuration:0.1f animations:^{
         
- //       containerView.contentOffset = scrollViewOffset;
-        collectionView.contentOffset=scrollViewOffset;
+        containerView.contentOffset = scrollViewOffset;
+//        collectionView.contentOffset=scrollViewOffset;
     }
                      completion:nil];
-*/
-    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+
+//    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 -(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
 {
@@ -838,7 +941,7 @@
   //  aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
   //  return;
     
-    for (ActionRequest *aBtn in myButtons){
+    for (ActionRequest *aBtn in buttonSequence){
         aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
     }
     

@@ -167,12 +167,14 @@
     }
     if(isCollectionView){
         
-        CGRect cvFrame=CGRectMake(0,0,maxW,self.cellMaxHeight*1.5);
-        self.buttonContainerView=[[UIScrollView alloc]initWithFrame:cvFrame];
-        for (ActionRequest *aBtn in self.cellsButtonsArray){
-            [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
-        }
-        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:cvFrame forContainer:self.buttonContainerView viewScrolls:YES];
+//        CGRect cvFrame=CGRectMake(0,0,maxW,self.cellMaxHeight*1.5);
+//        self.buttonContainerView=[[UIScrollView alloc]initWithFrame:cvFrame];
+//        for (ActionRequest *aBtn in self.cellsButtonsArray){
+//            [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
+ //       }
+//        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:cvFrame forContainer:self.buttonContainerView viewScrolls:YES];
+        
+        CollectionViewHolder * collectionVH= [[CollectionViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
         self.buttonView = [NSArray arrayWithObject:collectionVH];
         self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
         [self.buttonContainerView addSubview:collectionVH];

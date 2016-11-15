@@ -56,7 +56,7 @@
     
     CGPoint _lastContentOffset;
     int _originalMaxButtonsVisible;
-    int _originalButtonWidth;
+//    int _originalButtonWidth;
     CGRect _originalFrame;
 //    UIImageView *selectedBtnBox;
 //   NSMutableArray  *btnSequence;
@@ -137,7 +137,7 @@
         // Initialization code
         _originalFrame=containerView.frame;
         _originalMaxButtonsVisible=containerView.frame.size.width / buttonWidth;
-        _originalButtonWidth=buttonWidth;
+//        _originalButtonWidth=buttonWidth;
         UIImage *yellowBoxImage =  [UIImage imageNamed:@"select1.png"];
         selectedBtnBox = [[UIImageView alloc] initWithFrame:CGRectMake(0.0,0.0,firstButton.buttonSize.width ,firstButton.buttonSize.height)];
         [selectedBtnBox setImage:yellowBoxImage];

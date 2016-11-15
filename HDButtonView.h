@@ -27,8 +27,8 @@
 @property (nonatomic, strong) NSMutableArray        *buttonSequence;
 @property (nonatomic, strong) UIScrollView          *containerView;
 @property (nonatomic, readwrite) int                rowNumber;
-@property (nonatomic, retain) UIImageView *selectedBtnBox;
-@property (nonatomic, readwrite) ActionRequest *tvfocusAction;
+@property (nonatomic, retain) UIImageView           *selectedBtnBox;
+@property (nonatomic, readwrite) ActionRequest      *tvfocusAction;
 //- (id)initWithContainer:(UIView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr containerScrolls:(BOOL)containerScrolls;
 
 //- (id)initWithContainer:(UIView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr containerScrolls:(BOOL)containerScrolls withTVC:(TableViewController *)tvcPtr;
