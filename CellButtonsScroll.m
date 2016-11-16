@@ -10,6 +10,9 @@
 #import "ActionRequest.h"
 #import "TableProtoDefines.h"
 @implementation CellButtonsScroll
+{
+  
+}
 
 
 
@@ -19,13 +22,8 @@
 @synthesize buttonView;
 @synthesize indicateSelItem;
 @synthesize isCollectionView;
+@synthesize useCellButtonsViewHolder;
  
- 
-//@synthesize reloadOnly;
-
-//@synthesize buttonView;
-
-//@synthesize buttonViewScrolls;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +54,7 @@
 }
 -(void) makeUseDefaults:(CellButtonsScroll *)nCell
 {
+    
     nCell.indicateSelItem=NO;
     nCell.enableUserActivity=TRUE;
     nCell.cellclassType=CELLCLASS_BUTTONS_SCROLL;
@@ -63,13 +62,7 @@
     self.backgoundColor=TK_TRANSPARENT_COLOR;
 //    nCell.cellsButtonsArray=[[NSMutableArray alloc]init];
     nCell.cellMaxHeight=DEF_CELLHEIGHT;   //sections won't display without some non 0 value here
-   // nCell.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectZero];
-    //UIScrollView* buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxwidth, maxheight)];//=[[UIView alloc]initWithFrame:CGRectZero];
-    
-  //  nCell.buttonView = [[HDButtonView alloc]initWithContainer:buttonContainerView buttonSequence:cellsButtonsArray rowNumbr:0 containerScrolls:YES withTVC:nil];
-   // buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-  //  [buttonContainerView addSubview:returnedUIView];
-    
+      
 
     
 
@@ -87,8 +80,9 @@
     [nCell.cellsButtonsArray addObjectsFromArray:buttonArray];
     nCell.backgoundColor=  backColor;
     nCell.isCollectionView=isCollectionView;
+    nCell.useCellButtonsViewHolder=YES;
     
- //   nCell.buttonViewScrolls = buttonsScroll;
+    
     return nCell;
 }
 + (id )initCellDefaults
@@ -158,6 +152,21 @@
     }
     
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
+    
+    if (useCellButtonsViewHolder) {
+        CellButtonsViewHolder * cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr asCollectionView:isCollectionView];
+        self.buttonView = [NSArray arrayWithObject:cellButtonsVH];
+        self.buttonContainerView.contentSize = CGSizeMake(cellButtonsVH.bounds.size.width,0.0);
+        [self.buttonContainerView addSubview:cellButtonsVH];
+        self.buttonContainerView.backgroundColor= [UIColor clearColor];
+        tvcellPtr.backgroundColor=[UIColor clearColor];
+        tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
+        [tvcellPtr addSubview:self.buttonContainerView];
+        return;
+    }
+    
+    
+    
     if(!isCollectionView){
         
         HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
@@ -167,13 +176,6 @@
     }
     if(isCollectionView){
         
-//        CGRect cvFrame=CGRectMake(0,0,maxW,self.cellMaxHeight*1.5);
-//        self.buttonContainerView=[[UIScrollView alloc]initWithFrame:cvFrame];
-//        for (ActionRequest *aBtn in self.cellsButtonsArray){
-//            [HDButtonView makeUIButton:aBtn inButtonSequence:self.cellsButtonsArray];
- //       }
-//        CollectionViewHolder * collectionVH = [[CollectionViewHolder alloc] initWithButtons:self.cellsButtonsArray viewFrame:cvFrame forContainer:self.buttonContainerView viewScrolls:YES];
-        
         CollectionViewHolder * collectionVH= [[CollectionViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
         self.buttonView = [NSArray arrayWithObject:collectionVH];
         self.buttonContainerView.contentSize = CGSizeMake(collectionVH.bounds.size.width,0.0);
@@ -181,31 +183,10 @@
         
         
     }
-    
- 
-    
-    
-    
- //   buttonContainerView.backgroundColor=self.backgoundColor;//mah 070616
     self.buttonContainerView.backgroundColor= [UIColor clearColor];
-    
-
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
-
-    
     [tvcellPtr addSubview:self.buttonContainerView];
- //   buttonContainerView.center=tvcellPtr.center;
-    
-//    returnedUIView.userInteractionEnabled=NO;
-//    buttonContainerView.userInteractionEnabled=NO;
-//    tvcellPtr.userInteractionEnabled=NO;
-    
-    
-    //DAN - the height should be set by your container.... the max height 1 screens worth is provided by maxHeight just as a boundary
-   // self.cellMaxHeight=buttonContainerView.frame.size.height ;    //put the height your cell uses here
-    
-    
   
     
 }

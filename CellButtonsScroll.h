@@ -13,9 +13,9 @@
 #import "DispTText.h"
 #import "HDButtonView.h"
 #import "TableViewController.h"
-//#import "CellButtonsContainer.h"
+#import "CellButtonsViewHolder.h"
 #import "CollectionViewHolder.h"
-//@interface CellButtonsScroll : CellButtonsContainer
+
 @interface CellButtonsScroll : CellTypesAll
 
 @property (nonatomic, readwrite) UIColor *backgoundColor;
@@ -24,6 +24,7 @@
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 @property (nonatomic, readwrite) BOOL isCollectionView;
+@property (nonatomic, readwrite) BOOL    useCellButtonsViewHolder;
 
 + (id )initCellDefaults;
 
