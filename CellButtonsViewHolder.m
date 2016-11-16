@@ -125,10 +125,12 @@
      */
     if (containerScrolls){
         //       buttonViewWidth = (buttonSequence.count+ 2) * (buttonWidth + buttonSpacing);
-        buttonViewXOffset=0;
+        buttonViewXOffset=0;                // always put selected btn on left
+/*
         if(firstButton.reloadOnly) {
             buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
         }
+*/
       buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
 #if TARGET_OS_TV
         buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
