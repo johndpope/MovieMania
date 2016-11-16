@@ -129,8 +129,10 @@
         if(firstButton.reloadOnly) {
             buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
         }
+      buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
 #if TARGET_OS_TV
         buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
+//        buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing);
 #endif
         buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
         self.containerView.delegate = self;
@@ -363,6 +365,7 @@
     [collectionView reloadData];
     
     [self addSubview:collectionView];
+ //   containerView.contentOffset = CGPointMake( buttonViewXOffset, 0);
     //    [collectionView reloadData];
 }
 
@@ -609,8 +612,11 @@
         //NO self.bounds=_originalFrame;
     }
     if (containerScrolls){
-        
-        [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+        if (!isCollectionView){
+            containerView.contentOffset = newOffset;
+        }else{
+           [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+        }
     }
     
 }
@@ -645,7 +651,12 @@
     
     
     if (containerScrolls){
-        [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        if (!isCollectionView){
+            containerView.contentOffset = newOffset;
+        }else{
+            [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+        }
+
     }
     
     
@@ -890,17 +901,24 @@
     //context.previouslyFocusedView is a UIButton (Maybe)
     //context.nextFocusedView is a UIButton(Maybe)
     
-    
-    
+    UIButton *btn;
+   
     if(context.nextFocusedView == context.previouslyFocusedView){
         return;
     }
     
+    btn = nil;
     
     if ([context.previouslyFocusedView isKindOfClass: [UICollectionViewCell class]]){
         
         MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.previouslyFocusedView;
-        UIButton *btn = cell.myButton;
+        btn = cell.myButton;
+    }
+    if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
+        
+        btn = (UIButton* )context.previouslyFocusedView;
+    }
+    if (btn){
         NSString *prevTag = [NSString stringWithFormat:@"%li",btn.tag];
         ActionRequest *prevButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:prevTag];
         NSLog(@"      prevButton %@",prevButton.buttonName);
@@ -912,16 +930,24 @@
         //  } completion:nil];
         
         
-        
-        
     }
+        
+
+    btn = nil;
+    
     
     if ([context.nextFocusedView isKindOfClass:[UICollectionViewCell class]]){
         
         
         
         MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.nextFocusedView;
-        UIButton *btn = cell.myButton;
+        btn = cell.myButton;
+    }
+    if ([context.nextFocusedView isKindOfClass:[UIButton class]]){
+        
+        btn = (UIButton* )context.nextFocusedView;
+    }
+    if (btn){
         NSString *nextTag = [NSString stringWithFormat:@"%li",btn.tag];
         ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];
         NSLog(@"      nextButton %@",nextButton.buttonName);
@@ -930,8 +956,8 @@
         nextButton.uiButton.layer.borderWidth=TK_FOCUSBORDER_SIZE;
         nextButton.uiButton.layer.borderColor=TK_FOCUSBORDER_COLOR.CGColor;
         
-        
-        
+    
+    
         if( (currentButtonInCenter != nextButton)&& (nextButton.reloadOnly)){
             
             tvfocusAction=nextButton;
@@ -942,16 +968,19 @@
             NSLog(@"     disable focusMovie notification");
         }
         
-        
-        
     }
     
-    
-    
-    
-    
-    
 }
+
+
+
+    
+    
+    
+    
+    
+
+
 /////////////////////////////////////////////////////////////////////////
 #pragma mark - GestureRecognizer
 /////////////////////////////////////////////////////////////////////////

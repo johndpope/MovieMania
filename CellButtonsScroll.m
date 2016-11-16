@@ -80,7 +80,7 @@
     [nCell.cellsButtonsArray addObjectsFromArray:buttonArray];
     nCell.backgoundColor=  backColor;
     nCell.isCollectionView=isCollectionView;
-    nCell.useCellButtonsViewHolder=YES;
+    nCell.useCellButtonsViewHolder=  YES;
     
     
     return nCell;
