@@ -722,7 +722,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     NSString *tableTitle = @"Movie Information";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
-    NSLog(@"----makeTVC2    reloadOnly is %d",pressedButton.reloadOnly);
+    NSLog(@"----makeTVC21    reloadOnly is %d",pressedButton.reloadOnly);
     int section = 0;
     int row = 0;
 //    TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
@@ -748,6 +748,38 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     TableDef *myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
     
+    //////////////TEST HDR as CELLUIVIEW
+    //TEST    CellUIView * cuvPtrHDR=  [self cuvPtrCreateTest];
+    //TEST    CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
+    //TEST    cellContentPtr.ccCellTypePtr=cuvPtrHDR;
+    //TEST    myTable.tableHeaderContentPtr=cellContentPtr;
+    //TEST
+    
+    NSMutableDictionary *productDict = pressedButton.productDict;
+    CellUIView *cuvPtrHDR;
+    NSLog(@"getting cuvPtr for %@",[pressedButton.productDict objectForKey:@"Title"]);
+    NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
+    if (![movieInfoDict objectForKey:@"Error"]){
+        cuvPtrHDR = [self buildMovieInfoCell:movieInfoDict];
+    }else{
+        cuvPtrHDR = [self buildMovieInfoCellTMS:productDict];
+    }
+    cuvPtrHDR.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
+    cuvPtrHDR.enableUserActivity = NO;
+    cuvPtrHDR.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
+    cuvPtrHDR.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
+    CellContentDef *cellContentPtrHDR=[[CellContentDef alloc] init];
+    cellContentPtrHDR.ccCellTypePtr=cuvPtrHDR;
+    //      cuvPtr.nextTableView = TVC2;
+    cellContentPtrHDR.ccTableViewCellPtr=nil;
+    
+    myTable.tableHeaderContentPtr=cellContentPtrHDR;
+    
+
+   
+    
+    
+    
     return myTable;
     
     
@@ -758,11 +790,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     sdPtr2.sectionFooterContentPtr=nil;
     [myTable.tableSections addObject:sdPtr2];
     
-    NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
+   // NSMutableDictionary *productDict = pressedButton.productDict;//  [self fetchProductDict:pressedButton];
     //       NSString *productName = [productDict objectForKey:kProductNameKey];
     CellUIView *cuvPtr;
     NSLog(@"getting cuvPtr for %@",[pressedButton.productDict objectForKey:@"Title"]);
-    NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
+    //NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
     if (![movieInfoDict objectForKey:@"Error"]){
         cuvPtr = [self buildMovieInfoCell:movieInfoDict];
     }else{
@@ -5255,6 +5287,28 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     [myTable.tableSections addObject:sdPtr1];
     [sdPtr1.sCellsContentDefArr addObject:cellContentPtr];
+}
+-(CellUIView *)cuvPtrCreateTest
+{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"umaRuler300x400" ofType:@"png"];
+    UIImage * useImage = [UIImage imageWithContentsOfFile:filePath];
+    CGSize useQTRSize=CGSizeMake(useImage.size.width/4, useImage.size.height/4);//useImage.size;
+    //CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
+    
+    CellImageOnly *cioPtr=[CellImageOnly initCellDefaults:useImage withPNGName:@"umaRuler" withBackColor:[UIColor blueColor] rotateWhenVisible:NO withSize:useQTRSize];
+    CellUIView *cuvPtr=[[CellUIView alloc]init];
+    
+    cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;
+    // cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;
+    cuvPtr.displayTemplate=kDISP_TEMPLATE_IMAGEBOTTOM_LABELSTOP;
+    [cuvPtr.cioPtrArr addObject:cioPtr];
+    
+    CellTextDef *ctdPtr;
+    ctdPtr=[CellTextDef initCellText:@"MovieInfo" withTextColor:[UIColor redColor] withBackgroundColor:[UIColor greenColor] withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil];
+    [cuvPtr.cTextDefsArray addObject:ctdPtr];
+
+    
+    return cuvPtr;
 }
 -(void)mkTableDefTesterSplashScreen4:(TableDef*)myTable
 {
