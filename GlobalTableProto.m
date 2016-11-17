@@ -2285,7 +2285,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 {
     
     //  Generic Use Code Start
-        SectionDef *sdPtr1;
+        SectionDef *sdPtr;
     TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
     CellContentDef *cellContentPtr1;//, *cellContentPtr2;
     CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
@@ -2293,21 +2293,18 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
         NSLog(@"reloadonly - notcreate table");
-        for (sdPtr1 in myTable.tableSections){
- //       sdPtr1 = [myTable.tableSections objectAtIndex:section];// 0];
-//        [myTable.tableSections removeAllObjects];
-//        [myTable.tableSections addObject:sdPtr1];
-//        for (cellContentPtr1 in sdPtr1.sCellsContentDefArr){
-        cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
-        cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
-        }
+   //     sdPtr=[myTable.tableSections objectAtIndex:pressedButton.tableSection];
+   //     for (sdPtr1 in myTable.tableSections){
+   //     cellContentPtr1 = [sdPtr.sCellsContentDefArr objectAtIndex:0];
+   //     cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
+   //     }
     }
     else{
         NSLog(@"create table");
         myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
  //       CGSize sechdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
  //       myTable=aTable;
-        sdPtr1 = nil;
+        sdPtr = nil;
         
  //       sdPtr1 = [self createDateButtonsAsSectionHeader:sdPtr1 sectionNumber:0 inTable:myTable actionReq:pressedButton withButtonSize:sechdrBtnSize];// nextTVC:TVC2];
 //        hdrCell = (CellButtonsScroll *)sdPtr1.sectionHeaderContentPtr.ccCellTypePtr;
@@ -2330,10 +2327,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         NSMutableDictionary *allProductsOfThisGenre;
         NSMutableDictionary *aProductDict;
         for (aGenre in sortedGenres){
-            sdPtr1=[SectionDef initSectionHeaderText:aGenre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+            sdPtr=[SectionDef initSectionHeaderText:aGenre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
 //        sdPtr1.sectionHeaderContentPtr=nil;
-            sdPtr1.sectionFooterContentPtr=nil;
-            [myTable.tableSections addObject:sdPtr1];
+            sdPtr.sectionFooterContentPtr=nil;
+            [myTable.tableSections addObject:sdPtr];
             allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
             CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsOfThisGenre atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
             cbsPtr1.indicateSelItem=YES;
@@ -2341,7 +2338,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 cellContentPtr1=[[CellContentDef alloc] init];
                 cellContentPtr1.ccCellTypePtr=cbsPtr1;
                 cellContentPtr1.ccTableViewCellPtr=nil;
-                [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+                [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
             }
             section++;
         }

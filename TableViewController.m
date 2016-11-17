@@ -501,42 +501,13 @@
         return thisCell;
     }
 */
-    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){
+    if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){// && sectionCellsPtr.ccCellTypePtr.reloadOnly){
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
-        
-        if (!aButtonView.buttonContainerView) {
-            [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
-            
-
-        }
-        [thisCell addSubview:aButtonView.buttonContainerView];
-        NSLog(@"RELOADONLY....  %@",NSStringFromCGRect(aButtonView.buttonContainerView.frame));
-        
-    }else{
-        [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
-        
-        
-        // works - ish    moved to cell
-       // answer=thisCell;
-      //  additionalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0,answer.frame.size.height,self.tableDataPtr.tvcCreatedWidth,3)];
-      //  additionalSeparator.backgroundColor = [UIColor yellowColor];
-      //  [answer addSubview:additionalSeparator];
-      //  sectionCellsPtr.ccCellTypePtr.cellMaxHeight=sectionCellsPtr.ccCellTypePtr.cellMaxHeight+3;
+       if (aButtonView.buttonContainerView)
+           return thisCell;
     }
-
-    
+    [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
         
-    
-    
-
-     
-
-    
-    
-    
-    
-      // [thisCell setNeedsLayout]; //?
-     //  [thisCell layoutIfNeeded]; //?
     return thisCell;
     
 
