@@ -503,8 +503,10 @@
 */
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){// && sectionCellsPtr.ccCellTypePtr.reloadOnly){
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
-       if (aButtonView.buttonContainerView)
-           return thisCell;
+        if (aButtonView.buttonContainerView){
+            [thisCell.contentView addSubview:aButtonView.buttonContainerView];
+            return thisCell;
+           }
     }
     [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
         

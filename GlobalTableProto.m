@@ -69,6 +69,7 @@
 @synthesize viewBackColor,viewTextColor,cellBackColor,headerBackColor;
 @synthesize selectedDate, selectedLocDict, selectedProdcuctDict;
 @synthesize sizeGlobalButton,sizeGlobalPoster,sizeGlobalVideo,sizeGlobalTextFontBig,sizeGlobalTextFontMiddle,sizeGlobalTextFontSmall;
+@synthesize inTVOS;
 
 NSString* const ConstDoneLoopingXactionResponseProcessed = @"DoneLoopingXactionResponseProcessed";
 NSString* const ConstIDentifyUserControllerSuccess = @"IDentifyUserControllerCompletedOK";
@@ -142,8 +143,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     sizeGlobalPoster=CGSizeMake(TK_IOS_PictureWidth, TK_IOS_PictureHeight);  //picture holder
     sizeGlobalButton=CGSizeMake(TK_IOS_ButtonWidth, TK_IOS_ButtonHeight);  //press button
     sizeGlobalVideo=CGSizeMake(TK_IOS_VideoWidth, TK_IOS_VideoHeight);
+    inTVOS=NO;
     
     #if TARGET_OS_TV
+    inTVOS=YES;
     sizeGlobalTextFontBig=TK_TVOS_TextFontBig;
     sizeGlobalTextFontMiddle=TK_TVOS_TextFontMiddle;
     sizeGlobalTextFontSmall=TK_TVOS_TextFontSmall;
@@ -188,7 +191,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
             case TVC2:
                 NSLog(@"call makeTVC2");
-         //       makeCollectionView=YES;
+                makeCollectionView=YES;
                 nextTableDef = [self makeTVC2:pressedBtn];
              
                 break;

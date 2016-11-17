@@ -300,10 +300,15 @@
 -(void)setUpCollectionView:(CGRect)cvFrame
 {
   
-    ActionRequest *aBtn;    for (ActionRequest *aBtn in buttonSequence){
+    ActionRequest *aBtn;
+        for (aBtn in buttonSequence){
         [self makeUIButton:aBtn inButtonSequence:buttonSequence];
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
+//#if TARGET_OS_TV
+        [aBtn.uiButton addTarget:self  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
+//#endif
+        
     }
     
     aBtn = [buttonSequence objectAtIndex:0];
@@ -429,13 +434,13 @@
     aButton.center=cell.contentView.center;
     //    [cell addSubview:aButton];
     
-    
+/*
     if (cell.gestureRecognizers.count == 0) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedMovie:)];
         tap.allowedPressTypes = @[[NSNumber numberWithInteger:UIPressTypeSelect]];
         [cell addGestureRecognizer:tap];
     }
-    
+*/
     return cell;
 }
 /*
@@ -458,7 +463,7 @@
  }
  
  */
-
+/*
 #pragma mark - GestureRecognizer
 - (void)tappedMovie:(UITapGestureRecognizer *)gesture {
     
@@ -505,6 +510,7 @@
     }
     
 }
+*/
 /*
  #pragma mark - Focus
  - (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {

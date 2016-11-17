@@ -219,8 +219,7 @@
     if (!buttonContainerView) {
         NSLog(@"");
     }
-    
-    HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr];
+    CellButtonsViewHolder* returnedUIView = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr asCollectionView:NO];//[GlobalTableProto sharedGlobalTableProto].inTVOS];
     self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
     [self.buttonContainerView addSubview:returnedUIView];
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
