@@ -382,15 +382,16 @@
     
 }
 
--(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight inSection:(int)section
+-(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight// inSection:(int)section
 {
+    
     
     //Make returned UIViews the header and footer for the table
     NSLog(@"RNTME showMeInDisplayReload");
     
     /// self.tvcCreatedWidth=createdWidth;
     // self.tvcCreatedHeight=createdHeight;   //all scrollable, no fixed header or footer
-    
+ /*
     int totSections=(int)[self.tableSections count];
     int rowsSection=section;
     SectionDef *secPtr;
@@ -403,13 +404,38 @@
         [tvc.tableView reloadData];  //this is wrong
         return;
     }
-    NSMutableArray *allPaths=[[NSMutableArray alloc]init];
     
-    for (int index=0; index<rowsSection; index++) {
-        NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:section];
-        [allPaths addObject: somePath];
+ */
+    NSMutableArray *allPaths=[[NSMutableArray alloc]init];
+    SectionDef *aSection;
+    NSMutableArray *sectionCells;
+    CellContentDef *ccDefPtr;
+    NSUInteger rowsSection;
+    for (int sectionIndex = 0; sectionIndex < tableSections.count; sectionIndex++){
+        aSection = [tableSections objectAtIndex:sectionIndex];
+        rowsSection=aSection.sCellsContentDefArr.count;
+        sectionCells = aSection.sCellsContentDefArr;
+        for (ccDefPtr in sectionCells){
+            if (![ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && ccDefPtr.ccCellTypePtr.reloadOnly){
+//            if(![ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class] && ]){
+                for (int index=0; index<rowsSection; index++) {
+                    NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:sectionIndex];
+                    [allPaths addObject: somePath];
+                    
+               
+                }
+            }
+        }
+    }
+
+    
+ /*
+        for (int index=0; index<rowsSection; index++) {
+            NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:section];
+            [allPaths addObject: somePath];
         
     }
+  */
     NSArray *reloadPaths=[allPaths copy];
     
     //          NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];

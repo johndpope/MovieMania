@@ -189,7 +189,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC2:
                 NSLog(@"call makeTVC2");
          //       makeCollectionView=YES;
-                nextTableDef = [self makeTVC2Genres:pressedBtn];
+                nextTableDef = [self makeTVC2:pressedBtn];
+         //       nextTableDef = [self makeTVC2Genres:pressedBtn];
                 break;
             case TVC3:
                 NSLog(@"call makeTVC3");
