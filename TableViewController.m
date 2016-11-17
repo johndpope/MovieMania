@@ -445,7 +445,7 @@
 */
     
     
-    
+/*
     //do I have any subviews?
     int subsCount=[[thisCell.contentView subviews] count];
     
@@ -464,10 +464,9 @@
     }
     
     
+*/
     
-    
-    
-    
+    CellButtonsScroll *aButtonView;    
     //if (!iamreloading) {
     [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 

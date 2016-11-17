@@ -1094,27 +1094,28 @@
     //  aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
     //  return;
     
-    for (ActionRequest *aBtn in buttonSequence){
-        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
-    }
+//    for (ActionRequest *aBtn in buttonSequence){
+//        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+//    }
+//    CellButtonsViewHolder *aBtnView;
+    SectionDef *aSection ;
+    NSMutableArray *sectionCells;
+    CellButtonsScroll *aButtonsCell;
+    CellContentDef *ccDefPtr;
+    TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+    for (aSection in currentTableDef.tableSections){
+        sectionCells = aSection.sCellsContentDefArr;
     
-    /*
-     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
-     SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:aQuery.tableSection];
-     NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
-     CellButtonsScroll *aButtonsCell;
-     CellContentDef *ccDefPtr;
-     
-     
-     HDButtonView *aMMBtnView;
-     for (ccDefPtr in currentSectionCells){
-     if([ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
-     aButtonsCell = (CellButtonsScroll*) ccDefPtr.ccCellTypePtr;
-     aMMBtnView = [aButtonsCell.buttonView objectAtIndex:0];  // had to put this in array to avoid forward refs
-     [aMMBtnView.selectedBtnBox removeFromSuperview];
-     }
-     }
-     */
+        for (ccDefPtr in sectionCells){
+            if([ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+                aButtonsCell = (CellButtonsScroll*) ccDefPtr.ccCellTypePtr;
+          //   aBtnView = [aButtonsCell.buttonView objectAtIndex:0];  // had to put this in array to avoid forward refs
+                for (ActionRequest *aBtn in aButtonsCell.cellsButtonsArray){
+                    aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+                }
+            }
+        }
+    }
 }
 
 -(void)initButtonInCenterToRow0Btn0
