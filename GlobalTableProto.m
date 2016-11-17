@@ -745,8 +745,18 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 //        [self createScrollingViewForGenre:pressedButton forProducts:allProductsOfThisGenre atLocation:aLocDict withTableTitle:tableTitle withGenre:aGenre inSection:section];
  //       section++;
  //           }
-
+    
     TableDef *myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
+    if(!pressedButton.reloadOnly){
+        TableDef *currentTableDef = myTable;//[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+        SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
+        NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
+        CellContentDef *ccDefPtr = [currentSectionCells objectAtIndex:0];
+        CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
+        ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
+        pressedButton=firstButton;
+    
+    }
     
     //////////////TEST HDR as CELLUIVIEW
     //TEST    CellUIView * cuvPtrHDR=  [self cuvPtrCreateTest];
