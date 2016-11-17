@@ -684,7 +684,7 @@
                  [self evaluateAction:pressedBtn];
                  }
                  */
-                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight inSection:pressedBtn.tableSection];
                 break;
             case TVC4://TVCScrollButtonPress:
                 //[gGTPptr makeTVC2:pressedBtn];
@@ -692,7 +692,7 @@
                 //                    rtTableViewCtrler.reloadOnly = YES;
                 currentTableDef.cellDispPrepared = NO;
                 [self prepareTheActiveTableDataForDisplay:pressedBtn];
-                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight inSection:pressedBtn.tableSection];
                 break;
             default:
                 break;

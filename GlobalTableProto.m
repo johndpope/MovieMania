@@ -188,7 +188,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
             case TVC2:
                 NSLog(@"call makeTVC2");
-                makeCollectionView=YES;
+         //       makeCollectionView=YES;
                 nextTableDef = [self makeTVC2Genres:pressedBtn];
                 break;
             case TVC3:
@@ -723,13 +723,14 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
  //   [self turnOnButton:TVC2 inCellBtnArray:footerCell.cellsButtonsArray];
     // rebuild section 2 in all cases
     
- //   section++;
+ /*   section++;
     NSMutableDictionary *genres = [self makeGenresDict:self.liveRuntimePtr.allProductDefinitions_HDI];
     NSArray *sortedGenres = [[genres allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSString *aGenre;
     NSMutableDictionary *allProductsOfThisGenre;
     NSMutableDictionary *aProductDict;
-  //  for (aGenre in sortedGenres){
+  */
+    //for (aGenre in sortedGenres){
  //       allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
  //       for (aProductDict in allProductsOfThisGenre){
  //           NSLog(@"Genre-%@, Title-%@, All Title Genres-%@ ", aGenre, [aProductDict objectForKey:kMovieTitle], [aProductDict objectForKey:kMovieGenre] );
@@ -2290,8 +2291,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 cellContentPtr1.ccTableViewCellPtr=nil;
                 [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
             }
+            section++;
         }
-            }
+    }
     
     // Generic Code End
     return myTable;
