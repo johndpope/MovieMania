@@ -120,8 +120,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     allButtonsDictionary  = [[NSMutableDictionary alloc] init];
 
-    footerButtonNames1 = [[NSArray alloc] initWithObjects:@"SetZip",@"TTV", @"MBV", @"MTV",BUTTONS_FILLER_NAME, nil];
-    footerButtonNextTableViews1 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInteger:TVC0],[NSNumber numberWithInteger:TVC1],[NSNumber numberWithInteger:TVC2],[NSNumber numberWithInteger:TVC3],[NSNumber numberWithInteger:TVCStartUp], nil];
+    footerButtonNames1 = [[NSArray alloc] initWithObjects:@"SetZip",@"TTV", @"MBV", @"MTV",@"GEN", nil];
+    footerButtonNextTableViews1 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInteger:TVC0],[NSNumber numberWithInteger:TVC1],[NSNumber numberWithInteger:TVC2],[NSNumber numberWithInteger:TVC3],[NSNumber numberWithInteger:TVC21], nil];
 //    headerDateButtons = [[NSMutableArray alloc] init];
     footerButtonNames0 = [[NSArray alloc] initWithObjects:@"InitLoc",@"InitInv", @"MovieInfo", BUTTONS_FILLER_NAME,@"StartApp", nil];
     footerButtonNextTableviews0= [[NSArray alloc] initWithObjects:[NSNumber numberWithInteger:TVCStartUp],[NSNumber numberWithInteger:TVCStartUp],[NSNumber numberWithInteger:TVCStartUp],[NSNumber numberWithInteger:TVCStartUp],[NSNumber numberWithInteger:TVCStartUp], nil];
@@ -189,9 +189,14 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC2:
                 NSLog(@"call makeTVC2");
          //       makeCollectionView=YES;
-         //       nextTableDef = [self makeTVC2:pressedBtn];
+                nextTableDef = [self makeTVC2:pressedBtn];
+             
+                break;
+            case TVC21:
+                NSLog(@"call makeTVC21");
                 nextTableDef = [self makeTVC2Genres:pressedBtn];
                 break;
+            
             case TVC3:
                 NSLog(@"call makeTVC3");
                 nextTableDef = [self makeTVC3:pressedBtn];

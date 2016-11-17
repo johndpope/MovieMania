@@ -130,6 +130,7 @@
 #define TVC0 0          // log on TVC
 #define TVC1 1          // Theaters TVC
 #define TVC2 2          // All Movies Btn TVC
+#define TVC21 21        // Movies by genre
 #define TVC3 3          // All Movies Table TVC
 #define TVC4 4          // Theater Movies Showing TVC
 #define TVC5 5          // Movie Detail TVC
