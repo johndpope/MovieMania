@@ -1090,14 +1090,6 @@
     if(!aQuery)
         return;
     
-    
-    //  aQuery.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
-    //  return;
-    
-//    for (ActionRequest *aBtn in buttonSequence){
-//        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
-//    }
-//    CellButtonsViewHolder *aBtnView;
     SectionDef *aSection ;
     NSMutableArray *sectionCells;
     CellButtonsScroll *aButtonsCell;
@@ -1109,7 +1101,6 @@
         for (ccDefPtr in sectionCells){
             if([ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
                 aButtonsCell = (CellButtonsScroll*) ccDefPtr.ccCellTypePtr;
-          //   aBtnView = [aButtonsCell.buttonView objectAtIndex:0];  // had to put this in array to avoid forward refs
                 for (ActionRequest *aBtn in aButtonsCell.cellsButtonsArray){
                     aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
                 }
