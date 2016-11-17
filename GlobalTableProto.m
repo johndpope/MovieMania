@@ -711,35 +711,34 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)makeTVC2Genres:(ActionRequest *)pressedButton
 {
     
-    NSMutableDictionary *genres = [self makeGenresDict:self.liveRuntimePtr.allProductDefinitions_HDI];
-    NSArray *sortedGenres = [[genres allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSString *aGenre;
-    NSMutableDictionary *allProductsOfThisGenre;
-    NSMutableDictionary *aProductDict;
     
-    //
+
     NSString *tableTitle = @"Movie Information";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
     NSLog(@"----makeTVC2    reloadOnly is %d",pressedButton.reloadOnly);
     int section = 0;
     int row = 0;
-    TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
-    CellButtonsScroll *footerCell = (CellButtonsScroll *) myTable.tableFooterContentPtr.ccCellTypePtr;
-    [self turnOnButton:TVC2 inCellBtnArray:footerCell.cellsButtonsArray];
+//    TableDef *myTable = [self createSection0ScrollingView:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict forNumberOfDays:5 withTableTitle:tableTitle];
+//    CellButtonsScroll *footerCell = (CellButtonsScroll *) myTable.tableFooterContentPtr.ccCellTypePtr;
+ //   [self turnOnButton:TVC2 inCellBtnArray:footerCell.cellsButtonsArray];
     // rebuild section 2 in all cases
     
-    section++;
-    
-    for (aGenre in sortedGenres){
-        allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+ //   section++;
+    NSMutableDictionary *genres = [self makeGenresDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+    NSArray *sortedGenres = [[genres allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSString *aGenre;
+    NSMutableDictionary *allProductsOfThisGenre;
+    NSMutableDictionary *aProductDict;
+  //  for (aGenre in sortedGenres){
+ //       allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
  //       for (aProductDict in allProductsOfThisGenre){
  //           NSLog(@"Genre-%@, Title-%@, All Title Genres-%@ ", aGenre, [aProductDict objectForKey:kMovieTitle], [aProductDict objectForKey:kMovieGenre] );
  //       }
-        [self createScrollingViewForGenre:pressedButton forProducts:allProductsOfThisGenre atLocation:aLocDict withGenre:aGenre inSection:section inMyTable:myTable];
-        section++;
-            }
+//        [self createScrollingViewForGenre:pressedButton forProducts:allProductsOfThisGenre atLocation:aLocDict withTableTitle:tableTitle withGenre:aGenre inSection:section];
+ //       section++;
+ //           }
 
-    
+    TableDef *myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
     
     return myTable;
     
@@ -838,8 +837,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(NSMutableDictionary*)allProductsOfThisGenre:(NSString *)genre inProductsDict:(NSMutableDictionary *)allProductsDict
 {
     NSMutableDictionary *allProductsOfGenre = [[NSMutableDictionary alloc] init];
- //   NSMutableDictionary *productDictionaryWithNameAsKey = [self buildProductsDictionaryWithNameKey:allProductsDict];
- //   NSArray *allProductNames = [[productDictionaryWithNameAsKey allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSArray *allProductIDs = [[allProductsDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSMutableDictionary *aProductDict;
     NSMutableDictionary *aProductGenresDict;
@@ -2231,7 +2228,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     // Generic Code End
     return myTable;
 }
--(void)createScrollingViewForGenre:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)genreProductsDict atLocation:(NSMutableDictionary*)aLocDict  withGenre:(NSString*)genre inSection:(int)section inMyTable:(TableDef*)aTable
+-(TableDef*)createScrollingViewForGenres:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict withTableTitle:(NSString*)tableTitle inSection:(int)section // inMyTable:(TableDef*)aTable
 {
     
     //  Generic Use Code Start
@@ -2243,65 +2240,61 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
         NSLog(@"reloadonly - notcreate table");
-        sdPtr1 = [myTable.tableSections objectAtIndex:section];// 0];
+        for (sdPtr1 in myTable.tableSections){
+ //       sdPtr1 = [myTable.tableSections objectAtIndex:section];// 0];
 //        [myTable.tableSections removeAllObjects];
 //        [myTable.tableSections addObject:sdPtr1];
-        cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];  // 
+//        for (cellContentPtr1 in sdPtr1.sCellsContentDefArr){
+        cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
         cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
+        }
     }
     else{
         NSLog(@"create table");
- //       myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+        myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
  //       CGSize sechdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
-        myTable=aTable;
+ //       myTable=aTable;
         sdPtr1 = nil;
-        sdPtr1=[SectionDef initSectionHeaderText:genre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
-//        sdPtr1.sectionHeaderContentPtr=nil;
-        sdPtr1.sectionFooterContentPtr=nil;
-        [myTable.tableSections addObject:sdPtr1];
+        
  //       sdPtr1 = [self createDateButtonsAsSectionHeader:sdPtr1 sectionNumber:0 inTable:myTable actionReq:pressedButton withButtonSize:sechdrBtnSize];// nextTVC:TVC2];
 //        hdrCell = (CellButtonsScroll *)sdPtr1.sectionHeaderContentPtr.ccCellTypePtr;
-//        myTable =[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:hdrBtnSize];// buttonsScroll:NO];
-//        [self turnOnSelectedDateBtn:selectedDate inCellBtnArray:hdrCell.cellsButtonsArray];
+        myTable =[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:hdrBtnSize];// buttonsScroll:NO];
+        [self turnOnSelectedDateBtn:selectedDate inCellBtnArray:hdrCell.cellsButtonsArray];
+        
 //
 //        [myTable.tableSections addObject:sdPtr1];
 //        int section = 0;
         int row = 0;
         
-        //C E L L S    F O R        S E C T I O N S
+        //C E L L S    F O R        S E C T I O N S  Genre Button Sections/Cells
         //button cells section 1      B U T T O N S
         
-        //       CellButtonsContainer *cbsPtr;
-        //       if (makeCollectionView){
-        CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:genreProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
         
-        cbsPtr1.indicateSelItem=YES;
-        if (cbsPtr1.cellsButtonsArray.count){
-            cellContentPtr1=[[CellContentDef alloc] init];
-            cellContentPtr1.ccCellTypePtr=cbsPtr1;
-            cellContentPtr1.ccTableViewCellPtr=nil;
-            
-            [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+        
+        NSMutableDictionary *genres = [self makeGenresDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+        NSArray *sortedGenres = [[genres allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        NSString *aGenre;
+        NSMutableDictionary *allProductsOfThisGenre;
+        NSMutableDictionary *aProductDict;
+        for (aGenre in sortedGenres){
+            sdPtr1=[SectionDef initSectionHeaderText:aGenre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+//        sdPtr1.sectionHeaderContentPtr=nil;
+            sdPtr1.sectionFooterContentPtr=nil;
+            [myTable.tableSections addObject:sdPtr1];
+            allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+            CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsOfThisGenre atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+            cbsPtr1.indicateSelItem=YES;
+            if (cbsPtr1.cellsButtonsArray.count){
+                cellContentPtr1=[[CellContentDef alloc] init];
+                cellContentPtr1.ccCellTypePtr=cbsPtr1;
+                cellContentPtr1.ccTableViewCellPtr=nil;
+                [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
+            }
         }
-        /*
-         }else{
-         
-         CellButtonsScroll * cbsPtr2 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
-         
-         cbsPtr2.indicateSelItem=YES;
-         if (cbsPtr2.cellsButtonsArray.count){
-         cellContentPtr1=[[CellContentDef alloc] init];
-         cellContentPtr1.ccCellTypePtr=cbsPtr2;
-         cellContentPtr1.ccTableViewCellPtr=nil;
-         
-         [sdPtr1.sCellsContentDefArr addObject:cellContentPtr1];
-         }
-         }
-         */
-    }
+            }
     
     // Generic Code End
-    return; //myTable;
+    return myTable;
 }
 -(NSMutableArray *)showingsForNSDate:(NSDate *)aDate inShowings:(NSMutableArray*)showings atLocation:(NSMutableDictionary*)aLocationDict
 {
