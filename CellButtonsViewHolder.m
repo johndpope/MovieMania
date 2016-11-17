@@ -134,7 +134,7 @@
       buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
 #if TARGET_OS_TV
         buttonViewXOffset =  containerView.bounds.size.width/2 - buttonWidth/2;
-//        buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing);
+
 #endif
         buttonViewWidth = (buttonSequence.count) * (buttonWidth + buttonSpacing) + buttonViewXOffset;
         self.containerView.delegate = self;
@@ -686,6 +686,7 @@
     
     
     [self centerJustifyScrollViewSelection:scrollView];
+//   [self leftJustifyScrollViewSelection:scrollView];
     return;
 #endif
     
@@ -740,6 +741,8 @@
     
     
     [self centerJustifyScrollViewSelection:scrollView];
+//    [self leftJustifyScrollViewSelection:scrollView];
+    
     return;
 #endif
     

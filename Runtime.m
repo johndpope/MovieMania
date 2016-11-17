@@ -674,7 +674,7 @@
         NSLog(@"       reloadOnly");
         switch (pressedBtn.nextTableView){
             case TVC2://TVCScrollButtonPress:
-                NSLog(@"       TVC2");
+                            NSLog(@"       TVC2");
                 //[gGTPptr makeTVC2:pressedBtn];
                 [gGTPptr makeTVC:pressedBtn];
                 currentTableDef.cellDispPrepared = NO;
@@ -686,6 +686,15 @@
                  */
                 [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
                 break;
+            case TVC21:
+                NSLog(@"       TVC21");
+                [gGTPptr makeTVC:pressedBtn];
+                currentTableDef.cellDispPrepared = NO;
+                [self prepareTheActiveTableDataForDisplay:pressedBtn];
+//                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
+                
+                 [rtTableViewCtrler.tableView reloadData];
+                 break;
             case TVC4://TVCScrollButtonPress:
                 //[gGTPptr makeTVC2:pressedBtn];
                 [gGTPptr makeTVC:pressedBtn];

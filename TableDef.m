@@ -381,7 +381,7 @@
      
     
 }
-
+/*
 -(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight// inSection:(int)section
 {
     
@@ -406,37 +406,13 @@
         return;
     }
     
- */
-    NSMutableArray *allPaths=[[NSMutableArray alloc]init];
-    SectionDef *aSection;
-    NSMutableArray *sectionCells;
-    CellContentDef *ccDefPtr;
-    NSUInteger rowsSection;
-    for (int sectionIndex = 0; sectionIndex < tableSections.count; sectionIndex++){
-        aSection = [tableSections objectAtIndex:sectionIndex];
-        rowsSection=aSection.sCellsContentDefArr.count;
-        sectionCells = aSection.sCellsContentDefArr;
-        for (ccDefPtr in sectionCells){
-            if (![ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && ccDefPtr.ccCellTypePtr.reloadOnly){
-//            if(![ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class] && ]){
-                for (int index=0; index<rowsSection; index++) {
-                    NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:sectionIndex];
-                    [allPaths addObject: somePath];
-                    
-               
-                }
-            }
-        }
-    }
 
-    
- /*
         for (int index=0; index<rowsSection; index++) {
             NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:section];
             [allPaths addObject: somePath];
         
     }
-  */
+  
     NSArray *reloadPaths=[allPaths copy];
     
     //          NSIndexPath *tmpIndexpath=[NSIndexPath indexPathForRow:0 inSection:1];
@@ -447,11 +423,11 @@
     
     
     
-    
-    
+ 
     
 }
-/*
+ */
+
 -(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight
 {
     
@@ -490,7 +466,7 @@
     
 }
     
- */
+
     
     
 

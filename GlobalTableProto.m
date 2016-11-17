@@ -194,6 +194,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
             case TVC21:
                 NSLog(@"call makeTVC21");
+                makeCollectionView=YES;
                 nextTableDef = [self makeTVC2Genres:pressedBtn];
                 break;
             
