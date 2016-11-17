@@ -385,7 +385,8 @@
 -(void) showMeInDisplayReload:(UITableViewController *) tvc   tvcCreatedWidth:(int)createdWidth  tvcCreatedHeight:(int)createdHeight// inSection:(int)section
 {
     
-    
+    [tvc.tableView reloadData];
+    return;
     //Make returned UIViews the header and footer for the table
     NSLog(@"RNTME showMeInDisplayReload");
     

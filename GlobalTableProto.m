@@ -189,8 +189,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC2:
                 NSLog(@"call makeTVC2");
          //       makeCollectionView=YES;
-                nextTableDef = [self makeTVC2:pressedBtn];
-         //       nextTableDef = [self makeTVC2Genres:pressedBtn];
+         //       nextTableDef = [self makeTVC2:pressedBtn];
+                nextTableDef = [self makeTVC2Genres:pressedBtn];
                 break;
             case TVC3:
                 NSLog(@"call makeTVC3");
@@ -2175,9 +2175,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
         NSLog(@"reloadonly - notcreate table");
-//        sdPtr1 = [myTable.tableSections objectAtIndex:0];
-//        [myTable.tableSections removeAllObjects];
-//        [myTable.tableSections addObject:sdPtr1];
+                sdPtr1 = [myTable.tableSections objectAtIndex:0];
+        [myTable.tableSections removeAllObjects];
+        [myTable.tableSections addObject:sdPtr1];
         cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
         cellContentPtr1.ccCellTypePtr.reloadOnly = YES;
     }
