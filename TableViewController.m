@@ -468,7 +468,7 @@
     
     CellButtonsScroll *aButtonView;    
     //if (!iamreloading) {
-    [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+   [[thisCell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
     //}
     
@@ -503,7 +503,14 @@
 */
     if ([sectionCellsPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]] && sectionCellsPtr.ccCellTypePtr.reloadOnly){
         aButtonView = (CellButtonsScroll*)sectionCellsPtr.ccCellTypePtr;
+        
+        if (!aButtonView.buttonContainerView) {
+            [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
+            
+
+        }
         [thisCell addSubview:aButtonView.buttonContainerView];
+        NSLog(@"RELOADONLY....  %@",NSStringFromCGRect(aButtonView.buttonContainerView.frame));
         
     }else{
         [sectionCellsPtr.ccCellTypePtr putMeInTableViewCell:thisCell withTVC:self maxWidth:self.tableDataPtr.tvcCreatedWidth maxHeight:self.tableDataPtr.tvcCreatedHeight];
@@ -518,6 +525,7 @@
     }
 
     
+        
     
     
 

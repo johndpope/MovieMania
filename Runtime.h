@@ -109,4 +109,5 @@
 
 
 -(void)logwhatsup;
+-(void) reloadForHeader;
 @end

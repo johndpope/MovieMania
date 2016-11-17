@@ -306,6 +306,52 @@
     
     
 }
+
+
+-(void) reloadForHeader
+{
+    if (self.activeTableDataPtr.fixedTableHeaderUIView) {
+        
+        
+        
+       // =   //all scrollable, no fixed header or footer
+        
+        UIView *returnedHeaderUIView=[self.activeTableDataPtr.tableHeaderContentPtr.ccCellTypePtr putMeVisibleMaxWidth:self.activeTableDataPtr.tvcCreatedWidth maxHeight:self.activeTableDataPtr.tvcCreatedHeight withTVC:nil];
+        
+        //***HEADER
+        
+        
+            
+        NSLog(@"");
+            self.activeTableDataPtr.fixedTableHeaderUIView=returnedHeaderUIView;
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        if (forNavHeaderUIView) {
+            [forNavHeaderUIView removeFromSuperview];
+            forNavHeaderUIView=nil;
+        }
+
+        [self.activeTableDataPtr.fixedTableHeaderUIView setFrame:posTopRect ];   //ALTER offset of for fixed header
+        // [self.rtNavCtrler.view addSubview:thisTDataPtr.fixedTableHeaderUIView]; //ADD fixed header
+        [self.holdVCtrler.view addSubview:self.activeTableDataPtr.fixedTableHeaderUIView]; //ADD fixed header
+        NSLog(@"RUNTIME.M (FIXED HEADER RELOAD) NAV addSubView: %p",self.activeTableDataPtr.fixedTableHeaderUIView);
+        forNavHeaderUIView=self.activeTableDataPtr.fixedTableHeaderUIView;
+        
+    }
+    
+    
+    
+    
+}
+
 -(void)displayATVC:(TableDef *)thisTDataPtr pressedBtn:(ActionRequest *)pressedBtn
 {//THIS JUST CAUSES LOAD...IT's NOT UP YET
     
@@ -693,7 +739,7 @@
                 [self prepareTheActiveTableDataForDisplay:pressedBtn];
 //                [currentTableDef showMeInDisplayReload:rtTableViewCtrler tvcCreatedWidth:currentTableDef.tvcCreatedWidth tvcCreatedHeight:currentTableDef.tvcCreatedHeight];
                 
-                 [rtTableViewCtrler.tableView reloadData];
+                // [rtTableViewCtrler.tableView reloadData];
                  break;
             case TVC4://TVCScrollButtonPress:
                 //[gGTPptr makeTVC2:pressedBtn];

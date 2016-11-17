@@ -718,7 +718,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 -(TableDef *)makeTVC2Genres:(ActionRequest *)pressedButton
 {
     
-    
+    BOOL thisIsStartup=FALSE;
 
     NSString *tableTitle = @"Movie Information";
     NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
@@ -755,6 +755,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
         ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
         pressedButton=firstButton;
+        thisIsStartup=TRUE;  //first time through building this TVC
     
     }
     
@@ -786,7 +787,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     myTable.tableHeaderContentPtr=cellContentPtrHDR;
     
 
-   
+    if (!thisIsStartup) {
+        [self.liveRuntimePtr reloadForHeader];
+    }
     
     
     

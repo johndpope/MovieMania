@@ -152,7 +152,9 @@
     }
     
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxW, self.cellMaxHeight)];
-    
+    if (!buttonContainerView) {
+        NSLog(@"");
+    }
     if (useCellButtonsViewHolder) {
         CellButtonsViewHolder * cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr asCollectionView:isCollectionView];
         self.buttonView = [NSArray arrayWithObject:cellButtonsVH];
@@ -214,7 +216,9 @@
     
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxwidth, self.cellMaxHeight)];// maxheight)];
     
-  
+    if (!buttonContainerView) {
+        NSLog(@"");
+    }
     
     HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr];
     self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
