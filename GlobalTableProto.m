@@ -2327,20 +2327,22 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         NSMutableDictionary *allProductsOfThisGenre;
         NSMutableDictionary *aProductDict;
         for (aGenre in sortedGenres){
-            sdPtr=[SectionDef initSectionHeaderText:aGenre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
-//        sdPtr1.sectionHeaderContentPtr=nil;
-            sdPtr.sectionFooterContentPtr=nil;
-            [myTable.tableSections addObject:sdPtr];
             allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
-            CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsOfThisGenre atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
-            cbsPtr1.indicateSelItem=YES;
-            if (cbsPtr1.cellsButtonsArray.count){
-                cellContentPtr1=[[CellContentDef alloc] init];
-                cellContentPtr1.ccCellTypePtr=cbsPtr1;
-                cellContentPtr1.ccTableViewCellPtr=nil;
-                [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
-            }
+            if (allProductsOfThisGenre.count){
+                sdPtr=[SectionDef initSectionHeaderText:aGenre withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+//        sdPtr1.sectionHeaderContentPtr=nil;
+                sdPtr.sectionFooterContentPtr=nil;
+                [myTable.tableSections addObject:sdPtr];
+                        CellButtonsScroll * cbsPtr1 = [self buildAllProductsScrollView:pressedButton forProducts:allProductsOfThisGenre atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView];
+                cbsPtr1.indicateSelItem=YES;
+                if (cbsPtr1.cellsButtonsArray.count){
+                    cellContentPtr1=[[CellContentDef alloc] init];
+                    cellContentPtr1.ccCellTypePtr=cbsPtr1;
+                    cellContentPtr1.ccTableViewCellPtr=nil;
+                    [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
+                }
             section++;
+            }
         }
     }
     
