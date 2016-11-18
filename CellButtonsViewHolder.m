@@ -305,9 +305,6 @@
         [self makeUIButton:aBtn inButtonSequence:buttonSequence];
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
-//#if TARGET_OS_TV
-        [aBtn.uiButton addTarget:self  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
-//#endif
         
     }
     
@@ -357,8 +354,7 @@
     
     
 #if TARGET_OS_TV
-    // tvOS-specific code
-    
+    [aBtn.uiButton addTarget:self.collectionView  action:@selector(primaryActionTriggered:)  forControlEvents:UIControlEventPrimaryActionTriggered];
     
 #else
     // IOS
@@ -436,7 +432,7 @@
     
 
     if (cell.gestureRecognizers.count == 0) {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedMovie:)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedButton:)];
         tap.allowedPressTypes = @[[NSNumber numberWithInteger:UIPressTypeSelect]];
         [cell addGestureRecognizer:tap];
     }
@@ -446,31 +442,17 @@
 
 
 #pragma mark - GestureRecognizer
-- (void)tappedMovie:(UITapGestureRecognizer *)gesture {
+- (void)tappedButton:(UITapGestureRecognizer *)gesture {
     
     if (gesture.view != nil) {
         
-        
-        
-        //example  below
-        TableDef *myTable;
-        //        myTable=[[GlobalTableProto sharedGlobalTableProto] mkTableDefTesterSplashScreen1:nil]; //has text only
-        //        [GlobalTableProto sharedGlobalTableProto].tableDefInUse=myTable;
-        //example above
-        
-        
-        
-        MovieCollectionViewCell* aCell = (MovieCollectionViewCell *)gesture.view;   // I need aCell to get the indexPath only
-        
-        //     Delete from here
+        MovieCollectionViewCell* aCell = (MovieCollectionViewCell *)gesture.view;
         UIButton *myButton = aCell.myButton;
         NSInteger myTag = myButton.tag;
-        NSString *tagString = [NSString stringWithFormat:@"%li",myTag];
-        ActionRequest * pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
+ //       NSString *tagString = [NSString stringWithFormat:@"%li",myTag];
+//        ActionRequest * pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
         NSLog(@"indexPath.section = %li, indexPath.row = %li",aCell.indexPath.section,aCell.indexPath.row);
-       //        NSIndexPath *indexPath = aCell.indexPath;
-        
-          NSNumber *touchedButton = [NSNumber numberWithInteger:pressedBtn.buttonTag];        //       touchInput = touchInput + 88;
+        NSNumber *touchedButton = [NSNumber numberWithInteger:myTag];
         [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
      }
     

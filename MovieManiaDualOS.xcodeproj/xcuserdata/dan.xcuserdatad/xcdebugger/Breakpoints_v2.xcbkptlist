@@ -676,11 +676,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "501121775.530929"
+            timestampString = "501176189.324443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1032"
-            endingLineNumber = "1032"
+            startingLineNumber = "1014"
+            endingLineNumber = "1014"
             landmarkName = "-primaryActionTriggered:"
             landmarkType = "7">
          </BreakpointContent>
@@ -692,11 +692,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "501121775.530929"
+            timestampString = "501176189.324443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1052"
-            endingLineNumber = "1052"
+            startingLineNumber = "1034"
+            endingLineNumber = "1034"
             landmarkName = "-removeSelectedButtonBoxFromAllRows:"
             landmarkType = "7">
          </BreakpointContent>
@@ -740,11 +740,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "501121775.530929"
+            timestampString = "501175697.663007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "-tappedMovie:"
             landmarkType = "7">
          </BreakpointContent>
@@ -772,12 +772,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "501121775.530929"
+            timestampString = "501176189.324443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "473"
-            endingLineNumber = "473"
-            landmarkName = "-tappedMovie:"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
+            landmarkName = "-tappedButton:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CellButtonsViewHolder.m"
+            timestampString = "501176189.324443"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "799"
+            endingLineNumber = "799"
+            landmarkName = "-checkUserFocusMovie"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CellButtonsViewHolder.m"
+            timestampString = "501175919.943902"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "-setUpCollectionView:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
