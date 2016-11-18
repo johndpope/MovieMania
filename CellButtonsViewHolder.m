@@ -434,36 +434,17 @@
     aButton.center=cell.contentView.center;
     //    [cell addSubview:aButton];
     
-/*
+
     if (cell.gestureRecognizers.count == 0) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedMovie:)];
         tap.allowedPressTypes = @[[NSNumber numberWithInteger:UIPressTypeSelect]];
         [cell addGestureRecognizer:tap];
     }
-*/
+
     return cell;
 }
-/*
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.collectionView.frame = self.bounds;
-}
- */
-/*
- - (void)setCollectionViewDataSourceDelegate:(id<UICollectionViewDataSource, UICollectionViewDelegate>)dataSourceDelegate indexPath:(NSIndexPath *)indexPath
- {
- //    self.collectionView.dataSource = dataSourceDelegate;
- //    self.collectionView.delegate = dataSourceDelegate;
- //    self.collectionView.indexPath = indexPath;
- //    [self.collectionView setContentOffset:self.collectionView.contentOffset animated:NO];
- 
- [self.collectionView reloadData];
- }
- 
- */
-/*
+
+
 #pragma mark - GestureRecognizer
 - (void)tappedMovie:(UITapGestureRecognizer *)gesture {
     
@@ -486,50 +467,15 @@
         NSInteger myTag = myButton.tag;
         NSString *tagString = [NSString stringWithFormat:@"%li",myTag];
         ActionRequest * pressedBtn = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
-        //        Movie *movie = [self.movies objectAtIndex:aCell.indexPath.row];
         NSLog(@"indexPath.section = %li, indexPath.row = %li",aCell.indexPath.section,aCell.indexPath.row);
-        //     To here
-        NSIndexPath *indexPath = aCell.indexPath;
+       //        NSIndexPath *indexPath = aCell.indexPath;
         
-        
-        //       NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;// + 99;
-        
-        
-        //      Dan warning !!!  Collection View Row is same as Table View button index.
-        NSInteger touchInput = location * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row;//p indexPath.row*kCellRowModulus;
-        
-        
-        //       touchInput = touchInput + 88;
-        NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
+          NSNumber *touchedButton = [NSNumber numberWithInteger:pressedBtn.buttonTag];        //       touchInput = touchInput + 88;
         [[NSNotificationCenter defaultCenter] postNotificationName:ConstUserTouchInput object:touchedButton];
-        
-        
-        //        MovieViewController *movieVC = (id)[self.storyboard instantiateViewControllerWithIdentifier:@"Movie"];
-        //        movieVC.movie = movie;
-        //        [self presentViewController:movieVC animated:YES completion: nil];
-    }
+     }
     
 }
-*/
-/*
- #pragma mark - Focus
- - (void)didUpdateFocusInContext:(UIFocusUpdateContext *)context withAnimationCoordinator:(UIFocusAnimationCoordinator *)coordinator {
- 
- if (context.previouslyFocusedView != nil) {
- 
- MovieCollectionViewCell *cell = (MovieCollectionViewCell *)context.previouslyFocusedView;
- cell.titleLabel.font = [UIFont systemFontOfSize:17];
- cell.titleLabel.textColor = [UIColor blackColor];
- }
- 
- if (context.nextFocusedView != nil) {
- 
- MovieCollectionViewCell *cell = (MovieCollectionViewCell *)context.nextFocusedView;
- cell.titleLabel.font = [UIFont boldSystemFontOfSize:24];
- cell.titleLabel.textColor = [UIColor redColor];
- }
- }
- */
+
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  Scroll View processing
 ////////////////////////////////////////////////////////////////////////////////////////

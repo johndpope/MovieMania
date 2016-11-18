@@ -142,7 +142,9 @@
     ActionRequest *aBtn =    [self.cellsButtonsArray objectAtIndex:0];
     
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
-    
+    if ([GlobalTableProto sharedGlobalTableProto].inTVOS){
+        isCollectionView= YES;
+    }
     
     if (self.buttonContainerView) {
         self.buttonContainerView=nil;   //kill it?
@@ -213,13 +215,15 @@
         self.buttonContainerView=nil;
     }
     
-    
+    if ([GlobalTableProto sharedGlobalTableProto].inTVOS){
+        isCollectionView= YES;
+    }
     self.buttonContainerView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, maxwidth, self.cellMaxHeight)];// maxheight)];
     
     if (!buttonContainerView) {
         NSLog(@"");
     }
-    CellButtonsViewHolder* returnedUIView = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr asCollectionView:NO];//[GlobalTableProto sharedGlobalTableProto].inTVOS];
+    CellButtonsViewHolder* returnedUIView = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr asCollectionView:isCollectionView];
     self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
     [self.buttonContainerView addSubview:returnedUIView];
     self.buttonView = [NSArray arrayWithObject:returnedUIView];
