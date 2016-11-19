@@ -8,7 +8,7 @@
 
 #import "CellButtonsViewHolder.h"
 #import "CollectionViewHolder.h"
-#import "MovieCollectionViewCell.h"
+#import "CollectionViewCell.h"
 #import "ActionRequest.h"
 #import "TableProtoDefines.h"
 #import "GlobalTableProto.h"
@@ -334,7 +334,7 @@
     
     
     
-    [collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
+    [collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
     
     [collectionView setBackgroundColor:[UIColor blueColor]];
     
@@ -395,11 +395,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MovieCollectionViewCell* cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"movieCell"
+    CollectionViewCell* cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"movieCell"
                                                                                    forIndexPath:indexPath];
     if (!cell)
     {
-        cell = [[MovieCollectionViewCell alloc] init];
+        cell = [[CollectionViewCell alloc] init];
     }
     
     
@@ -446,7 +446,7 @@
     
     if (gesture.view != nil) {
         
-        MovieCollectionViewCell* aCell = (MovieCollectionViewCell *)gesture.view;
+        CollectionViewCell* aCell = (CollectionViewCell *)gesture.view;
         UIButton *myButton = aCell.myButton;
         NSInteger myTag = myButton.tag;
  //       NSString *tagString = [NSString stringWithFormat:@"%li",myTag];
@@ -850,7 +850,7 @@
     
     if ([context.previouslyFocusedView isKindOfClass: [UICollectionViewCell class]]){
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.previouslyFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell*)context.previouslyFocusedView;
         btn = cell.myButton;
     }
     if ([context.previouslyFocusedView isKindOfClass:[UIButton class]]){
@@ -879,7 +879,7 @@
         
         
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.nextFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell*)context.nextFocusedView;
         btn = cell.myButton;
     }
     if ([context.nextFocusedView isKindOfClass:[UIButton class]]){

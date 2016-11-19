@@ -7,7 +7,7 @@
 //
 
 #import "CollectionViewHolder.h"
-#import "MovieCollectionViewCell.h"
+#import "CollectionViewCell.h"
 #import "ActionRequest.h"
 #import "TableProtoDefines.h"
 #import "GlobalTableProto.h"
@@ -203,7 +203,7 @@
     
     
     
-    [collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:@"movieCell"];
+    [collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:@"collectionViewCell"];
     
     [collectionView setBackgroundColor:[UIColor blueColor]];
     
@@ -264,11 +264,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MovieCollectionViewCell* cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"movieCell"
+    CollectionViewCell* cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"collectionViewCell"
                                                                            forIndexPath:indexPath];
     if (!cell)
     {
-        cell = [[MovieCollectionViewCell alloc] init];
+        cell = [[CollectionViewCell alloc] init];
     }
 
     
@@ -343,7 +343,7 @@
         
         
        
-        MovieCollectionViewCell* aCell = (MovieCollectionViewCell *)gesture.view;   // I need aCell to get the indexPath only
+        CollectionViewCell* aCell = (CollectionViewCell *)gesture.view;   // I need aCell to get the indexPath only
         
  //     Delete from here
         UIButton *myButton = aCell.myButton;
@@ -380,14 +380,14 @@
     
     if (context.previouslyFocusedView != nil) {
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell *)context.previouslyFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell *)context.previouslyFocusedView;
         cell.titleLabel.font = [UIFont systemFontOfSize:17];
         cell.titleLabel.textColor = [UIColor blackColor];
     }
     
     if (context.nextFocusedView != nil) {
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell *)context.nextFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell *)context.nextFocusedView;
         cell.titleLabel.font = [UIFont boldSystemFontOfSize:24];
         cell.titleLabel.textColor = [UIColor redColor];
     }
@@ -773,7 +773,7 @@
     
     if ([context.previouslyFocusedView isKindOfClass: [UICollectionViewCell class]]){
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.previouslyFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell*)context.previouslyFocusedView;
         UIButton *btn = cell.myButton;
         NSString *prevTag = [NSString stringWithFormat:@"%li",btn.tag];
         ActionRequest *prevButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:prevTag];
@@ -794,7 +794,7 @@
         
         
         
-        MovieCollectionViewCell *cell = (MovieCollectionViewCell*)context.nextFocusedView;
+        CollectionViewCell *cell = (CollectionViewCell*)context.nextFocusedView;
         UIButton *btn = cell.myButton;
         NSString *nextTag = [NSString stringWithFormat:@"%li",btn.tag];
         ActionRequest *nextButton = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:nextTag];

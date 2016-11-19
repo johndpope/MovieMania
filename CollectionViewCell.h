@@ -1,5 +1,5 @@
 //
-//  MovieCollectionViewCell.h
+//  CollectionViewCell.h
 //  TVOSExample
 //
 //  Created by Christian Lysne on 13/09/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GlobalTableProto.h"
 
-@interface MovieCollectionViewCell : UICollectionViewCell
+@interface CollectionViewCell : UICollectionViewCell
 
 @property (retain, nonatomic) UIView *posterView;
 @property (retain, nonatomic) UILabel *titleLabel;
