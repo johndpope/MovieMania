@@ -12,7 +12,7 @@
 #import "TableProtoDefines.h"
 #import "GlobalTableProto.h"
 #import "Runtime.h"
-
+#import "TableViewController.h"
 #define COLLECTION_VIEW_PADDING 60
 
 //@interface ViewController () <UICollectionViewDelegateFlowLayout>
@@ -169,8 +169,9 @@
  //   buttonSequence=myButtons;
     
 //    height = (CGRectGetHeight(self.frame)-(2*COLLECTION_VIEW_PADDING))/2;
-    ActionRequest *aBtn;    for (ActionRequest *aBtn in buttonSequence){
-        [HDButtonView makeUIButton:aBtn inButtonSequence:buttonSequence];
+    ActionRequest *aBtn;
+        for (ActionRequest *aBtn in buttonSequence){
+        [self makeUIButton:aBtn inButtonSequence:buttonSequence];
 //
 //    for (aBtn in buttonSequence){
         [aBtn.uiButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
@@ -241,6 +242,41 @@
 //    [collectionView reloadData];
 }
 
+-(void)makeUIButton:(ActionRequest*)actionReq inButtonSequence:(NSMutableArray *)buttonSeq
+{
+    
+    CGRect buttonFrame = CGRectMake(actionReq.buttonOrigin.x,actionReq.buttonOrigin.y,actionReq.buttonSize.width,actionReq.buttonSize.height);
+    //    buttonFrame.origin = actionReq.buttonOrigin;
+    UIButton *nextButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    
+    actionReq.uiButton = nextButton;
+    nextButton.tag = actionReq.buttonTag;
+    nextButton.hidden = NO;
+    nextButton.userInteractionEnabled =  YES;
+    nextButton.backgroundColor = [UIColor darkGrayColor];//  backColor;// [UIColor blackColor];
+    //    buttonViewXOffset = buttonViewXOffset + buttonWidth + buttonSpacing;
+    
+    nextButton.adjustsImageWhenHighlighted = YES;
+    [nextButton addTarget: actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
+    [nextButton addTarget: actionReq action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpOutside];
+    if (actionReq.buttonImage){
+        
+        [nextButton setImage:actionReq.buttonImage forState: UIControlStateNormal];
+        nextButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+        nextButton.contentVerticalAlignment   = UIControlContentVerticalAlignmentFill;
+        nextButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+    }else{
+        [nextButton setTitle:actionReq.buttonName forState:UIControlStateNormal];
+        nextButton.titleLabel.font = [UIFont systemFontOfSize:[GlobalTableProto sharedGlobalTableProto].sizeGlobalTextFontSmall]; //was 12
+        [nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        nextButton.titleLabel.numberOfLines = 2;
+        nextButton.alpha = 0.6;
+        if (actionReq.buttonIsOn || (buttonSeq.count == 1))
+            nextButton.alpha = 1.0;
+    }
+    [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary setObject:actionReq forKey:[NSString stringWithFormat:@"%li",actionReq.buttonTag]];
+}
 
 #pragma mark - UICollectionView
 

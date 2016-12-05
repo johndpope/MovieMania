@@ -396,14 +396,8 @@
 				B2EB42681D80736C00F7E82F /* ActionRequest.m */,
 				B2EB42691D80736C00F7E82F /* Assets.bundle */,
 				B2EB426A1D80736C00F7E82F /* buffy100x100.png */,
-				B2EB426B1D80736C00F7E82F /* CellButtonsScroll.h */,
-				B2EB426C1D80736C00F7E82F /* CellButtonsScroll.m */,
-				37FEE7931DDBE33E00DBA0C5 /* CellButtonsViewHolder.h */,
-				37FEE7941DDBE33E00DBA0C5 /* CellButtonsViewHolder.m */,
-				B21A35E31DD50B9A0066475A /* CollectionViewHolder.h */,
-				B21A35E41DD50BA50066475A /* CollectionViewHolder.m */,
-				B21A35E71DD50EA90066475A /* CollectionViewCell.h */,
-				B21A35E81DD50EA90066475A /* CollectionViewCell.m */,
+				B2896A441DF5EEA100488815 /* Unused Classes */,
+				B2896A451DF5EF0300488815 /* CellButtonsScroll */,
 				B2EB426D1D80736C00F7E82F /* CellContentDef.h */,
 				B2EB426E1D80736C00F7E82F /* CellContentDef.m */,
 				B2EB426F1D80736C00F7E82F /* CellImageLTextR.h */,
@@ -436,8 +430,6 @@
 				B2EB42861D80736C00F7E82F /* GlobalTableProto.m */,
 				B2EB42AB1D80736C00F7E82F /* PurchaseRecord.h */,
 				B2EB42AC1D80736C00F7E82F /* PurchaseRecord.m */,
-				B2EB42871D80736C00F7E82F /* HDButtonView.h */,
-				B2EB42881D80736C00F7E82F /* HDButtonView.m */,
 				B2EB42891D80736C00F7E82F /* HDI_iOS_Client */,
 				B2EB42B61D80736C00F7E82F /* HDMovieClipPlayer.h */,
 				B2EB42B71D80736C00F7E82F /* HDMovieClipPlayer.m */,
@@ -544,6 +536,30 @@
 				AAE8D3021BA5CEBC0003A4DF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2896A441DF5EEA100488815 /* Unused Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B21A35E31DD50B9A0066475A /* CollectionViewHolder.h */,
+				B21A35E41DD50BA50066475A /* CollectionViewHolder.m */,
+				B2EB42871D80736C00F7E82F /* HDButtonView.h */,
+				B2EB42881D80736C00F7E82F /* HDButtonView.m */,
+			);
+			name = "Unused Classes";
+			sourceTree = "<group>";
+		};
+		B2896A451DF5EF0300488815 /* CellButtonsScroll */ = {
+			isa = PBXGroup;
+			children = (
+				B2EB426B1D80736C00F7E82F /* CellButtonsScroll.h */,
+				B2EB426C1D80736C00F7E82F /* CellButtonsScroll.m */,
+				37FEE7931DDBE33E00DBA0C5 /* CellButtonsViewHolder.h */,
+				37FEE7941DDBE33E00DBA0C5 /* CellButtonsViewHolder.m */,
+				B21A35E71DD50EA90066475A /* CollectionViewCell.h */,
+				B21A35E81DD50EA90066475A /* CollectionViewCell.m */,
+			);
+			name = CellButtonsScroll;
 			sourceTree = "<group>";
 		};
 		B2B8AFEB1DAD5EF800A6EC4E /* Frameworks */ = {

@@ -13,7 +13,7 @@
 #import "TableProtoDefines.h"
 #import "GlobalTableProto.h"
 #import "Runtime.h"
-
+#import "TableViewController.h"
 #define COLLECTION_VIEW_PADDING 60
 
 //@interface ViewController () <UICollectionViewDelegateFlowLayout>
@@ -26,7 +26,7 @@
 
 @implementation CellButtonsViewHolder
 {
-    //    HDButtonView *myButtonView;
+   
     
     int location;
     ActionRequest *currentButtonInCenter;
@@ -247,11 +247,11 @@
     }
     
     if (containerScrolls && aBtn.reloadOnly){
-        NSLog(@"HDButtonView addButtonsToView   INIT button in center buttonsCount %ld ",[self.buttonSequence count]);
+        NSLog(@"CellButtonsViewHolder addButtonsToView   INIT button in center buttonsCount %ld ",[self.buttonSequence count]);
         [self initButtonInCenterToRow0Btn0];
     }
     else{
-        NSLog(@"HDButtonView addButtonsToView   not init button in center  buttonsCount %ld",[self.buttonSequence count]);
+        NSLog(@"CellButtonsViewHolder addButtonsToView   not init button in center  buttonsCount %ld",[self.buttonSequence count]);
     }
     
     

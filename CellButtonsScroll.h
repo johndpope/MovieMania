@@ -11,10 +11,10 @@
 #import "CellTypesAll.h"
 #import "TableProtoDefines.h" 
 #import "DispTText.h"
-#import "HDButtonView.h"
+//#import "HDButtonView.h"
 #import "TableViewController.h"
 #import "CellButtonsViewHolder.h"
-#import "CollectionViewHolder.h"
+//#import "CollectionViewHolder.h"
 
 @interface CellButtonsScroll : CellTypesAll
 
@@ -24,7 +24,7 @@
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 @property (nonatomic, readwrite) BOOL isCollectionView;
-@property (nonatomic, readwrite) BOOL    useCellButtonsViewHolder;
+//@property (nonatomic, readwrite) BOOL    useCellButtonsViewHolder;
 
 + (id )initCellDefaults;
 

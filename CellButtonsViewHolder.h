@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "TableViewController.h"
+//#import "TableViewController.h"
+@class TableViewController;
 @class ActionRequest;
 @interface CellButtonsViewHolder : UIView <UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate,UIGestureRecognizerDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic, retain) NSMutableArray*  buttonSequence;//*myButtons;

@@ -200,7 +200,7 @@
             aBtn.buttonOrigin = CGPointMake(buttonViewXOffset,buttonYOffset);
             if (isColumn)
                 aBtn.buttonOrigin = CGPointMake(buttonYOffset, buttonViewXOffset);
-            [HDButtonView makeUIButton:aBtn inButtonSequence:buttonSequence];// isColumn:NO];
+            [self makeUIButton:aBtn inButtonSequence:buttonSequence];// isColumn:NO];
             nextButton=aBtn.uiButton;
             [newButtonView addSubview:nextButton];
              [nextButton addTarget: self action:@selector(touchUpOnButton:)  forControlEvents:UIControlEventTouchUpInside];
@@ -252,7 +252,7 @@
     return self;
 }
 
-+(void)makeUIButton:(ActionRequest*)actionReq inButtonSequence:(NSMutableArray *)buttonSeq
+-(void)makeUIButton:(ActionRequest*)actionReq inButtonSequence:(NSMutableArray *)buttonSeq
 {
     
     CGRect buttonFrame = CGRectMake(actionReq.buttonOrigin.x,actionReq.buttonOrigin.y,actionReq.buttonSize.width,actionReq.buttonSize.height);

@@ -22,7 +22,7 @@
 @synthesize buttonView;
 @synthesize indicateSelItem;
 @synthesize isCollectionView;
-@synthesize useCellButtonsViewHolder;
+//@synthesize useCellButtonsViewHolder;
  
 
 
@@ -80,7 +80,7 @@
     [nCell.cellsButtonsArray addObjectsFromArray:buttonArray];
     nCell.backgoundColor=  backColor;
     nCell.isCollectionView=isCollectionView;
-    nCell.useCellButtonsViewHolder= YES;
+//    nCell.useCellButtonsViewHolder= YES;
     
     
     return nCell;
@@ -157,7 +157,7 @@
     if (!buttonContainerView) {
         NSLog(@"");
     }
-    if (useCellButtonsViewHolder) {
+//    if (useCellButtonsViewHolder) {
         CellButtonsViewHolder * cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr asCollectionView:isCollectionView];
         self.buttonView = [NSArray arrayWithObject:cellButtonsVH];
         self.buttonContainerView.contentSize = CGSizeMake(cellButtonsVH.bounds.size.width,0.0);
@@ -167,10 +167,10 @@
         tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
         [tvcellPtr addSubview:self.buttonContainerView];
         return;
-    }
+//    }
     
     
-    
+ /*
     if(!isCollectionView){
         
         HDButtonView* returnedUIView = [[HDButtonView alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr];
@@ -191,7 +191,7 @@
     tvcellPtr.backgroundColor=[UIColor clearColor];
     tvcellPtr.contentView.backgroundColor=[UIColor clearColor];
     [tvcellPtr addSubview:self.buttonContainerView];
-  
+ */ 
     
 }
 
