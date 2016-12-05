@@ -861,6 +861,14 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIScrollViewDelegate
 ////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+//    NSLog(@"TableViewDidScroll");
+    
+    return;
+    }
+
 /*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSLog(@"do I get scrollViewDidScroll messages?");

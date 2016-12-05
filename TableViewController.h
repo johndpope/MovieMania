@@ -15,7 +15,7 @@
 #import "CellMovieView.h"
 //#import "YTPlayerView.h"
 
-@interface TableViewController : UITableViewController <UIGestureRecognizerDelegate, UITableViewDelegate>//<YTPlayerViewDelegate>
+@interface TableViewController : UITableViewController <UIScrollViewDelegate,UIGestureRecognizerDelegate, UITableViewDelegate>//<YTPlayerViewDelegate>
 
 //@property (nonatomic, readwrite) int inMovieVC;
 //@property (nonatomic, readwrite) ActionRequest *actionForReloadingView;
