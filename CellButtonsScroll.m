@@ -22,6 +22,8 @@
 @synthesize buttonView;
 @synthesize indicateSelItem;
 @synthesize isCollectionView;
+@synthesize cellButtonsVH;
+@synthesize cellYoffSet;
 //@synthesize useCellButtonsViewHolder;
  
 
@@ -158,7 +160,7 @@
         NSLog(@"");
     }
 //    if (useCellButtonsViewHolder) {
-        CellButtonsViewHolder * cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr asCollectionView:isCollectionView];
+        cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcontrollerPtr asCollectionView:isCollectionView];
         self.buttonView = [NSArray arrayWithObject:cellButtonsVH];
         self.buttonContainerView.contentSize = CGSizeMake(cellButtonsVH.bounds.size.width,0.0);
         [self.buttonContainerView addSubview:cellButtonsVH];
@@ -223,10 +225,10 @@
     if (!buttonContainerView) {
         NSLog(@"");
     }
-    CellButtonsViewHolder* returnedUIView = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr asCollectionView:isCollectionView];
-    self.buttonContainerView.contentSize = CGSizeMake(returnedUIView.bounds.size.width,0.0);
-    [self.buttonContainerView addSubview:returnedUIView];
-    self.buttonView = [NSArray arrayWithObject:returnedUIView];
+    cellButtonsVH = [[CellButtonsViewHolder alloc]initWithContainer:self.buttonContainerView buttonSequence:self.cellsButtonsArray rowNumbr:0  withTVC:(TableViewController *)tvcPtr asCollectionView:isCollectionView];
+    self.buttonContainerView.contentSize = CGSizeMake(cellButtonsVH.bounds.size.width,0.0);
+    [self.buttonContainerView addSubview:cellButtonsVH];
+    self.buttonView = [NSArray arrayWithObject:cellButtonsVH];
 //    buttonContainerView.scrollEnabled = thisViewScrolls;
     self.buttonContainerView.backgroundColor=self.backgoundColor;
     

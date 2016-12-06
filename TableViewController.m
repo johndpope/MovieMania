@@ -3,7 +3,8 @@
 
 //
 #import "TableViewController.h"
-
+#import "CellButtonsViewHolder.h"
+#import "CellButtonsScroll.h"
 
 
 @interface TableViewController()
@@ -16,6 +17,9 @@
 @end
 
 @implementation TableViewController
+{
+    GlobalTableProto *gtpPtr;
+}
 
 @synthesize _myInitFrame;
 
@@ -869,7 +873,46 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     return;
     }
 
-/*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+
+- (void)scrollViewDidEndDragging:(UITableView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    //what is currentbuttonincenter?
+#if TARGET_OS_TV
+       return;
+#endif
+    
+    
+    if (!decelerate){
+//        NSInteger cellHeight = scrollView.bounds.size.height;
+      float yOffset = scrollView.contentOffset.y;
+      NSInteger section =  [CellButtonsViewHolder newSegmentFromTableScroll:scrollView withScrollOffset:yOffset];
+      if (section > 1000)
+          return;
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UITableView *)scrollView
+{
+    NSLog(@"MYRACHANGED TableViewController scrollViewDidEndDecelerating");
+#if TARGET_OS_TV
+    
+       return;
+#endif
+//    NSInteger cellHeight = scrollView.bounds.size.height;
+    float yOffset = scrollView.contentOffset.y;
+    NSInteger section =  [CellButtonsViewHolder newSegmentFromTableScroll:scrollView withScrollOffset:yOffset];
+    if (section > 1000)
+        return;
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+
+
+
+    /*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSLog(@"do I get scrollViewDidScroll messages?");
     NSLog(@"scrollview %p",scrollView);

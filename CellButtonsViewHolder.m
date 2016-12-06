@@ -44,6 +44,7 @@
     UITableViewController *tvc;
     int     numberOfButtonsToMake;
     float buttonViewXOffset;
+    GlobalTableProto *gtpPtr;
     
     UIColor *textColor;
     UIColor *backColor;
@@ -55,6 +56,7 @@
 @synthesize containerView;
 @synthesize rowNumber;
 @synthesize isCollectionView;
+
 #pragma mark - Lifecycle
 
 - (id)initWithButtons:(NSMutableArray*)buttons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls
@@ -80,6 +82,7 @@
 }
 - (id)initWithContainer:(UIScrollView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr withTVC:(TableViewController *)tvcPtr asCollectionView:(BOOL)asCollectionView
 {
+    gtpPtr= [GlobalTableProto sharedGlobalTableProto];
     isCollectionView=asCollectionView;
     tvc = tvcPtr;
     //    [self addTestButtonsToArray:btnSequence];
@@ -466,9 +469,9 @@
     UIButton * uiButtonPressed = sender;
     NSLog(@"CollectionViewHolder touch up on Button Number %li",(long)uiButtonPressed.tag);
     
-    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+//    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
     
-    
+    [CellButtonsViewHolder removeSelectedButtonBoxFromAllRows];
     NSNumber *touchedButton = [NSNumber numberWithInteger:uiButtonPressed.tag];
     NSString *tagString = [touchedButton stringValue];
     ActionRequest *pressedAction = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
@@ -647,7 +650,8 @@
          return;
          }
          */
-        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+//        [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+        [CellButtonsViewHolder removeSelectedButtonBoxFromAllRows];
         [self updateButtonInCenter:offset];
         if (currentButtonInCenter.reloadOnly){
             NSNumber *touchedButton = [NSNumber numberWithInteger:currentButtonInCenter.uiButton.tag];
@@ -698,7 +702,8 @@
      NSLog(@"buttonWasPressed = NO 2");
      return;
      }*/
-    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+//    [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
+    [CellButtonsViewHolder removeSelectedButtonBoxFromAllRows];
     [self updateButtonInCenter:offset];// forScrollView:scrollView];
     if (currentButtonInCenter.reloadOnly){
         NSNumber *touchedButton = [NSNumber numberWithInteger:currentButtonInCenter.uiButton.tag];
@@ -730,7 +735,7 @@
         adjustedOffSet = CGPointMake(offset.x+aSab.uiButton.bounds.size.width/2, offset.y);
         aSabOffset = i*(aSab.buttonSize.width+buttonSpacing)+(aSab.buttonSize.width/2);
         aSabCenter = CGPointMake(aSabOffset, offset.y);
-        int testDistance = [self distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSabCenter];// aSab.uiButton.center];
+        int testDistance = [CellButtonsViewHolder distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSabCenter];// aSab.uiButton.center];
         if ( testDistance < closestDistance){
             closestDistance= testDistance;
             sel = i;//+1;
@@ -739,12 +744,13 @@
     
     [self moveToButtonInCenter:sel];// forScrollView:scrollView];// withCurrentSA:currentSpriteAction];
 }
+
 -(void)moveToButtonInCenter:(NSInteger)currentCenterBtnNumber //forScrollView:(UIScrollView*)scrollView
 {
     NSLog(@"CollectionViewHolder moveToButtonInCenter");
     
     
-    
+
     ActionRequest *aBtn;
     
     for (int i = 0; i < buttonSequence.count; i++){
@@ -779,9 +785,10 @@
     }
                      completion:nil];
     
-    //    [self.collectionView scrollToItemAtIndexPath:currentButtonInCenter.buttonIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    
 }
--(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
+ 
++(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
 {
     float distance = sqrt(pow((currentPosition.x - buttonPos.x), 2.0) + pow((currentPosition.y - buttonPos.y), 2.0));
     //   DDLogDan(@"Distance Between Sprite Touches = %3.2f", distance);
@@ -1020,12 +1027,12 @@
 
 
 
--(void)removeSelectedButtonBoxFromAllRows:(ActionRequest*)aQuery
++(void)removeSelectedButtonBoxFromAllRows//:(ActionRequest*)aQuery
 {
     
     NSLog(@"CollectionViewHolder removeSelectedButtonBoxFromAllRows");
-    if(!aQuery)
-        return;
+//    if(!aQuery)
+//        return;
     
     SectionDef *aSection ;
     NSMutableArray *sectionCells;
@@ -1045,7 +1052,98 @@
         }
     }
 }
+//+(ActionRequest*)newSegmentFromTableScroll:(NSIndexPath*)indexPath
+/*
++(NSInteger)newSegmentFromTableScrollOld:(UITableView*)tableView withScrollOffset:(NSInteger)yOffset;
+{
+    NSLog(@"CollectionViewHolder newSegmentFromTableScroll");
+    
+//    GlobalTableProto *gtpPtr=[GlobalTableProto sharedGlobalTableProto];
+    ActionRequest *aBtn = nil;
+    CellButtonsViewHolder *newCellButtonsVH;
+    SectionDef *aSection;
+//    NSMutableArray *sectionCells;
+//    CellButtonsScroll *aButtonsCell;
+    CellContentDef *ccDefPtr;
+    TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+    
+    if (!currentTableDef.tableSections)
+        return 999999;
+    
+    NSInteger section = [CellButtonsViewHolder whatSectionCellIsThis:yOffset withCellButtonsScroll:currentTableDef];
+    if (section>1000)
+        return 999999;
+    aSection = [currentTableDef.tableSections objectAtIndex:section];
+//    sectionCells = aSection.sCellsContentDefArr;
+//    for (ccDefPtr in sectionCells){
+    ccDefPtr=[aSection.sCellsContentDefArr objectAtIndex:0];
+//    if([ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+    CellButtonsScroll *cbsPtr = (CellButtonsScroll*) ccDefPtr.ccCellTypePtr;
+    newCellButtonsVH=cbsPtr.cellButtonsVH;
+    aBtn = [newCellButtonsVH.buttonSequence objectAtIndex:0];
+    aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+    [newCellButtonsVH touchUpOnButton:aBtn.uiButton];
+    [aBtn touchUpOnButton:aBtn.uiButton];
+        
+    return section;
+    
+    
+    
+}
+ */
+//+(NSInteger)whatSectionCellIsThis:(NSInteger)yOffset withCellButtonsScroll:(TableDef*)currentTableDef
++(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(float)yOffset;
+{
+    NSLog(@"CollectionViewHolder newSegmentFromTableScroll");
 
+
+    TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+    NSMutableArray *tableSections = currentTableDef.tableSections;
+    SectionDef *aSection;
+    CellButtonsScroll* cbsPtr;
+    CellContentDef *ccDefPtr;
+    int sel = 99999;
+    float closestDistance = 99999;
+  
+    CGPoint currentScrollOffset = CGPointMake(0, yOffset);
+    CGPoint testOffset = CGPointMake(0, 0);
+    for (int i = 0; i < tableSections.count; i++){
+        aSection = [tableSections objectAtIndex:i];
+        ccDefPtr = [aSection.sCellsContentDefArr objectAtIndex:0];
+        cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
+        if(!cbsPtr)
+            continue;
+        int testDistance = [CellButtonsViewHolder distanceBetweenTwoPoints:testOffset buttonPos:currentScrollOffset];// aSab.uiButton.center];
+            if ( testDistance < closestDistance){
+                closestDistance= testDistance;
+                sel = i;//+1;
+            }
+        testOffset.y = testOffset.y + cbsPtr.cellMaxHeight + 40;  // need section hdr height
+    }
+    if (sel<=1000){
+        aSection = [tableSections objectAtIndex:sel];
+        cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
+        if (!cbsPtr)
+            return 99999;
+        CellButtonsViewHolder *newCellButtonsVH=cbsPtr.cellButtonsVH;
+        ActionRequest* aBtn = [newCellButtonsVH.buttonSequence objectAtIndex:0];
+        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+        [newCellButtonsVH touchUpOnButton:aBtn.uiButton];
+        [aBtn touchUpOnButton:aBtn.uiButton];
+    }
+    return sel;
+}
+                
+                
++(CellButtonsScroll*)whatIsCBS:(NSMutableArray*)sectionCells atIndex:(NSInteger)cellIndex
+{
+    CellButtonsScroll *aButtonsCell=nil;
+    CellContentDef *ccDefPtr = [sectionCells objectAtIndex:cellIndex];
+    if([ccDefPtr.ccCellTypePtr isKindOfClass:[CellButtonsScroll class]]){
+        aButtonsCell = (CellButtonsScroll*) ccDefPtr.ccCellTypePtr;
+    }
+    return aButtonsCell;
+}
 -(void)initButtonInCenterToRow0Btn0
 {
     

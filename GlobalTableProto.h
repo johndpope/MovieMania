@@ -63,6 +63,7 @@ extern NSString* const ConstDoneLoopingXactionResponseProcessed;
 
 @property (nonatomic, readwrite) CGRect currentActiveTVRect;
 @property (nonatomic, readwrite) BOOL inTVOS;
+//@property (nonatomic, readwrite) ActionRequest   *currentButtonInCenter;
 
 
 @property (nonatomic, readwrite) BOOL runningSimulator;

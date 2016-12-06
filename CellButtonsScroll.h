@@ -24,6 +24,8 @@
 @property (nonatomic, retain)    NSArray *buttonView;
 @property (nonatomic, readwrite) BOOL indicateSelItem;
 @property (nonatomic, readwrite) BOOL isCollectionView;
+@property (nonatomic, readwrite) CellButtonsViewHolder *cellButtonsVH;
+@property (nonatomic, readwrite) NSInteger cellYoffSet;
 //@property (nonatomic, readwrite) BOOL    useCellButtonsViewHolder;
 
 + (id )initCellDefaults;

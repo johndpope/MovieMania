@@ -11,6 +11,7 @@
 //#import "TableViewController.h"
 @class TableViewController;
 @class ActionRequest;
+@class CellButtonsScroll;
 @interface CellButtonsViewHolder : UIView <UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate,UIGestureRecognizerDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic, retain) NSMutableArray*  buttonSequence;//*myButtons;
 @property (nonatomic, retain) UICollectionView *collectionView;
@@ -19,8 +20,14 @@
 @property (nonatomic, strong) UIScrollView          *containerView;
 @property (nonatomic, readwrite) int                rowNumber;
 @property (nonatomic, readwrite) BOOL  isCollectionView;
+
 - (id)initWithContainer:(UIScrollView *)container buttonSequence:(NSMutableArray *)btnSequence rowNumbr:(int)rowNmbr withTVC:(TableViewController *)tvcPtr asCollectionView:(BOOL)asCollectionView;
 - (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls;
+
++(void)removeSelectedButtonBoxFromAllRows;
++(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(float)yOffset;
+
+
 @end
 
 

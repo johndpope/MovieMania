@@ -520,12 +520,6 @@
     return;
 #endif
     
- 
-    
-    
-    
-    
-    
     
     if (!decelerate){
         [self removeSelectedButtonBoxFromAllRows:currentButtonInCenter];
