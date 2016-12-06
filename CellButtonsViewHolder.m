@@ -1096,7 +1096,7 @@
 //+(NSInteger)whatSectionCellIsThis:(NSInteger)yOffset withCellButtonsScroll:(TableDef*)currentTableDef
 //+(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(CGFloat)yOffset;
 
-+(void)newSectionFromTableScroll:(NSUInteger)newSection
++(void)newSectionFromTableViewScroll:(NSUInteger)newSection
 {
     NSLog(@"CollectionViewHolder newSegmentFromTableScroll");
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
