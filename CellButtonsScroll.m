@@ -23,7 +23,7 @@
 @synthesize indicateSelItem;
 @synthesize isCollectionView;
 @synthesize cellButtonsVH;
-@synthesize cellYoffSet;
+//@synthesize cellYoffSet;
 //@synthesize useCellButtonsViewHolder;
  
 

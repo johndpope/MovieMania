@@ -2186,8 +2186,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         NSArray *sortedGenres = [[genres allKeys] sortedArrayUsingSelector:@selector(compare:)];
         NSString *aGenre;
         NSMutableDictionary *allProductsOfThisGenre;
-        NSInteger sectionYOffset = 0;
-        NSInteger sectionHeight;
+
         for (aGenre in sortedGenres){
             allProductsOfThisGenre = [self allProductsOfThisGenre:aGenre inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
             if (allProductsOfThisGenre.count){
@@ -2204,8 +2203,6 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                     [sdPtr.sCellsContentDefArr addObject:cellContentPtr1];
                 }
             section++;
-                sectionYOffset = sectionYOffset+cbsPtr1.cellMaxHeight;
-                cbsPtr1.cellYoffSet=sectionYOffset;
             }
         }
     }

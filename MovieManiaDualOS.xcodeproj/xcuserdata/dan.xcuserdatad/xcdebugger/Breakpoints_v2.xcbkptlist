@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502688559.436125"
+            timestampString = "502732779.63622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1123"
-            endingLineNumber = "1123"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "1101"
+            endingLineNumber = "1101"
+            landmarkName = "+newSectionFromTableScroll:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502688562.690369"
+            timestampString = "502733189.796681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1121"
-            endingLineNumber = "1121"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "1106"
+            endingLineNumber = "1106"
+            landmarkName = "+newSectionFromTableScroll:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -52,12 +52,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502688840.392996"
+            timestampString = "502733189.796681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1097"
-            endingLineNumber = "1097"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "1107"
+            endingLineNumber = "1107"
+            landmarkName = "+newSectionFromTableScroll:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -68,12 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502688898.014259"
+            timestampString = "502733189.796681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1118"
-            endingLineNumber = "1118"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "1106"
+            endingLineNumber = "1106"
+            landmarkName = "+newSectionFromTableScroll:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -84,12 +84,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690080.538091"
+            timestampString = "502732413.266343"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1126"
-            endingLineNumber = "1126"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "788"
+            endingLineNumber = "788"
+            landmarkName = "-moveToButtonInCenter:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -100,108 +100,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690067.9008"
+            timestampString = "502732676.483619"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1127"
-            endingLineNumber = "1127"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690068.466747"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1126"
-            endingLineNumber = "1126"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690220.113617"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1119"
-            endingLineNumber = "1119"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690257.79611"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1117"
-            endingLineNumber = "1117"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690283.779317"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1110"
-            endingLineNumber = "1110"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690352.263429"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1115"
-            endingLineNumber = "1115"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CellButtonsViewHolder.m"
-            timestampString = "502690431.017142"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1108"
-            endingLineNumber = "1108"
-            landmarkName = "+newSegmentFromTableScroll:withScrollOffset:"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
+            landmarkName = "-moveToButtonInCenter:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

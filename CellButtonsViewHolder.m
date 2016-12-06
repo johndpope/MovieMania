@@ -735,7 +735,7 @@
         adjustedOffSet = CGPointMake(offset.x+aSab.uiButton.bounds.size.width/2, offset.y);
         aSabOffset = i*(aSab.buttonSize.width+buttonSpacing)+(aSab.buttonSize.width/2);
         aSabCenter = CGPointMake(aSabOffset, offset.y);
-        int testDistance = [CellButtonsViewHolder distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSabCenter];// aSab.uiButton.center];
+        int testDistance = [self distanceBetweenTwoPoints:adjustedOffSet buttonPos:aSabCenter];// aSab.uiButton.center];
         if ( testDistance < closestDistance){
             closestDistance= testDistance;
             sel = i;//+1;
@@ -784,11 +784,13 @@
         //        collectionView.contentOffset=scrollViewOffset;
     }
                      completion:nil];
-    
+    NSInteger newSection = currentButtonInCenter.tableSection;
+    [gtpPtr.liveRuntimePtr.rtTableViewCtrler.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:newSection ] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
     
 }
  
-+(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
+-(float)distanceBetweenTwoPoints:(CGPoint)currentPosition buttonPos:(CGPoint)buttonPos
 {
     float distance = sqrt(pow((currentPosition.x - buttonPos.x), 2.0) + pow((currentPosition.y - buttonPos.y), 2.0));
     //   DDLogDan(@"Distance Between Sprite Touches = %3.2f", distance);
@@ -1092,46 +1094,24 @@
 }
  */
 //+(NSInteger)whatSectionCellIsThis:(NSInteger)yOffset withCellButtonsScroll:(TableDef*)currentTableDef
-+(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(float)yOffset;
+//+(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(CGFloat)yOffset;
+
++(void)newSectionFromTableScroll:(NSUInteger)newSection
 {
     NSLog(@"CollectionViewHolder newSegmentFromTableScroll");
-
-
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
     NSMutableArray *tableSections = currentTableDef.tableSections;
-    SectionDef *aSection;
-    CellButtonsScroll* cbsPtr;
-    CellContentDef *ccDefPtr;
-    int sel = 99999;
-    float closestDistance = 99999;
-  
-    CGPoint currentScrollOffset = CGPointMake(0, yOffset);
-    CGPoint testOffset = CGPointMake(0, 0);
-    for (int i = 0; i < tableSections.count; i++){
-        aSection = [tableSections objectAtIndex:i];
-        ccDefPtr = [aSection.sCellsContentDefArr objectAtIndex:0];
-        cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
-        if(!cbsPtr)
-            continue;
-        int testDistance = [CellButtonsViewHolder distanceBetweenTwoPoints:testOffset buttonPos:currentScrollOffset];// aSab.uiButton.center];
-            if ( testDistance < closestDistance){
-                closestDistance= testDistance;
-                sel = i;//+1;
-            }
-        testOffset.y = testOffset.y + cbsPtr.cellMaxHeight + 40;  // need section hdr height
-    }
-    if (sel<=1000){
-        aSection = [tableSections objectAtIndex:sel];
-        cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
-        if (!cbsPtr)
-            return 99999;
-        CellButtonsViewHolder *newCellButtonsVH=cbsPtr.cellButtonsVH;
-        ActionRequest* aBtn = [newCellButtonsVH.buttonSequence objectAtIndex:0];
-        aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
-        [newCellButtonsVH touchUpOnButton:aBtn.uiButton];
-        [aBtn touchUpOnButton:aBtn.uiButton];
-    }
-    return sel;
+    SectionDef * aSection = [tableSections objectAtIndex:newSection];
+    CellButtonsScroll* cbsPtr;cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
+    if (!cbsPtr)
+        return;// 99999;
+    CellButtonsViewHolder *newCellButtonsVH=cbsPtr.cellButtonsVH;
+    ActionRequest* aBtn = [newCellButtonsVH.buttonSequence objectAtIndex:0];
+    aBtn.uiButton.layer.borderColor=[UIColor clearColor].CGColor;
+    [newCellButtonsVH touchUpOnButton:aBtn.uiButton];
+    [aBtn touchUpOnButton:aBtn.uiButton];
+    
+    return;// sel;
 }
                 
                 

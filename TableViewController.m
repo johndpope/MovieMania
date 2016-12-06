@@ -874,7 +874,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     }
 
 
-- (void)scrollViewDidEndDragging:(UITableView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidEndDragging:(UITableView *)tableView willDecelerate:(BOOL)decelerate
 {
     
     //what is currentbuttonincenter?
@@ -884,58 +884,30 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     
     
     if (!decelerate){
-//        NSInteger cellHeight = scrollView.bounds.size.height;
-      float yOffset = scrollView.contentOffset.y;
-      NSInteger section =  [CellButtonsViewHolder newSegmentFromTableScroll:scrollView withScrollOffset:yOffset];
-      if (section > 1000)
-          return;
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        CGFloat yOffset = tableView.contentOffset.y;
+        CGPoint currentPt = CGPointMake(0, yOffset);
+        NSIndexPath *currentIndex = [tableView indexPathForRowAtPoint:currentPt];
+        [CellButtonsViewHolder newSectionFromTableScroll:currentIndex.section];
     }
     
 }
 
-- (void)scrollViewDidEndDecelerating:(UITableView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UITableView *)tableView
 {
     NSLog(@"MYRACHANGED TableViewController scrollViewDidEndDecelerating");
 #if TARGET_OS_TV
     
        return;
 #endif
-//    NSInteger cellHeight = scrollView.bounds.size.height;
-    float yOffset = scrollView.contentOffset.y;
-    NSInteger section =  [CellButtonsViewHolder newSegmentFromTableScroll:scrollView withScrollOffset:yOffset];
-    if (section > 1000)
-        return;
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+    CGFloat yOffset = tableView.contentOffset.y;
+    CGPoint currentPt = CGPointMake(0, yOffset);
+    NSIndexPath *currentIndex = [tableView indexPathForRowAtPoint:currentPt];
+    [CellButtonsViewHolder newSectionFromTableScroll:currentIndex.section];
 }
 
 
 
-
-    /*- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    NSLog(@"do I get scrollViewDidScroll messages?");
-    NSLog(@"scrollview %p",scrollView);
-   // CGRect rect = self.toolbarContainerView.frame;
-  //  rect.origin.y = MIN(0,scrollView.contentOffset.y + scrollView.contentInset.top);
-    //self.toolbarContainerView.frame = rect;
-    
-    
-    // Adjust the header's frame to keep it pinned to the top of the scroll view
-    CGRect headerFrame = self.tableDataPtr.fixedHeaderUIView.frame;
-    CGFloat yOffset = scrollView.contentOffset.y;
-    headerFrame.origin.y = MAX(0, yOffset);
-    self.tableDataPtr.fixedHeaderUIView.frame = headerFrame;
-    
-    // If the user is pulling down on the top of the scroll view, adjust the scroll indicator appropriately
-    CGFloat height = CGRectGetHeight(headerFrame);
-    if (yOffset< 0) {
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(ABS(yOffset) + height, 0, 0, 0);
-    }
-    
-    
-    
-}*/
 ////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -  Button processing
 ////////////////////////////////////////////////////////////////////////////////////////
