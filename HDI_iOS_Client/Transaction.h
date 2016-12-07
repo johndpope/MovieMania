@@ -57,7 +57,7 @@
 @property (nonatomic, readwrite) NSMutableDictionary *storeDictForResults;
 
 
-
+@property (nonatomic, readwrite) BOOL queryReturns404IsError; //if this query returns 404 (not Found status)  report as FATAL ERROR or not?
 
 
 -(void) killYourself;
