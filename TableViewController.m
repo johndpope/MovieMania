@@ -261,8 +261,7 @@
     
     [self.tableDataPtr showMeInDisplay:self tvcCreatedWidth:self.view.frame.size.width tvcCreatedHeight:self.view.frame.size.height];      //causes table to be displayed
     
-    
-    
+//    self.tableView.decelerationRate=UIScrollViewDecelerationRateFast;
     
 }
 
@@ -887,7 +886,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
         CGFloat yOffset = tableView.contentOffset.y;
         CGPoint currentPt = CGPointMake(0, yOffset);
         NSIndexPath *currentIndex = [tableView indexPathForRowAtPoint:currentPt];
-        [CellButtonsViewHolder newSectionFromTableViewScroll:currentIndex.section];
+        [CellButtonsViewHolder newSectionFromTableViewScroll:currentIndex];
     }
     
 }
@@ -903,7 +902,7 @@ NEVER called - requires custom uitableviewcell    -(void) setSelected:(BOOL)sele
     CGFloat yOffset = tableView.contentOffset.y;
     CGPoint currentPt = CGPointMake(0, yOffset);
     NSIndexPath *currentIndex = [tableView indexPathForRowAtPoint:currentPt];
-    [CellButtonsViewHolder newSectionFromTableViewScroll:currentIndex.section];
+    [CellButtonsViewHolder newSectionFromTableViewScroll:currentIndex];
 }
 
 
