@@ -238,7 +238,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 nextTableDef = [self makeTVC10:pressedBtn];
                 break;
  
- 
+            case DUMPtvcDATAONLY:
+                nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+                break;
+            case DUMPtvc:
+                nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI andPosterDict:self.liveRuntimePtr.movieImageDictionary];
+                break;
  
             default:
                 NSLog(@"call default to TVC2");
@@ -386,6 +391,164 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
 
     
        return myTable;
+}
+-(TableDef *)makeDUMPtvcDATAONLY:(ActionRequest *)pressedButton withProductDict:ourProductDictPtr
+{   //self.liveRuntimePtr.allProductDefinitions_HDI  can be used for ourProductDictPtr
+    //dump to screen contents of allProductDefinitions_HDI
+    //
+    NSString *tableTitle = @"allProductDefinitions_HDI";
+    
+    
+    TableDef *myTable;
+    myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+    
+    
+    
+    //NSArray *allProductKeys = [[self.liveRuntimePtr.allProductDefinitions_HDI allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *allProductKeys = [[ourProductDictPtr allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    
+    for (NSString *aProdKey in allProductKeys){
+        //uniqure key is section header, each sections dictionary is cuv content
+        
+        SectionDef *sdPtr=[SectionDef initSectionHeaderText:aProdKey withTextColor:viewBackColor withBackgroundColor:viewTextColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+        
+        //C E L L S    F O R        S E C T I O N S
+        //NSMutableDictionary *dictPtr=[self.liveRuntimePtr.allProductDefinitions_HDI objectForKey:aProdKey];
+        NSMutableDictionary *dictPtr=[ourProductDictPtr objectForKey:aProdKey];
+        NSArray *thisDictKeys = [[dictPtr allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        
+        
+        for (NSString *productDictionaryKeyString in thisDictKeys){
+            
+            NSString *correspondingDictDataString= [dictPtr objectForKey:productDictionaryKeyString];
+            NSString *stringToDisplay=[NSString stringWithFormat:@"%@ :%@", productDictionaryKeyString, correspondingDictDataString];
+            
+            CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
+            CellTextDef *ctdPtr=[CellTextDef initCellText:stringToDisplay withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+            ctdPtr.cellSeparatorVisible=FALSE;
+            ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
+            // ctdPtr.
+            cellContentPtr.ccCellTypePtr=ctdPtr;
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
+            
+        }//end for allDictionary contents for this product
+        
+        
+        [myTable.tableSections addObject:sdPtr];
+        
+    }//end for allProductKeys in allProductDefinitions_HDI
+    
+    
+    
+    return myTable;
+    
+    
+}
+-(TableDef *)makeDUMPtvc:(ActionRequest *)pressedButton   withProductDict:ourProductDictPtr  andPosterDict: ourPosterDictPtr
+{//dump to screen contents of allProductDefinitions_HDI , find 'Poster' if exists
+    //self.liveRuntimePtr.allProductDefinitions_HDI  can be used for ourProductDictPtr
+    //self.liveRuntimePtr.productImageDictionary can be used for ourPosterDictPtr
+    
+    NSString *tableTitle = @"allProductDefinitions_HDI";
+    
+    
+    TableDef *myTable;
+    myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+    
+    
+    
+    
+   // NSArray *allProductKeys = [[self.liveRuntimePtr.allProductDefinitions_HDI allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *allProductKeys = [[ourProductDictPtr allKeys] sortedArrayUsingSelector:@selector(compare:)];
+
+    for (NSString *aProdKey in allProductKeys){
+        //uniqure key is section header, each sections dictionary is cuv content
+        
+        SectionDef *sdPtr=[SectionDef initSectionHeaderText:aProdKey withTextColor:viewBackColor withBackgroundColor:viewTextColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+        
+        //C E L L S    F O R        S E C T I O N S
+        //NSMutableDictionary *dictPtr=[self.liveRuntimePtr.allProductDefinitions_HDI objectForKey:aProdKey];
+        NSMutableDictionary *dictPtr=[ourProductDictPtr objectForKey:aProdKey];
+        NSArray *thisDictKeys = [[dictPtr allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        
+        
+        for (NSString *productDictionaryKeyString in thisDictKeys){
+            
+            NSString *correspondingDictDataString= [dictPtr objectForKey:productDictionaryKeyString];
+            // NSString *stringToDisplay=[NSString stringWithFormat:@"%@ :%@", productDictionaryKeyString, correspondingDictDataString];
+            CellTextDef *ctdPtr1=[CellTextDef initCellText:productDictionaryKeyString withTextColor:[UIColor yellowColor] withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+            CellTextDef *ctdPtr2=[CellTextDef initCellText:correspondingDictDataString withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
+            UIImage * posterImage=nil;
+            if ([productDictionaryKeyString isEqualToString:@"Poster"]){
+                //posterImage=[self.liveRuntimePtr.productImageDictionary objectForKey:aProdKey];
+                posterImage=[ourPosterDictPtr objectForKey:aProdKey];
+                NSLog(@"");
+            }
+            if (posterImage) {
+                //add special item for this, keep the text version too
+                CGSize posterSize=posterImage.size;
+                CGSize tofitSize=[self scaleMySizeMaxOf:sizeGlobalPoster fromSizeNow:posterSize];
+                CellImageOnly *cioPtr=[CellImageOnly initCellDefaults:posterImage withPNGName:aProdKey withBackColor:[UIColor clearColor] rotateWhenVisible:NO withSize:tofitSize];
+                CellContentDef *cellContentPtrPoster=[[CellContentDef alloc] init];
+                CellUIView *cuvPtrPoster=[[CellUIView alloc]init];
+                
+                [cuvPtrPoster.cioPtrArr addObject:cioPtr];
+                cuvPtrPoster.displayTemplate=kDISP_TEMPLATE_IMAGETOP_LABELSBOTTOM;
+                cellContentPtrPoster.ccCellTypePtr=cuvPtrPoster;
+                [sdPtr.sCellsContentDefArr addObject:cellContentPtrPoster];
+                cuvPtrPoster.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
+                cuvPtrPoster.enableUserActivity = NO;
+            }
+            CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
+            CellUIView *cuvPtr=[[CellUIView alloc]init];
+            cuvPtr.displaycTextDefsAlign=kDISP_ALIGN_HORIZONTAL;
+            cuvPtr.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;
+            cuvPtr.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
+            cuvPtr.enableUserActivity = NO;
+            [cuvPtr.cTextDefsArray addObject:ctdPtr1];
+            [cuvPtr.cTextDefsArray addObject:ctdPtr2];
+            cellContentPtr.ccCellTypePtr=cuvPtr;
+            
+            
+            
+            
+            
+            
+            //     ctdPtr.cellSeparatorVisible=FALSE;
+            ctdPtr1.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
+            ctdPtr2.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
+            
+            
+            [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
+            
+        }//end for allDictionary contents for this product
+        
+        
+        [myTable.tableSections addObject:sdPtr];
+        
+    }//end for allProductKeys in allProductDefinitions_HDI
+    
+    
+    
+    return myTable;
+    
+}
+-(CGSize) scaleMySizeMaxOf:(CGSize)maxSize fromSizeNow:(CGSize)picSize
+{
+    int w=picSize.width;
+    int h=picSize.height;
+    
+    
+    if (picSize.height <= maxSize.height) {
+        return picSize; //its ok as is
+    }
+    int modifier=h/maxSize.height;
+    
+    CGSize newSize= CGSizeMake(w/modifier, h/modifier);
+    return newSize;
+    
+    
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

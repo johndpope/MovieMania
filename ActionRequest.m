@@ -26,6 +26,8 @@
 @synthesize  reloadOnly;
 //@synthesize dataBaseDictsPtrs;
 @synthesize arrayIndex,loopDictPtr,aiKeyForResultDict,efLoopArrPtr; //loop through array for send, store results in dict with array key
+@synthesize errNOTFOUNDLoopArrPtr;  //new keep track of what queries got  404 or 204
+
 @synthesize tableRow, tableSection;
 @synthesize showingInfoDict;
 @synthesize buttonDate;
@@ -77,6 +79,9 @@
 //    aProductDict = nil;
 //    [dataBaseDictsPtrs removeAllObjects];
 //    dataBaseDictsPtrs = nil;
+    
+    [errNOTFOUNDLoopArrPtr removeAllObjects];
+    errNOTFOUNDLoopArrPtr=nil;
     
     [loopDictPtr removeAllObjects];
     loopDictPtr=nil;

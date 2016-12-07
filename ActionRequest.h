@@ -50,6 +50,7 @@
 @property (nonatomic, readwrite, nullable)          NSString *aiKeyForResultDict;
 @property (nonatomic, readwrite, nullable)          NSMutableArray *efLoopArrPtr;
 @property (nonatomic, readwrite, nullable)          NSMutableDictionary *loopDictPtr;
+@property (nonatomic, readwrite, nullable)          NSMutableArray *errNOTFOUNDLoopArrPtr;
 @property (nonatomic, readwrite, nullable)          NSMutableDictionary *decryptDict;
 @property (nonatomic, readwrite, nullable)          NSString *trailerPath;
 @property (nonatomic, readwrite, nullable)          NSString *errorDisplayText;
