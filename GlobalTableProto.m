@@ -2381,15 +2381,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         return timeHasPassed;
     }
 
-//-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize // forLocation:(NSMutableDictionary*)aLocDicTMS
--(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize isCollectionView:(BOOL)isCollectionView// forLocation:(NSMutableDictionary*)aLocDicTMS
+
+-(CellButtonsScroll*)buildAllProductsScrollView:(ActionRequest*)pressedBtn forProducts:(NSMutableDictionary*)allProductsDict atLoc:(NSMutableDictionary*)aLocDict forSection:(int)section andRow:(int)row withBtnSize:(CGSize)btnSize isCollectionView:(BOOL)isCollectionView
     {
         
         //values in allProductsDict are using TMS keys.  This isn't going to work for generic product.
         CellButtonsScroll* ctdPtr;
-//        id ctdPtr = nil;
-//       CellButtonsContainer *ctdPtr;
-//    NSMutableDictionary *aLocDict = [self fetchLocationDict:pressedBtn];
         NSInteger numberOfProductsAtLocation = 0;
         NSMutableArray *productDictNamesAtLoc = [[NSMutableArray alloc] init];
         NSMutableDictionary *aProductDict;//TMS;
