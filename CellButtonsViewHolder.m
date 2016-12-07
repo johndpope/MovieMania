@@ -1097,14 +1097,24 @@
 //+(NSInteger)whatSectionCellIsThis:(NSInteger)yOffset withCellButtonsScroll:(TableDef*)currentTableDef
 //+(NSInteger)newSegmentFromTableScroll:(UITableView*)tableView withScrollOffset:(CGFloat)yOffset;
 
-+(void)newSectionFromTableViewScroll:(NSUInteger)newSection
+//+(void)newSectionFromTableViewScroll:(NSUInteger)newSection
++(void)newSectionFromTableViewScroll:(NSIndexPath*)indexPath
 {
     NSLog(@"CollectionViewHolder newSegmentFromTableScroll");
+    NSLog(@"currentIndex Section = %li, Row = %li",(long)indexPath.section,(long)indexPath.row);
+    NSInteger touchInput = BUTTONS_NORMAL_CELL * kLocationModulus + indexPath.section*kCellSectionModulus+ indexPath.row*kCellRowModulus;
+    NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
+    NSString *tagString = [touchedButton stringValue];
+    ActionRequest *pressedAction = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
+    [pressedAction.uiButton sendActionsForControlEvents: UIControlEventTouchUpInside];
+    return;
+}
+/*
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
     NSMutableArray *tableSections = currentTableDef.tableSections;
-    SectionDef * aSection = [tableSections objectAtIndex:newSection];
+    SectionDef * aSection = [tableSections objectAtIndex:indexPath.section];
     CellButtonsScroll* cbsPtr;
-    cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
+    cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:indexPath.row];
     if (!cbsPtr)
         return;// 99999;
     CellButtonsViewHolder *newCellButtonsVH=cbsPtr.cellButtonsVH;
@@ -1126,6 +1136,7 @@
     }
     return aButtonsCell;
 }
+*/
 -(void)initButtonInCenterToRow0Btn0
 {
     

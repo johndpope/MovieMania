@@ -25,7 +25,7 @@
 - (id)initWithButtons:(NSMutableArray*)myButtons viewFrame:(CGRect)thisFrame forContainer:(UIScrollView*)container viewScrolls:(BOOL)viewScrolls;
 
 +(void)removeSelectedButtonBoxFromAllRows;
-+(void)newSectionFromTableViewScroll:(NSUInteger)newSection;// withScrollOffset:(CGFloat)yOffset;
++(void)newSectionFromTableViewScroll:(NSIndexPath*)indexPath;
 
 
 @end
