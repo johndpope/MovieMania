@@ -785,7 +785,8 @@
     }
                      completion:nil];
     NSInteger newSection = currentButtonInCenter.tableSection;
-    [gtpPtr.liveRuntimePtr.rtTableViewCtrler.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:newSection ] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    NSInteger newRow = currentButtonInCenter.tableRow;
+    [gtpPtr.liveRuntimePtr.rtTableViewCtrler.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:newRow inSection:newSection ] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
     
 }
@@ -1102,7 +1103,8 @@
     TableDef *currentTableDef = [GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
     NSMutableArray *tableSections = currentTableDef.tableSections;
     SectionDef * aSection = [tableSections objectAtIndex:newSection];
-    CellButtonsScroll* cbsPtr;cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
+    CellButtonsScroll* cbsPtr;
+    cbsPtr = [CellButtonsViewHolder whatIsCBS:aSection.sCellsContentDefArr atIndex:0];
     if (!cbsPtr)
         return;// 99999;
     CellButtonsViewHolder *newCellButtonsVH=cbsPtr.cellButtonsVH;

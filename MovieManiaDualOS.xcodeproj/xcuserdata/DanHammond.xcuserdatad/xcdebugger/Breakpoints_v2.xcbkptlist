@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "445"
             endingLineNumber = "445"
-            landmarkName = "-tappedButton:"
-            landmarkType = "7">
+            landmarkName = "@implementation CellButtonsViewHolder"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -127,8 +127,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "464"
             endingLineNumber = "464"
-            landmarkName = "-touchUpOnButton:"
-            landmarkType = "7">
+            landmarkName = "@implementation CellButtonsViewHolder"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,13 +138,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502651791.839489"
+            timestampString = "502828523.580031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
-            landmarkName = "-primaryActionTriggered:"
-            landmarkType = "7">
+            startingLineNumber = "1012"
+            endingLineNumber = "1012"
+            landmarkName = "@implementation CellButtonsViewHolder"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "492"
             endingLineNumber = "492"
-            landmarkName = "-scrollViewDidScroll:"
+            landmarkName = "-scrollViewWillBeginDragging:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -191,8 +191,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "865"
             endingLineNumber = "865"
-            landmarkName = "-scrollViewDidScroll:"
-            landmarkType = "7">
+            landmarkName = "@implementation TableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,12 +218,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502655789.494537"
+            timestampString = "502828523.580031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "795"
-            endingLineNumber = "795"
-            landmarkName = "-checkUserFocusMovie"
+            startingLineNumber = "796"
+            endingLineNumber = "796"
+            landmarkName = "-distanceBetweenTwoPoints:buttonPos:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -234,12 +234,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CellButtonsViewHolder.m"
-            timestampString = "502655800.067991"
+            timestampString = "502828523.580031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "843"
-            endingLineNumber = "843"
-            landmarkName = "-didUpdateFocusInContext:withAnimationCoordinator:"
+            startingLineNumber = "844"
+            endingLineNumber = "844"
+            landmarkName = "-checkUserFocusMovie"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,6 +256,38 @@
             startingLineNumber = "168"
             endingLineNumber = "168"
             landmarkName = "-setUpCollectionView:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CellButtonsViewHolder.m"
+            timestampString = "502828515.167688"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "788"
+            endingLineNumber = "788"
+            landmarkName = "-moveToButtonInCenter:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CellButtonsViewHolder.m"
+            timestampString = "502829096.884839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "789"
+            endingLineNumber = "789"
+            landmarkName = "-moveToButtonInCenter:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
