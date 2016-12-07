@@ -424,7 +424,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "635"
-            endingLineNumber = "635">
+            endingLineNumber = "635"
+            landmarkName = "-requestFailed:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -710,7 +712,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "639"
-            endingLineNumber = "639">
+            endingLineNumber = "639"
+            landmarkName = "@implementation Transaction"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -724,7 +728,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "644"
-            endingLineNumber = "644">
+            endingLineNumber = "644"
+            landmarkName = "-badResponseStatusCode:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
