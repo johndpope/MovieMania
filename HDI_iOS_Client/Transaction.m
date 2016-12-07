@@ -19,7 +19,7 @@
 @synthesize loopingPosition,loopingActive;
 @synthesize  storeloopingDataArrayPtr,storeKeyString,storeView,storeActReq,storeSentVariablesArrayPtr,storeStringSubstituted,storeDictForResults;
 @synthesize storeKeyArrayPtr;
-
+@synthesize queryReturns404IsError;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,8 @@
    
     loopingPosition=0;
     loopingActive=FALSE;
-    
+    queryReturns404IsError=FALSE;   //if this query returns 404 (not Found status)  report as FATAL ERROR or not?
+
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NOTIFICATIONS
@@ -336,12 +337,14 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     
- //   GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
+    //   GlobalTableProto *gGTPptr=[GlobalTableProto sharedGlobalTableProto];
     
- //   gGTPptr.thisUserValid=FALSE;
+    //   gGTPptr.thisUserValid=FALSE;
     
     
     [MBProgressHUD hideHUDForView:self.viewActive animated:YES];
+    NSLog(@"*****************************FINISH");
+    
     NSLog(@"request.responseStatusCode %d",request.responseStatusCode);
     NSLog(@"request.responseStatusMessage %@",request.responseStatusMessage);
     NSLog(@"(requestFinished)request.responseString %@",request.responseString);    //this is json format   have to parse it
@@ -351,16 +354,37 @@
     //note request.responseStatusCode != 200   means no need to parse.....
     // CODE UI FOR THIS CONDITION  getting user to reenter?
     
-    if (request.responseStatusCode != 200) {
-        [self badResponseStatusCode:request];
-
+    
+    if(request.responseStatusCode == 200){
+        [self parseRecievedResponse:request];    //all GOOOD
+        return;
     }
-    else{
-        [self parseRecievedResponse:request];
+    if ((request.responseStatusCode == 404) || (request.responseStatusCode ==204)) {
+        //NOT FOUND....JUST GO ON? NOT FATAL?
+        if (self.queryReturns404IsError) {
+            [self badResponseStatusCode:request];
+        }
+        else{
+            [self parseNOTFOUNDresponse:request];    //ITS ok....NO JSON TO PROCESS., handle looping state
+        }
         
-        
+        return;
+    }
+    [self badResponseStatusCode:request];
+    
+    /*
+     if (request.responseStatusCode != 200) {
+     [self badResponseStatusCode:request];
      
-    }
+     }
+     else{
+     [self parseRecievedResponse:request];
+     
+     
+     
+     }
+     
+     */
     
     
     
@@ -564,6 +588,37 @@
     
 }
 
+
+-(void)parseNOTFOUNDresponse:(ASIHTTPRequest *)request
+{
+    //from 404  NOT FOUND.  IS THIS AN ERROR? DEPENDS....
+    
+    
+    if (loopingActive) {
+        //do something with this data
+        
+        NSLog(@"***RECV actReqPtr %p   actReqPtr.loopDictPtr %p",actReqPtr, actReqPtr.loopDictPtr);
+        
+        //no data returned, so   retRecordsAsDPtrs is nil
+        
+        [actReqPtr.errNOTFOUNDLoopArrPtr addObject:actReqPtr.aiKeyForResultDict];
+        // [actReqPtr.loopDictPtr setObject:[retRecordsAsDPtrs objectAtIndex:0] forKey:actReqPtr.aiKeyForResultDict];
+        
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName: ConstContinueLoopingTransaction  object:actReqPtr];
+        
+        
+        request=nil;
+        
+        
+    }
+    else{
+        [[NSNotificationCenter defaultCenter] postNotificationName: ConstIDentifyUserControllerSuccess  object:actReqPtr];
+    }
+    return;
+    
+}
 
 
 

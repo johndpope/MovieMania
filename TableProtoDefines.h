@@ -140,6 +140,11 @@
 #define TVC9 9          // Change Date For Search
 #define TVC10 10        // All Theaters showing a movie
 
+
+#define DUMPtvc 50      //special dump contents of allProductDefinitions_HDI
+#define DUMPtvcDATAONLY 51      //special dump contents of allProductDefinitions_HDI   no graphics 'Poster' looked for
+
+
 #define kDISP_ALIGN_VERTICAL 0      //CellUIView, for CellTextDef
 #define kDISP_ALIGN_HORIZONTAL 1    //CellUIView, for CellTextDef
 
