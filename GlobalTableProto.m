@@ -731,7 +731,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
     
     if(!pressedButton.reloadOnly){
-        myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
+        myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section numberOfProductsPerRow:6];
         TableDef *currentTableDef = myTable;//[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
         SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
         NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
@@ -2157,7 +2157,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     // Generic Code End
     return myTable;
 }
--(TableDef*)createScrollingViewForGenres:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict withTableTitle:(NSString*)tableTitle inSection:(int)section // inMyTable:(TableDef*)aTable
+-(TableDef*)createScrollingViewForGenres:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict withTableTitle:(NSString*)tableTitle inSection:(int)section numberOfProductsPerRow:(int)productsPerRow
 {
     
     //  Generic Use Code Start
