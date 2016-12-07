@@ -728,9 +728,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     NSLog(@"----makeTVC21    reloadOnly is %d",pressedButton.reloadOnly);
     int section = 0;
     int row = 0;
+    TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
     
-    TableDef *myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
     if(!pressedButton.reloadOnly){
+        myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];
         TableDef *currentTableDef = myTable;//[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
         SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
         NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
@@ -2161,15 +2162,18 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     //  Generic Use Code Start
         SectionDef *sdPtr;
-    TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
-    CellContentDef *cellContentPtr1;//, *cellContentPtr2;
-    CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
-    CGSize movieBtnSize = sizeGlobalPoster;//CGSizeMake(100, 150);
-    CellButtonsScroll *hdrCell;
+    TableDef *myTable =self.liveRuntimePtr.activeTableDataPtr;
     if (pressedButton.reloadOnly){
-        NSLog(@"reloadonly - notcreate table");
+        NSLog(@"reloadonly - notcreate table This should not happen");
+        return myTable;
       }
-    else{
+    
+//    else{
+        CellContentDef *cellContentPtr1;//, *cellContentPtr2;
+        CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+        CGSize movieBtnSize = sizeGlobalPoster;//CGSizeMake(100, 150);
+        CellButtonsScroll *hdrCell;
+
         NSLog(@"create table");
         myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
         sdPtr = nil;
@@ -2205,7 +2209,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             section++;
             }
         }
-    }
+//    }
     
     // Generic Code End
     return myTable;
@@ -2417,9 +2421,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
         
         NSMutableArray *hdiButtons = [self buildBasicButtonArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonCount:numberOfProductsAtLocation withButtonNames:productDictNamesAtLoc withButtonSize:btnSize buttonType:0];
-        //    NSMutableArray* hdiButtons = [self buildButtonsArray:BUTTONS_NORMAL_CELL inSection:section inRow:row buttonsPerRow:numberOfProductsAtLocation withTotalNumberOfBtns:numberOfProductsAtLocation withStartingIndex:0 withButtonSize:btnSize];
-        
-        ActionRequest *aBtn;
+               ActionRequest *aBtn;
         for(int col = 0; col  <numberOfProductsAtLocation; col++){
             //    aProductDict = [self.liveRuntimePtr.allMovieInfoOMDB objectForKey:[allMovieInfoOMDBKeys objectAtIndex:keyIndex]];
             aProductDict = [productDictionaryWithNameAsKey  objectForKey:[productDictNamesAtLoc objectAtIndex:col]];
@@ -3051,7 +3053,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
     return hdiButtonArray;
 }
--(NSMutableArray *)buildButtonsArray:(int)location inSection:(int)section inRow:(int)row buttonsPerRow:(NSInteger)buttonsPerRow withTotalNumberOfBtns:(NSInteger)totalNumberOfButtons withStartingIndex:(int)startingIndex withButtonSize:(CGSize)btnSize// withButtonNames:(NSArray*)buttonNames;
+-(NSMutableArray *)buildButtonsArray:(int)location inSection:(int)section inRow:(int)row buttonsPerRow:(NSInteger)buttonsPerRow withTotalNumberOfBtns:(NSInteger)totalNumberOfButtons withStartingIndex:(int)startingIndex withButtonSize:(CGSize)btnSize  // withButtonNames:(NSArray*)buttonNames;
 {
         NSMutableArray  *hdiButtonArray = [[NSMutableArray alloc] init];
         ActionRequest *hdiBtn;

@@ -786,7 +786,7 @@
                      completion:nil];
     NSInteger newSection = currentButtonInCenter.tableSection;
     NSInteger newRow = currentButtonInCenter.tableRow;
-    [gtpPtr.liveRuntimePtr.rtTableViewCtrler.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:newRow inSection:newSection ] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [gtpPtr.liveRuntimePtr.rtTableViewCtrler.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:newRow inSection:newSection ] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 
     
 }
@@ -1106,7 +1106,7 @@
     NSNumber *touchedButton = [NSNumber numberWithInteger:touchInput];
     NSString *tagString = [touchedButton stringValue];
     ActionRequest *pressedAction = [[GlobalTableProto sharedGlobalTableProto].allButtonsDictionary objectForKey:tagString];
-    [pressedAction.uiButton sendActionsForControlEvents: UIControlEventTouchUpInside];
+    [pressedAction.uiButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     return;
 }
 /*

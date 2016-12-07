@@ -261,8 +261,7 @@
     
     [self.tableDataPtr showMeInDisplay:self tvcCreatedWidth:self.view.frame.size.width tvcCreatedHeight:self.view.frame.size.height];      //causes table to be displayed
     
-    
-    
+//    self.tableView.decelerationRate=UIScrollViewDecelerationRateFast;
     
 }
 
