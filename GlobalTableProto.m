@@ -193,7 +193,9 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 NSLog(@"call makeTVC2");
                 makeCollectionView=YES;
                 nextTableDef = [self makeTVC2:pressedBtn];
-             
+            //WORKS    nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI];
+                
+            //WORKS     nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI andPosterDict:nil];
                 break;
             case TVC21:
                 NSLog(@"call makeTVC21");
@@ -239,10 +241,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
                 break;
  
             case DUMPtvcDATAONLY:
-                nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+                nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI];
+                //nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI];
                 break;
             case DUMPtvc:
-                nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI andPosterDict:self.liveRuntimePtr.movieImageDictionary];
+                //nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allProductDefinitions_HDI andPosterDict:self.liveRuntimePtr.movieImageDictionary];
+                nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI andPosterDict:nil];
                 break;
  
             default:
@@ -427,6 +431,8 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             CellTextDef *ctdPtr=[CellTextDef initCellText:stringToDisplay withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontMiddle withTextFontName:nil];
             ctdPtr.cellSeparatorVisible=FALSE;
             ctdPtr.cellDispTextPtr.alignMe=NSTextAlignmentLeft;
+            ctdPtr.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
+            ctdPtr.enableUserActivity = NO;
             // ctdPtr.
             cellContentPtr.ccCellTypePtr=ctdPtr;
             [sdPtr.sCellsContentDefArr addObject:cellContentPtr];
@@ -3165,10 +3171,18 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         if (!myTable) {
             //makeone
             myTable=[[TableDef alloc]init];
+            //I created it, no footer needed
+            if (myTable.tableFooterContentPtr) {
+                [myTable.tableFooterContentPtr killYourself];
+                myTable.tableFooterContentPtr=nil;
+                myTable.fixedTableFooterUIView=nil;
+                myTable.tableFooterFixed=NO;
+            }
         }
         else{
             if (myTable.tableHeaderContentPtr) {
                 [myTable.tableHeaderContentPtr killYourself];
+                myTable.tableHeaderContentPtr=nil;
             }
         }
         
