@@ -919,11 +919,12 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
         pressedButton=firstButton;
         thisIsStartup=TRUE;  //first time through building this TVC
-        sdPtr2=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
-        sdPtr2.sectionHeaderContentPtr=nil;
+        sdPtr2=[SectionDef initSectionHeaderText:@"Movie Trailers" withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:sizeGlobalTextFontMiddle footerTextFontName:nil];
+//        sdPtr2.sectionHeaderContentPtr=nil;
         sdPtr2.sectionFooterContentPtr=nil;
         NSLog(@"sdPtr2 %p",sdPtr2);
         [myTable.tableSections addObject:sdPtr2];
+        
     }
     
     //////////////TEST HDR as CELLUIVIEW
