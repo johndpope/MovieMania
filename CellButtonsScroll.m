@@ -211,6 +211,13 @@
         return nil;
     ActionRequest *aBtn = [self.cellsButtonsArray objectAtIndex:0];
     self.cellMaxHeight = aBtn.buttonSize.height;//*1.5;
+    if ([GlobalTableProto sharedGlobalTableProto].inTVOS){
+        if (maxheight > maxwidth)
+            self.cellMaxHeight=self.cellsButtonsArray.count*aBtn.buttonSize.height;
+    }
+    
+    
+
     NSLog(@"CellBUttonScroll putMeVisibleMaxWidth %d indicateSel %d",maxwidth,self.indicateSelItem);
     
     if (self.buttonContainerView) {
