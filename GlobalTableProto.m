@@ -192,7 +192,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC2:
                 NSLog(@"call makeTVC2");
                 makeCollectionView=YES;
-                nextTableDef = [self makeTVC2:pressedBtn];
+                nextTableDef = [self makeTVC22:pressedBtn];
             //WORKS    nextTableDef = [self makeDUMPtvcDATAONLY:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI];
                 
             //WORKS     nextTableDef = [self makeDUMPtvc:pressedBtn withProductDict:self.liveRuntimePtr.allLocationsHDI andPosterDict:nil];
@@ -200,7 +200,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             case TVC21:
                 NSLog(@"call makeTVC21");
                 makeCollectionView=YES;
-                nextTableDef = [self makeTVC2Genres:pressedBtn];
+                nextTableDef = [self makeTVC21:pressedBtn];
                 break;
             
             case TVC3:
@@ -887,7 +887,109 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     
     return myTable; //tvc2
 }
--(TableDef *)makeTVC2Genres:(ActionRequest *)pressedButton
+-(TableDef *)makeTVC22:(ActionRequest *)pressedButton
+{
+    
+    //
+    BOOL thisIsStartup=FALSE;
+    SectionDef *sdPtr2;
+    NSString *tableTitle = @"Movie Information";
+    NSMutableDictionary *aLocDict = nil;// [self fetchLocationDict:pressedButton];
+    NSLog(@"----makeTVC22    reloadOnly is %d",pressedButton.reloadOnly);
+    int section = 0;
+    int row = 0;
+    TableDef *myTable = self.liveRuntimePtr.activeTableDataPtr;
+    
+    if(!pressedButton.reloadOnly){
+        // one row per genre
+        //        myTable = [self createScrollingViewForGenres:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section];// numberOfProductsPerRow:6];
+        
+        // multiple rows per genre
+        
+        //          myTable = [self createScrollingViewForGenresWithRows:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section numberOfProductsPerRow:6];
+        NSMutableDictionary *catagoryTypeDict=[[NSMutableDictionary alloc] init];
+        [catagoryTypeDict setObject:[NSNumber numberWithInt:kNone] forKey:kProductFilterKey];
+        myTable = [self createScrollingViewForCatagories:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:0 numberOfProductsPerRow:1000 withCatagoryTypeDict:catagoryTypeDict];
+        
+        TableDef *currentTableDef = myTable;//[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
+        SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
+        NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
+        CellContentDef *ccDefPtr = [currentSectionCells objectAtIndex:0];
+        CellButtonsScroll* firstButtonRow = (CellButtonsScroll*)ccDefPtr.ccCellTypePtr;
+        ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
+        pressedButton=firstButton;
+        thisIsStartup=TRUE;  //first time through building this TVC
+        SectionDef *sdPtr2=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+        sdPtr2.sectionHeaderContentPtr=nil;
+        sdPtr2.sectionFooterContentPtr=nil;
+        [myTable.tableSections addObject:sdPtr2];
+    }
+    
+    //////////////TEST HDR as CELLUIVIEW
+    //TEST    CellUIView * cuvPtrHDR=  [self cuvPtrCreateTest];
+    //TEST    CellContentDef *cellContentPtr=[[CellContentDef alloc] init];
+    //TEST    cellContentPtr.ccCellTypePtr=cuvPtrHDR;
+    //TEST    myTable.tableHeaderContentPtr=cellContentPtr;
+    //TEST
+       NSMutableDictionary *productDict = pressedButton.productDict;
+    CellUIView *cuvPtrHDR;
+    NSLog(@"getting cuvPtr for %@",[pressedButton.productDict objectForKey:@"Title"]);
+    NSMutableDictionary*movieInfoDict =[productDict objectForKey:kProductDescriptionKey]; //@"ProductDescription"
+    if (![movieInfoDict objectForKey:@"Error"]){
+        cuvPtrHDR = [self buildMovieInfoCell:movieInfoDict];
+    }else{
+        cuvPtrHDR = [self buildMovieInfoCellTMS:productDict];
+    }
+    cuvPtrHDR.canMyRowHaveTVFocus=NO;//TVOS user shouldn't give focus to me
+    cuvPtrHDR.enableUserActivity = NO;
+    cuvPtrHDR.displaycTextDefsAlign=kDISP_ALIGN_VERTICAL;   //alignment for container holding texts
+    cuvPtrHDR.displayTemplate=kDISP_TEMPLATE_LABELS_ONLY;  //template layout for container
+    CellContentDef *cellContentPtrHDR=[[CellContentDef alloc] init];
+    cellContentPtrHDR.ccCellTypePtr=cuvPtrHDR;
+    //      cuvPtr.nextTableView = TVC2;
+    cellContentPtrHDR.ccTableViewCellPtr=nil;
+    
+    myTable.tableHeaderContentPtr=cellContentPtrHDR;
+    
+
+    if (!thisIsStartup) {
+        [self.liveRuntimePtr reloadForHeader];
+        sdPtr2=[myTable.tableSections objectAtIndex:1];
+        
+    }
+
+    //  add movie trailers
+    //test with dory.... movieRoot=@"12329215";
+    NSMutableArray *trailerArray = self.liveRuntimePtr.movieTrailers;               // YouTubes from trailersapi.com
+    NSMutableDictionary *trailersDict;
+    if (self.inAVPlayerVC){
+        NSMutableDictionary *productDict = pressedButton.productDict;
+        NSString *movieRoot = [productDict objectForKey:kMovieUniqueKey];//tms kProductIDKey];
+        trailersDict = [self.liveRuntimePtr.allMovieTrailersHDI objectForKey:movieRoot];
+        trailerArray = [NSMutableArray arrayWithArray: [trailersDict allValues]];
+    }
+    
+    //return myTable;   //myra fix this
+    
+    
+    CellButtonsScroll *cbsPtr = [self buildMovieTrailerButtonsCell:pressedButton inSection:section inRow:row fromTrailerArray:trailerArray]; //forNumberOfTrailers:3];
+    CellContentDef * cellContentPtr1=[[CellContentDef alloc] init];
+    cellContentPtr1.ccCellTypePtr=cbsPtr;
+    cellContentPtr1.ccTableViewCellPtr=nil;
+    
+    if (cbsPtr.cellsButtonsArray.count){
+       // [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
+       [sdPtr2.sCellsContentDefArr removeAllObjects];
+       }
+        [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];   //yes this in as array of 0 elements....required for reload of row to work
+    
+    
+    return myTable; //tvc2
+}
+
+
+
+-(TableDef *)makeTVC21:(ActionRequest *)pressedButton  // products by genres
 {
     
     BOOL thisIsStartup=FALSE;
@@ -905,7 +1007,11 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         
 // multiple rows per genre
         
-          myTable = [self createScrollingViewForGenresWithRows:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section numberOfProductsPerRow:6];
+//          myTable = [self createScrollingViewForGenresWithRows:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:section numberOfProductsPerRow:6];
+        NSMutableDictionary *catagoryTypeDict=[[NSMutableDictionary alloc] init];
+        [catagoryTypeDict setObject:[NSNumber numberWithInt:kGenres] forKey:kProductFilterKey];
+        myTable = [self createScrollingViewForCatagories:pressedButton forProducts:self.liveRuntimePtr.allProductDefinitions_HDI atLocation:aLocDict withTableTitle:tableTitle inSection:0 numberOfProductsPerRow:6 withCatagoryTypeDict:catagoryTypeDict];
+
         TableDef *currentTableDef = myTable;//[GlobalTableProto sharedGlobalTableProto].liveRuntimePtr.activeTableDataPtr;
         SectionDef *currentSection = [currentTableDef.tableSections objectAtIndex:0];//aQuery.tableSection];
         NSMutableArray *currentSectionCells = currentSection.sCellsContentDefArr;
@@ -2276,7 +2382,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellButtonsScroll *hdrCell;
     if (pressedButton.reloadOnly){
         NSLog(@"reloadonly - notcreate table");
-                sdPtr1 = [myTable.tableSections objectAtIndex:0];
+        sdPtr1 = [myTable.tableSections objectAtIndex:0];
         [myTable.tableSections removeAllObjects];
         [myTable.tableSections addObject:sdPtr1];
         cellContentPtr1 = [sdPtr1.sCellsContentDefArr objectAtIndex:0];
@@ -2384,6 +2490,68 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         }
     }
     //    }
+    
+    // Generic Code End
+    return myTable;
+}
+-(TableDef*)createScrollingViewForCatagories:(ActionRequest *)pressedButton forProducts:(NSMutableDictionary*)allProductsDict atLocation:(NSMutableDictionary*)aLocDict withTableTitle:(NSString*)tableTitle inSection:(int)section numberOfProductsPerRow:(int)productsPerRow withCatagoryTypeDict:(NSMutableDictionary*)catagoryTypeDict
+{
+    
+    //  Generic Use Code Start
+    SectionDef *sdPtr;
+    TableDef *myTable =self.liveRuntimePtr.activeTableDataPtr;
+    if (pressedButton.reloadOnly){
+        NSLog(@"reloadonly - notcreate table This should not happen");
+        return myTable;
+    }
+    
+    //    else{
+    //        CellContentDef *cellContentPtr1;//, *cellContentPtr2;
+    CGSize hdrBtnSize = sizeGlobalButton;//CGSizeMake(60, 30);
+    CGSize movieBtnSize = sizeGlobalPoster;//CGSizeMake(100, 150);
+    CellButtonsScroll *hdrCell;
+    
+    NSLog(@"create table");
+    myTable = [self createFixedTableHeaderUsingText:tableTitle forTable:nil];
+    sdPtr = nil;
+    myTable =[self createButtonsForFixedFooterinTable:myTable withFooterBtns:footerButtonNames1 withNextTVCs:footerButtonNextTableViews1 withButtonSize:hdrBtnSize];
+    [self turnOnSelectedDateBtn:selectedDate inCellBtnArray:hdrCell.cellsButtonsArray];
+    int row = 0;
+    
+    //C E L L S    F O R        S E C T I O N S  Genre Button Sections/Cells
+    //button cells section 1      B U T T O N S
+    NSNumber *catagoryFilterNum = [catagoryTypeDict objectForKey:kProductFilterKey];
+    NSMutableDictionary *catagories;
+    NSArray *sortedCatagories;
+    NSString *aCatagory;
+    NSMutableDictionary *allProductsOffThisCatagory;
+    int numberOfRows;
+    switch ([catagoryFilterNum integerValue]) {
+        case kNone:
+            aCatagory=@"All Movies";
+            sdPtr=[SectionDef initSectionHeaderText:aCatagory withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+            sdPtr.sectionFooterContentPtr=nil;
+            [myTable.tableSections addObject:sdPtr];
+           numberOfRows = [self buildAllProductsSectionRows:pressedButton forProducts:allProductsDict atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView withProductsPerRow:productsPerRow inSection:sdPtr];
+            
+            break;
+        case kGenres:
+         
+            catagories = [self makeGenresDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+            sortedCatagories = [[catagories allKeys] sortedArrayUsingSelector:@selector(compare:)];
+            for (aCatagory in sortedCatagories){
+                allProductsOffThisCatagory = [self allProductsOfThisGenre:aCatagory inProductsDict:self.liveRuntimePtr.allProductDefinitions_HDI];
+                if (allProductsOffThisCatagory.count){
+                    sdPtr=[SectionDef initSectionHeaderText:aCatagory withTextColor:viewTextColor withBackgroundColor:viewBackColor withTextFontSize:sizeGlobalTextFontBig withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+                    sdPtr.sectionFooterContentPtr=nil;
+                    [myTable.tableSections addObject:sdPtr];
+                    numberOfRows = [self buildAllProductsSectionRows:pressedButton forProducts:allProductsOffThisCatagory atLoc:aLocDict forSection:section andRow:row withBtnSize:movieBtnSize isCollectionView:makeCollectionView withProductsPerRow:productsPerRow inSection:sdPtr];
+                    section++;
+                }
+            }
+        default:
+            break;
+    }
     
     // Generic Code End
     return myTable;

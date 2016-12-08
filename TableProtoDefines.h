@@ -308,4 +308,9 @@
 
 #endif /* TableProtoDefines_h */
 
+/// Product Filters
+#define kProductFilterKey @"ProductFilterKey"
+#define kNone   0
+#define kGenres 1
+#define kDepartments 2
 
