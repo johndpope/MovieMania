@@ -3172,12 +3172,15 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
             //makeone
             myTable=[[TableDef alloc]init];
             //I created it, no footer needed
+// Dan Needs the FooterContentPtr 12/7/16
+/*
             if (myTable.tableFooterContentPtr) {
                 [myTable.tableFooterContentPtr killYourself];
                 myTable.tableFooterContentPtr=nil;
                 myTable.fixedTableFooterUIView=nil;
                 myTable.tableFooterFixed=NO;
             }
+*/
         }
         else{
             if (myTable.tableHeaderContentPtr) {
