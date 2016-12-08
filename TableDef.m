@@ -453,6 +453,7 @@
     
     for (int index=0; index<rowsSection1; index++) {
         NSIndexPath *somePath=[NSIndexPath indexPathForRow:index inSection:1];
+        NSLog(@"indexpath is section 1  row %d",index);
         [allPaths addObject: somePath];
         
     }

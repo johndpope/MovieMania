@@ -919,9 +919,10 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
         ActionRequest *firstButton = [firstButtonRow.cellsButtonsArray objectAtIndex:0];
         pressedButton=firstButton;
         thisIsStartup=TRUE;  //first time through building this TVC
-        SectionDef *sdPtr2=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
+        sdPtr2=[SectionDef initSectionHeaderText:nil withTextColor:nil withBackgroundColor:viewBackColor withTextFontSize:0 withTextFontName:nil footerText:nil footerTextColor:nil footerBackgroundColor:nil footerTextFontSize:0 footerTextFontName:nil];
         sdPtr2.sectionHeaderContentPtr=nil;
         sdPtr2.sectionFooterContentPtr=nil;
+        NSLog(@"sdPtr2 %p",sdPtr2);
         [myTable.tableSections addObject:sdPtr2];
     }
     
@@ -955,7 +956,7 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     if (!thisIsStartup) {
         [self.liveRuntimePtr reloadForHeader];
         sdPtr2=[myTable.tableSections objectAtIndex:1];
-        
+        NSLog(@"sdPtr2 %p",sdPtr2);
     }
 
     //  add movie trailers
@@ -976,12 +977,13 @@ NSString* const ConstNEWZIPstartOver = @"NewZipStartOver";
     CellContentDef * cellContentPtr1=[[CellContentDef alloc] init];
     cellContentPtr1.ccCellTypePtr=cbsPtr;
     cellContentPtr1.ccTableViewCellPtr=nil;
-    
-    if (cbsPtr.cellsButtonsArray.count){
+    NSLog(@"sdPtr2 %p",sdPtr2);
+    NSLog(@"sdPtr2.sCellsContentDefArr %@  count: %d",sdPtr2.sCellsContentDefArr, [sdPtr2.sCellsContentDefArr count]);
+    if (sdPtr2.sCellsContentDefArr.count){
        // [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];
        [sdPtr2.sCellsContentDefArr removeAllObjects];
-       }
-        [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];   //yes this in as array of 0 elements....required for reload of row to work
+    }
+    [sdPtr2.sCellsContentDefArr addObject:cellContentPtr1];   //yes this in as array of 0 elements....required for reload of row to work
     
     
     return myTable; //tvc2
